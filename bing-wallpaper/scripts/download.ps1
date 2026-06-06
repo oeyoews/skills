@@ -6,14 +6,30 @@ $imageUrl = 'https://www.bing.com' + $imageInfo.url
 
 $dateStr = Get-Date -Format 'yyyyMMdd_HHmmss'
 
-# 跨平台桌面路径检测
-if ($env:OS -eq 'Windows_NT' -or $IsWindows) {
-    $desktopPath = [Environment]::GetFolderPath('Desktop')
-} else {
+# 跨平台桌面路径：始终使用 .NET 方法获取真实桌面路径
+# 支持中文路径、自定义桌面位置等
+if ($IsWindows) {
+    # Windows: 使用 Shell 获取真实桌面路径（支持中文、自定义位置）
+    $shell = New-Object -ComObject Shell.Application
+    $desktopPath = $shell.NameSpace(0x00).Self.Path
+} elseif ($IsMacOS) {
     $desktopPath = Join-Path $HOME 'Desktop'
     if (-not (Test-Path $desktopPath)) {
         $desktopPath = $HOME
     }
+} elseif ($IsLinux) {
+    # Linux: 优先用 xdg-user-dir，回退到 ~/Desktop
+    $xdgDesktop = & xdg-user-dir DESKTOP 2>$null
+    if ($xdgDesktop -and (Test-Path $xdgDesktop)) {
+        $desktopPath = $xdgDesktop
+    } else {
+        $desktopPath = Join-Path $HOME 'Desktop'
+        if (-not (Test-Path $desktopPath)) {
+            $desktopPath = $HOME
+        }
+    }
+} else {
+    $desktopPath = $HOME
 }
 
 $savePath = Join-Path $desktopPath ('BingWallpaper_' + $dateStr + '.jpg')
