@@ -88,13 +88,14 @@ description: 从微软 Bing 获取当日壁纸并下载到本地桌面。支持 
 
 ## 跨平台桌面路径
 
-脚本自动检测操作系统并选择保存路径：
+脚本自动通过系统 API 获取**真实桌面路径**，支持中文路径和用户自定义桌面位置：
 
-| 平台 | 保存路径 |
-|------|----------|
-| Windows | `[Environment]::GetFolderPath('Desktop')`（如 `C:\Users\<user>\Desktop\`） |
-| Linux | `~/Desktop/`，若不存在则回退到 `~/` |
-| macOS | `~/Desktop/`，若不存在则回退到 `~/` |
+| 平台 | 桌面路径获取方式 | 说明 |
+|------|-----------------|------|
+| Windows (PowerShell) | `Shell.Application.NameSpace(0x0a).Self.Path` | 读取 Shell 桌面路径，支持中文及自定义位置 |
+| Windows (Git Bash) | `[Environment]::GetFolderPath('Desktop')` | 通过 PowerShell 获取真实桌面路径 |
+| Linux | `$XDG_DESKTOP_DIR` → `xdg-user-dir DESKTOP` → `~/Desktop/` → `~/` | 优先 XDG 环境变量，逐级回退 |
+| macOS | `~/Desktop/` → `~/` | 桌面不存在时回退到主目录 |
 
 ## 注意事项
 

@@ -24,16 +24,36 @@ FULL_URL="https://www.bing.com${IMAGE_URL}"
 # 生成保存文件名（当前时间戳）
 DATE_STR=$(date +%Y%m%d_%H%M%S)
 
-# 跨平台桌面路径检测
+# 跨平台桌面路径：使用系统命令获取真实桌面路径
+# 支持中文路径、自定义桌面位置等
+DESKTOP_PATH=""
+
 case "$(uname -s)" in
     MINGW*|MSYS*|CYGWIN*)
         # Windows (Git Bash / MSYS2 / Cygwin)
-        DESKTOP_PATH="${USERPROFILE}/Desktop"
+        # 通过 PowerShell 获取真实桌面路径（支持中文、自定义位置）
+        DESKTOP_PATH=$(powershell -NoProfile -Command "[Environment]::GetFolderPath('Desktop')" 2>/dev/null | tr -d '\r\n')
+        if [ -z "$DESKTOP_PATH" ] || [ ! -d "$DESKTOP_PATH" ]; then
+            # 回退：通过 USERPROFILE 拼接
+            DESKTOP_PATH="${USERPROFILE}/Desktop"
+        fi
         ;;
-    *)
-        # Linux / macOS
+    Darwin)
+        # macOS
         DESKTOP_PATH="${HOME}/Desktop"
         [ ! -d "$DESKTOP_PATH" ] && DESKTOP_PATH="${HOME}"
+        ;;
+    *)
+        # Linux: 优先读取 XDG 环境变量，其次 xdg-user-dir，最后回退 ~/Desktop → ~/
+        if [ -n "$XDG_DESKTOP_DIR" ] && [ -d "$XDG_DESKTOP_DIR" ]; then
+            DESKTOP_PATH="$XDG_DESKTOP_DIR"
+        else
+            DESKTOP_PATH=$(xdg-user-dir DESKTOP 2>/dev/null)
+            if [ -z "$DESKTOP_PATH" ] || [ ! -d "$DESKTOP_PATH" ]; then
+                DESKTOP_PATH="${HOME}/Desktop"
+                [ ! -d "$DESKTOP_PATH" ] && DESKTOP_PATH="${HOME}"
+            fi
+        fi
         ;;
 esac
 
