@@ -1,6 +1,6 @@
 ---
 name: bing-wallpaper-py
-description: 从微软 Bing 获取当日壁纸并下载到本地桌面。支持 Windows、Linux、macOS 平台，使用纯 Python 3 标准库实现，无需额外依赖。当用户要求下载壁纸、Bing 壁纸、每日壁纸、设置桌面背景时使用。
+description: "用在任何需要从微软 Bing 获取当日壁纸并下载到本地桌面时。覆盖：获取 Bing 每日壁纸、下载桌面背景、设置本机壁纸、查看最新壁纸信息、下载特定日期的历史壁纸，以及在 Windows、Linux、macOS 上使用 Python 标准库完成无依赖下载。触发条件：用户要求下载壁纸、Bing 壁纸、每日壁纸、桌面背景、换壁纸、设置背景图、获取壁纸信息、PPT 背景图、电脑壁纸等，或者直接提到 Bing、wallpaper、background image、每日图片、壁纸下载等场景。"
 ---
 
 # Bing 每日壁纸下载 (Python 版)

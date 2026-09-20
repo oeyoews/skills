@@ -1,13 +1,6 @@
 ---
 name: week-report
-description: >-
-  Generate developer weekly reports (周报) from git history, PRs, and conversation
-  context. Output only this week's work as plain numbered list (1. xxx 2. xxx)
-  for WeChat group chat, and save to weekly/<YYYYMMDD>/index.md (YYYYMMDD is this
-  Saturday). Reply wraps the same body in a fenced code block for easy copy. Use
-  when the user asks to write, draft, or summarize a weekly report, work summary,
-  周报, 工作总结, 本周工作, or period recap. Tone: professional and concise, not
-  corporate buzzwords.
+description: "用在任何需要根据 git 历史、PR、对话上下文生成本周工作总结或周报时。覆盖：写周报、生成工作总结、汇总本周完成事项、整理研发产出、提炼关键任务与结果，以及把开发者工作记录成适合微信群聊或内部沟通的简洁中文列表。触发条件：用户要求写周报、做工作总结、汇总本周工作、写开发周报、周报模板、工作复盘、项目总结、工作汇报、周计划复盘，或者直接提到 周报、工作总结、本周工作、绩效汇报、开发汇报 等场景。"
 ---
 
 # 周报生成
