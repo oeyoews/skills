@@ -652,8 +652,6 @@ Required dependencies (should already be installed):
 
 - **markitdown**: `pip install "markitdown[pptx]"` (text extraction)
 - **pptxgenjs**: `npm install -g pptxgenjs` (creating presentations)
-- **playwright**: `npm install -g playwright@1.50.0` (HTML rendering)
-- **sharp**: `npm install -g sharp` (SVG rasterization and image processing)
 - **defusedxml**: `pip install defusedxml` (secure XML parsing)
 
 ## Final response citations
