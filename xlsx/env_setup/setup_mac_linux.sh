@@ -63,7 +63,7 @@ ERRORS=0
 
 # ── Step 2a: Homebrew (macOS only) ──
 if [ "$PLATFORM" = "mac" ]; then
-    echo "--- [1/6] Homebrew (macOS package manager) ---"
+    echo "--- [1/5] Homebrew (macOS package manager) ---"
     if command -v brew &>/dev/null; then
         ok "brew installed"
     else
@@ -75,7 +75,7 @@ if [ "$PLATFORM" = "mac" ]; then
 fi
 
 # ── Step 2b: Python 3 ──
-echo "--- [2/6] Python 3 ---"
+echo "--- [2/5] Python 3 ---"
 if command -v python3 &>/dev/null; then
     PY_VER=$(python3 --version 2>&1)
     ok "python3 ($PY_VER)"
@@ -107,7 +107,7 @@ fi
 echo ""
 
 # ── Step 2c: Python packages ──
-echo "--- [3/6] Python Packages (openpyxl, XlsxWriter) ---"
+echo "--- [3/5] Python Packages (openpyxl, XlsxWriter) ---"
 PY_PKGS=(
     "openpyxl:openpyxl"
     "xlsxwriter:XlsxWriter"
@@ -137,44 +137,8 @@ if [ ${#MISSING_PY[@]} -gt 0 ]; then
 fi
 echo ""
 
-# ── Step 2d: LibreOffice (install-on-demand, NOT substitutable) ──
-echo "--- [4/6] LibreOffice (format conversion + formula recalc) ---"
-if command -v soffice &>/dev/null; then
-    LO_VER=$(soffice --version 2>/dev/null | head -1)
-    ok "libreoffice ($LO_VER)"
-else
-    warn "libreoffice not installed — REQUIRED for recalc, .xlsx→PDF, .csv→.xlsx"
-    info "You MUST install it. FORBIDDEN: using Excel/WPS/Numbers instead of installing,"
-    info "or skipping recalculation. A large download is NOT a reason to skip. REQUIRED:"
-    info "explain the necessity to the user, say the package is large, THEN install it."
-    info "PREFERRED source (fast in China, current build): Tsinghua TUNA mirror"
-    info "  https://mirrors.tuna.tsinghua.edu.cn/libreoffice/libreoffice/stable/26.8.0/"
-    info "  Pick the subdir for this platform/arch ($(uname -m)):"
-    info "    Linux deb  -> deb/x86_64/ or deb/aarch64/   (tar -xzf, then dpkg -i */DEBS/*.deb)"
-    info "    Linux rpm  -> rpm/x86_64/"
-    info "    macOS      -> mac/aarch64/ (Apple Silicon) or mac/x86_64/ (Intel)  (.dmg)"
-    info "  If 26.8.0 is gone, pick the newest version under .../libreoffice/stable/"
-    info "Package-manager FALLBACK (only if the mirror is unreachable):"
-    case "$PLATFORM" in
-        mac)   info "  brew install --cask libreoffice" ;;
-        linux) info "  sudo apt install libreoffice-core" ;;
-    esac
-    info "AFTER installing, REGISTER the binary on PATH -- the method differs per OS:"
-    case "$PLATFORM" in
-        mac)   info "  sudo ln -sf /Applications/LibreOffice.app/Contents/MacOS/soffice /usr/local/bin/soffice"
-               info "  (Apple Silicon: use /opt/homebrew/bin/soffice if /usr/local/bin is not on PATH)" ;;
-        linux) info "  sudo ln -sf /opt/libreoffice*/program/soffice /usr/local/bin/soffice" ;;
-    esac
-    info "  then re-verify: soffice --version"
-    info "An install left off PATH looks 'not installed' next run and gets reinstalled"
-    info "needlessly. If soffice already exists on disk but is off PATH, just link it."
-    info "Another program is allowed ONLY after an install attempt has FAILED. Report it."
-    info "No install attempt = no substitute program."
-fi
-echo ""
-
 # ── Step 2e: Font Verification (local /usr/share/fonts/) ──
-echo "--- [5/6] Font Verification ---"
+echo "--- [4/5] Font Verification ---"
 FONT_BASE="/usr/share/fonts"
 FONT_LIST="$SCRIPT_DIR/font_list.txt"
 
@@ -211,7 +175,7 @@ export FONT_DIR
 echo ""
 
 # ── Step 2f: CJK Font Verification ──
-echo "--- [6/6] CJK Font Verification ---"
+echo "--- [5/5] CJK Font Verification ---"
 CJK_FOUND=false
 
 if [ -f "$FONT_BASE/truetype/chinese/NotoSansSC[wght].ttf" ]; then

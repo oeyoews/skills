@@ -60,7 +60,7 @@ if ($global:UseCN) {
 $Errors = 0
 
 # ── Step 2a: Python 3 ──
-Write-Host "--- [1/5] Python 3 + pip ---"
+Write-Host "--- [1/4] Python 3 + pip ---"
 $PyCmd = $null
 foreach ($cmd in @("python3", "python", "py")) {
     try {
@@ -98,7 +98,7 @@ if ($PyCmd) {
 Write-Host ""
 
 # ── Step 2b: Python packages ──
-Write-Host "--- [2/5] Python Packages (openpyxl, XlsxWriter) ---"
+Write-Host "--- [2/4] Python Packages (openpyxl, XlsxWriter) ---"
 $PyPkgs = @(
     @{ Module = "openpyxl";   Package = "openpyxl" },
     @{ Module = "xlsxwriter"; Package = "XlsxWriter" }
@@ -134,40 +134,8 @@ if ($PyCmd) {
 }
 Write-Host ""
 
-# ── Step 2c: LibreOffice (install-on-demand, NOT substitutable) ──
-Write-Host "--- [3/5] LibreOffice (format conversion + formula recalc) ---"
-$SofficePath = "C:\Program Files\LibreOffice\program\soffice.exe"
-if (Test-Path $SofficePath) {
-    Write-Ok "libreoffice found"
-} elseif (Get-Command soffice -ErrorAction SilentlyContinue) {
-    Write-Ok "libreoffice (in PATH)"
-} else {
-    Write-Warn "libreoffice not installed - REQUIRED for recalc, .xlsx -> PDF, .csv -> .xlsx"
-    Write-Info "You MUST install it. FORBIDDEN: using Excel/WPS/Numbers instead of installing,"
-    Write-Info "or skipping recalculation. A large download is NOT a reason to skip. REQUIRED:"
-    Write-Info "explain the necessity to the user, say the package is large, THEN install it."
-    Write-Info "PREFERRED source (fast in China, current build): Tsinghua TUNA mirror"
-    Write-Info "  https://mirrors.tuna.tsinghua.edu.cn/libreoffice/libreoffice/stable/26.8.0/"
-    Write-Info "  Windows x64:   win/x86_64/LibreOffice_26.8.0_Win_x86-64.msi"
-    Write-Info "  Windows ARM64: win/aarch64/LibreOffice_26.8.0_Win_aarch64.msi"
-    Write-Info "  Then: msiexec /i <file>.msi /qn   (needs admin)"
-    Write-Info "  If 26.8.0 is gone, pick the newest version under .../libreoffice/stable/"
-    Write-Info "FALLBACK (only if the mirror is unreachable):"
-    Write-Info "  winget install TheDocumentFoundation.LibreOffice"
-    Write-Info "  or: https://www.libreoffice.org/download/"
-    Write-Info "AFTER installing, REGISTER it on PATH (Windows method - differs per OS):"
-    Write-Info '  setx PATH "$([Environment]::GetEnvironmentVariable(''PATH'',''User''));C:\Program Files\LibreOffice\program"'
-    Write-Info "  setx affects NEW shells only - for this session use the full soffice.exe path."
-    Write-Info '  then re-verify: & "C:\Program Files\LibreOffice\program\soffice.exe" --version'
-    Write-Info "An install left off PATH looks 'not installed' next run and gets reinstalled"
-    Write-Info "needlessly. If soffice already exists on disk but is off PATH, just register it."
-    Write-Info "Another program is allowed ONLY after an install attempt has FAILED. Report it."
-    Write-Info "No install attempt = no substitute program."
-}
-Write-Host ""
-
 # ── Step 2d: Font Installation (from CDN) ──
-Write-Host "--- [4/5] Font Installation ---"
+Write-Host "--- [3/4] Font Installation ---"
 $FontCdnBase = "https://z-cdn.chatglm.cn/office-skill/fonts"
 $FontList = Join-Path $ScriptDir "font_list.txt"
 
@@ -227,7 +195,7 @@ $env:XLSX_FONTS_DIR = $XLSX_FONTS_DIR
 Write-Host ""
 
 # ── Step 2e: CJK Font Verification ──
-Write-Host "--- [5/5] CJK Font Verification ---"
+Write-Host "--- [4/4] CJK Font Verification ---"
 $CjkFound = $false
 $FontsDir = Join-Path $env:WINDIR "Fonts"
 $UserFontDir2 = Join-Path $env:LOCALAPPDATA "Microsoft\Windows\Fonts"

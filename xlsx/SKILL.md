@@ -17,12 +17,6 @@ This auto-detects and exports `XLSX_SKILL_DIR` and `FONT_DIR`. No manual variabl
 
 **Only if the check fails**, read [`env_setup/setup.md`](env_setup/setup.md) for full platform-specific installation instructions (dependencies, fonts, China mirrors).
 
-> 🔴 **LibreOffice is install-on-demand and NOT substitutable.** `env_check.sh` reports it as
-> `on-demand MISSING` without failing, so a passing check does **not** mean it is present. The moment
-> a task needs `recalc`, `.xlsx`→PDF, or `.csv`→`.xlsx`, you **MUST install it** — using the user's
-> Excel/WPS/Numbers instead is forbidden, and a large download is not a reason to skip.
-> See [HARD REQUIREMENT](#-hard-requirement--libreoffice-is-missing) under Quality Gate.
-
 | Variable | Auto-set by env_check.sh | Description |
 |----------|--------------------------|-------------|
 | `XLSX_SKILL_DIR` | skill root directory | Parent of this file |
@@ -226,55 +220,17 @@ Quick reference:
 Blueprint → Build & Self-check (per-sheet) → Inspect → Pivot (if needed) → Release
 ```
 
-### 🔴 HARD REQUIREMENT — LibreOffice is missing
+### Formula verification without a calculation engine
 
-`recalc` (formula recalculation), `.xlsx` → PDF, and `.csv` → `.xlsx` all run through
-LibreOffice/`soffice`. It is *install-on-demand* only in the sense that it is installed the moment a
-task needs it.
+This environment has no spreadsheet calculation engine, so formulas are never recalculated for you.
+Verify numbers programmatically instead:
 
-**If LibreOffice is not installed, you MUST install it. This is not a choice.**
-
-**FORBIDDEN — do not do any of these:**
-- ❌ Using Microsoft Excel, WPS Office, Numbers, or any other program already on the user's machine
-  *instead of* installing LibreOffice.
-- ❌ Deciding on the user's behalf that the download is "too large", "too slow", or "not worth it".
-  **The package being large is NOT a reason to skip the install.** It is expected to be large.
-- ❌ Asking the user "should I just use Excel instead to save time?" — that is the same violation
-  dressed up as a question. Do not offer the substitution.
-- ❌ Skipping recalculation or the release gate altogether to avoid installing.
-
-**REQUIRED sequence — no steps skipped, in this order:**
-
-1. **Explain the necessity to the user.** LibreOffice is what actually recalculates the formulas so
-   errors (`#REF!`, `#DIV/0!`, `#VALUE!`) surface before delivery — without it, formula results are
-   unverified and the Live Formula Guarantee cannot be honored.
-2. **Tell them the download is large** (roughly several hundred MB) and may take a while. This is
-   information for the user, **not** a decision point for you — state it and proceed to install.
-3. **Install it now.** **Preferred source — Tsinghua TUNA mirror:**
-   `https://mirrors.tuna.tsinghua.edu.cn/libreoffice/libreoffice/stable/26.8.0/` — pick the
-   subdirectory for the platform/arch (`deb/x86_64`, `deb/aarch64`, `rpm/x86_64`, `mac/aarch64`,
-   `mac/x86_64`, `win/x86_64`, `win/aarch64`) and install the main package from it. If 26.8.0 is
-   gone, use the newest version under `.../libreoffice/stable/`. Full per-platform commands:
-   [`env_setup/setup.md`](env_setup/setup.md) → *"LibreOffice — Recommended Download Source"*.
-   Package-manager fallback, only if the mirror is unreachable: macOS
-   `brew install --cask libreoffice`; Linux (Debian/Ubuntu) `sudo apt install libreoffice-core`;
-   Windows `winget install TheDocumentFoundation.LibreOffice`.
-4. **Register the binary on `PATH`, then re-verify.** An install that leaves `soffice` off the
-   executable search path looks identical to "not installed" on the next probe — that is what causes
-   the same several-hundred-MB package to be downloaded twice. **The mechanism differs per OS**
-   (Linux/macOS: symlink into `/usr/local/bin`; Windows: append the program dir to the user `PATH`
-   with `setx`). Full per-OS commands: [`env_setup/setup.md`](env_setup/setup.md) → *"Register the
-   binary on PATH"*. Re-run `soffice --version` and only continue once it prints a version.
-   Corollary: **probe before installing** — if the binary already exists on disk but off-`PATH`,
-   register it instead of reinstalling.
-5. **Only after that install has actually been attempted AND failed** may you use software already
-   on the user's machine (Excel, WPS, Numbers). Report the install failure and which verification
-   steps were skipped.
-
-> **The gate is simple: no install attempt = no substitute program.** If you have not run the
-> install command and seen it fail, using Excel/WPS/Numbers is a violation of this skill.
-
----
+- Write **computed values** (not formulas) for any cell that a downstream Python check will read —
+  `openpyxl` cannot evaluate formulas, and `data_only=True` returns `None` for freshly written ones.
+- Run `python3 "$XLSX_SKILL_DIR/xlsx.py" audit output.xlsx` — it statically scans every formula for
+  error text (`#REF!`, `#DIV/0!`, `#VALUE!` …), zero-value results and Excel-incompatible implicit
+  array formulas.
+- PDF export from `.xlsx` is unavailable: deliver the `.xlsx` and let the user print it themselves.
 
 ## Capability Matrix
 

@@ -11,7 +11,7 @@ For financial models, also load `scenes/finance.md`.
 1. PLAN     → Identify all sheets, their structure, formulas, cross-references
 2. STYLE    → Load engines/design.md, apply default palette
 3. BUILD    → Create workbook, write data/formulas/formatting per sheet
-4. QA       → recalc → audit → scan → chart-verify (if charts)
+4. QA       → audit → scan → chart-verify (if charts)
 5. PIVOT    → If needed, run pivot command LAST
 6. VALIDATE → validate → exit 0 = deliver
 ```

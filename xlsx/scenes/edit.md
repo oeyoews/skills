@@ -26,7 +26,7 @@ wb.save('output.xlsm')  # VBA modules preserved
                asks to edit their own file — then first copy it to `<stem>_backup.xlsx`
                next to it (never /tmp)
 4. MODIFY    → Make targeted changes
-5. QA        → recalc → audit → scan
+5. QA        → audit → scan
 6. VALIDATE  → validate → deliver
 ```
 
@@ -154,7 +154,7 @@ for row in ws.iter_rows(min_row=2, values_only=True):
 
 ### Fix Formulas
 ```python
-# Find cells with errors (after recalc)
+# Find cells carrying error text (no engine recalculates formulas here)
 wb_data = load_workbook('input.xlsx', data_only=True)
 ws_data = wb_data.active
 
@@ -185,7 +185,7 @@ When the user asks to "make it look better" or "format nicely":
 | Modify pivot table output with openpyxl | Corrupt pivotCache | Never — regenerate via xlsx.py pivot |
 | Overwrite merged cells | Layout breaks | Check `ws.merged_cells.ranges` first |
 | Manual row sort (swap row data) | Formulas still reference old row numbers | **Regenerate formula strings with target row number** (see Common Patterns → Sort with Formula Rewrite) |
-| Write SUM formula → verify with data_only | Get `None` — formula not evaluated | Compute value in Python for verification; write computed value or use recalc |
+| Write SUM formula → verify with data_only | Get `None` — formula not evaluated | Compute the value in Python and compare; for TOTAL rows write computed values instead of formulas |
 
 ---
 

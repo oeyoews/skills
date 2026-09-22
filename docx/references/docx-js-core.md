@@ -1,6 +1,6 @@
 # docx-js API Reference
 
-Complete API for creating .docx documents with the `docx` npm package. For advanced features (TOC details, footnotes, PDF conversion), see `docx-js-advanced.md`.
+Complete API for creating .docx documents with the `docx` npm package. For advanced features (TOC details, footnotes, and other advanced topics), see `docx-js-advanced.md`.
 
 ## Setup
 

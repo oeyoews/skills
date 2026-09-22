@@ -1,6 +1,6 @@
 ---
 name: docx
-description: "用在任何需要创建、编辑、分析或转换 DOCX/Word 文档时。覆盖：从零生成新文档、修改现有内容、处理修订和批注、保留格式与样式、提取文本和结构、以及将 Word 文档转换为 PDF、图片预览、Markdown 或纯文本。触发条件：用户要求写文档、改 Word 文件、生成报告、修订稿件、添加批注、导出 PDF、转图片、转换为 Markdown、处理 .doc/.docx、Word 转 PDF、doc 转 docx、PPT/文档/报告/合同/简历等文件编辑与导出场景，或者直接提到 Word、DOCX、文档、报告、导出、转格式、预览图片等。"
+description: "用在任何需要创建、编辑、分析或转换 DOCX/Word 文档时。覆盖：从零生成新文档、修改现有内容、处理修订和批注、保留格式与样式、提取文本和结构、以及转换为 Markdown 或纯文本。触发条件：用户要求写文档、改 Word 文件、生成报告、修订稿件、添加批注、转换为 Markdown、处理 .docx、PPT/文档/报告/合同/简历等文件编辑场景，或者直接提到 Word、DOCX、文档、报告、导出、转格式等。"
 ---
 
 # DOCX Creation, Editing, and Analysis
@@ -207,60 +207,13 @@ See `references/chart-templates.md`.
 
 - **pandoc**: Text extraction
 - **docx**: `bun add docx` or `npm install docx` (creating)
-- **LibreOffice**: PDF conversion, .doc support — install from the Tsinghua mirror
-  (`https://mirrors.tuna.tsinghua.edu.cn/libreoffice/libreoffice/stable/26.8.0/`, see below)
-- **Poppler**: PDF to image (`pdftoppm`)
 - **defusedxml**: Secure XML parsing
 - **python-docx**: Simple comment operations
 
-### 🔴 HARD REQUIREMENT — LibreOffice is missing
-
-Any step that calls `libreoffice`/`soffice` (`.doc` → `.docx`, DOCX → PDF, visual verification)
-depends on LibreOffice.
-
-**If LibreOffice is not installed, you MUST install it. This is not a choice.**
-
-**FORBIDDEN — do not do any of these:**
-- ❌ Using Microsoft Word, WPS Office, Pages, or any other program already on the user's machine
-  *instead of* installing LibreOffice.
-- ❌ Deciding on the user's behalf that the download is "too large", "too slow", or "not worth it".
-  **The package being large is NOT a reason to skip the install.** It is expected to be large.
-- ❌ Asking the user "should I use Word instead to save time?" — that is the same violation dressed
-  up as a question. Do not offer the substitution.
-- ❌ Silently degrading (skipping the PDF check, skipping visual verification) to avoid installing.
-
-**REQUIRED sequence — no steps skipped, in this order:**
-
-1. **Explain the necessity to the user.** LibreOffice is the conversion engine that preserves the
-   document's styles, layout, fonts, and page breaks faithfully — no other tool reproduces the same
-   output, so substituting it degrades fidelity.
-2. **Tell them the download is large** (roughly several hundred MB) and may take a while. This is
-   information for the user, **not** a decision point for you — state it and proceed to install.
-3. **Install it now.** **Preferred source — Tsinghua TUNA mirror** (fast in China, current build):
-   `https://mirrors.tuna.tsinghua.edu.cn/libreoffice/libreoffice/stable/26.8.0/` — pick the
-   subdirectory for the platform/arch (`deb/x86_64`, `deb/aarch64`, `rpm/x86_64`, `mac/aarch64`,
-   `mac/x86_64`, `win/x86_64`, `win/aarch64`) and download the main package from it. If 26.8.0 is no
-   longer there, list `https://mirrors.tuna.tsinghua.edu.cn/libreoffice/libreoffice/stable/` and take
-   the newest version. Full per-platform download-and-install commands: `env_setup/setup.md` →
-   *"LibreOffice — Recommended Download Source"*.
-   Package-manager fallback, only if the mirror is unreachable:
-   - macOS: `brew install --cask libreoffice`
-   - Linux (Debian/Ubuntu): `sudo apt install libreoffice-core`
-   - Windows: `winget install TheDocumentFoundation.LibreOffice`
-4. **Register the binary on `PATH`, then re-verify.** An install that leaves `soffice` off the
-   executable search path looks identical to "not installed" on the next probe — that is what causes
-   the same several-hundred-MB package to be downloaded twice. **The mechanism differs per OS**
-   (Linux/macOS: symlink into `/usr/local/bin`; Windows: append the program dir to the user `PATH`
-   with `setx`). Full per-OS commands: `env_setup/setup.md` → *"Register the binary on PATH"*.
-   Re-run `soffice --version` and only continue once it prints a version. Corollary: **probe before
-   installing** — if the binary already exists on disk but off-`PATH`, register it instead of
-   reinstalling.
-5. **Only after that install has actually been attempted AND failed** may you use software already
-   on the user's machine (Word, WPS, Pages). Report the install failure and what you switched to,
-   and warn that output fidelity may differ.
-
-> **The gate is simple: no install attempt = no substitute program.** If you have not run the
-> install command and seen it fail, using Word/WPS/Pages/Keynote is a violation of this skill.
+> **No rendering engine in this environment.** DOCX → PDF, legacy `.doc` → `.docx`, and rendered
+> visual checks are all unavailable. Deliver the `.docx` itself and let the user open/export it in
+> their own Office or WPS install; every verification step stays programmatic (Layer 2 post-check
+> below).
 
 ## Final response citations
 

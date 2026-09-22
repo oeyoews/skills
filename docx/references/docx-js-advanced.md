@@ -229,45 +229,12 @@ const doc = new Document({
 });
 ```
 
-## Converting DOCX to PDF
+## Converting DOCX to PDF / Images
 
-> 🔴 **LibreOffice not installed? You MUST install it — do not substitute.** Using Word/WPS *instead
-> of* installing is forbidden, and a large download is **not** a reason to skip it. Required: explain
-> the necessity to the user (it preserves styles, layout, fonts and pagination faithfully), say the
-> package is large, then install it — **preferred source is the Tsinghua TUNA mirror**
-> `https://mirrors.tuna.tsinghua.edu.cn/libreoffice/libreoffice/stable/26.8.0/` (pick the
-> platform/arch subdirectory; if that version is gone, take the newest under
-> `.../libreoffice/stable/`; full commands in `env_setup/setup.md`), with
-> `brew install --cask libreoffice` / `sudo apt install libreoffice-core` /
-> `winget install TheDocumentFoundation.LibreOffice` as fallbacks. Only
-> after an install attempt has **failed** may you use another program. **No install attempt = no
-> substitute program.** After installing, **register `soffice` on `PATH` and re-verify
-> `soffice --version`** (per-OS commands: `env_setup/setup.md` → *"Register the binary on PATH"*) —
-> an install left off the search path reads as "not installed" next time and gets reinstalled
-> needlessly. Note this is separate from the TOC rule below, which is about field
-> recalculation, not about avoiding LibreOffice.
+> **Not available in this environment.** There is no DOCX→PDF engine installed and no way to install
+> one, so PDF export and rendered previews cannot be produced here. Deliver the `.docx` itself and
+> tell the user to export or print to PDF from their own Office/WPS install (Word's "Save as PDF"
+> keeps TOC fields and pagination most faithfully).
 
-```bash
-# Using LibreOffice (headless)
-libreoffice --headless --convert-to pdf output.docx
-
-# ⚠️ TOC Rule: If document has TOC, warn user that:
-# 1. LibreOffice conversion may show empty TOC
-# 2. User should open in Word first, update fields (Ctrl+A → F9), save, then convert
-# 3. Or use Word's "Save as PDF" for best results
-```
-
-## Converting DOCX to Images
-
-```bash
-# Step 1: Convert to PDF
-libreoffice --headless --convert-to pdf output.docx
-
-# Step 2: Convert PDF to images
-pdftoppm -png -r 200 output.pdf output_page
-
-# This generates output_page-1.png, output_page-2.png, etc.
-# Use -r 200 for good quality (200 DPI)
-```
-
-Useful for generating preview thumbnails or when user needs images instead of document files.
+> **TOC note (still applies):** if the document has a TOC, tell the user to open it in Word, update
+> fields (Ctrl+A → F9), and save — page numbers only fill in once a word processor recalculates them.

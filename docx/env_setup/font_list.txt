@@ -77,4 +77,3 @@
 /usr/share/fonts/truetype/freefont/FreeMonoBold.ttf
 /usr/share/fonts/truetype/freefont/FreeMonoOblique.ttf
 /usr/share/fonts/truetype/freefont/FreeMonoBoldOblique.ttf
-/usr/share/fonts/truetype/libreoffice/opens___.ttf

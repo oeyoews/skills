@@ -63,7 +63,7 @@ When user doesn't specify chart type, auto-select:
 
 1. **Anti-Overlap**: Always `fig.tight_layout(pad=2.0)` before `savefig()`; use `plt.legend(loc='best')`
 2. **`titles_from_data=True`**: First row of data reference MUST contain text headers
-3. **Cached Values**: Run `recalc` before adding charts that reference formula cells
+3. **Cached Values**: Excel-native charts read cached cell values, so point them at cells that hold computed values (or at the source data range) — never at freshly written formulas, which have no cached value
 4. **Hidden Data**: Set `chart.plot_visible_only = False` when chart data comes from hidden rows
 5. **Aspect Ratio**: When embedding matplotlib PNGs, always calculate proportional height from original dimensions
 6. **Chinese Font**: Must configure Noto Sans SC before any matplotlib plotting

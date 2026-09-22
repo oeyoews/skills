@@ -10,7 +10,6 @@ All commands: `python3 "$XLSX_SKILL_DIR/xlsx.py" <command> [arguments]`
 
 | Command | Purpose | Called By |
 |---------|---------|-----------|
-| `recalc <file>` | Recalculate formulas via LibreOffice, scan for errors | Builder (self-check) |
 | `audit <file>` | Deep formula error scan + zero-value + implicit array detection | Builder (self-check) |
 | `scan <file>` | Detect out-of-range, header-included, small-aggregate, inconsistent patterns | Builder (self-check) |
 | `inspect <file> --pretty` | Get sheet structure, data ranges, headers (JSON) | Blueprint Architect |
@@ -18,21 +17,10 @@ All commands: `python3 "$XLSX_SKILL_DIR/xlsx.py" <command> [arguments]`
 | `chart-verify <file>` | Verify embedded charts have data | Builder (self-check) |
 | `validate <file>` | Structural validation (release gate) | Inspector |
 
-> 🔴 **`recalc` needs LibreOffice — if it is missing you MUST install it, not substitute it.**
-> Forbidden: skipping recalculation, or handing the workbook to the user's Excel/WPS/Numbers *instead
-> of* installing. A large download is **not** a reason to skip. Required: explain the necessity (it is
-> what actually recalculates the formulas so errors surface), say the package is large, then install
-> it — **preferred source is the Tsinghua TUNA mirror**
-> `https://mirrors.tuna.tsinghua.edu.cn/libreoffice/libreoffice/stable/26.8.0/` (pick the
-> platform/arch subdirectory; if that version is gone, take the newest under
-> `.../libreoffice/stable/`), with `brew install --cask libreoffice` /
-> `sudo apt install libreoffice-core` / `winget install TheDocumentFoundation.LibreOffice` as
-> fallbacks. Only after an install attempt has **failed**
-> may you use another program, and you must report which verification steps were skipped.
-> **No install attempt = no substitute program.** After installing, **register `soffice` on `PATH`
-> and re-verify `soffice --version`** (per-OS commands: `env_setup/setup.md` → *"Register the binary
-> on PATH"*) — an install left off the search path reads as "not installed" next time and gets
-> reinstalled needlessly. See `env_setup/setup.md`.
+> **No formula recalculation engine.** Nothing recalculates formulas here, so the self-check chain
+> is a static one: `audit` (error text, zero-value, implicit-array detection) → `scan` (reference
+> anomalies) → `chart-verify`. Numbers themselves are verified by recomputing them in Python and
+> comparing against the source — see *Known Traps* below.
 
 ---
 
@@ -62,7 +50,7 @@ The Builder writes code and produces the workbook. The Builder operates under a 
 │  Save workbook to disk                          │
 │                    ↓                            │
 │  Self-check chain:                              │
-│    recalc → audit → scan                        │
+│    audit → scan                                 │
 │    + chart-verify (if sheet has charts)          │
 │                    ↓                            │
 │  All clear? ──Yes──→ Proceed to next sheet      │
@@ -154,7 +142,7 @@ These are recurring failure modes. The Builder must internalize them.
 | Division by zero | `#DIV/0!` in Excel | Wrap with `IFERROR()` or `IF(denom=0,...)` |
 | Text starting with `=` | `#NAME?` error | Prefix descriptive text with `'` |
 | Implicit array formula | `#N/A` in Excel | Avoid `MATCH(TRUE(),range>0,0)`, use `SUMPRODUCT` |
-| Chart renders blank | Formula cells have no cached values | Run `recalc` before creating charts |
+| Chart renders blank | Chart references formula cells that have no cached value | Point charts at cells holding computed values, or at the source data range |
 | Hidden rows → empty chart | Chart skips hidden data | Set `chart.plot_visible_only = False` |
 | Overlapping charts | Multiple charts stacked on same cells | Calculate anchor: ~15 rows per chart + 2 rows gap |
 | Verify newly-written formulas with `data_only=True` → get `None` | openpyxl doesn't evaluate formulas; `data_only=True` only reads Excel's cached values which don't exist for new formulas | Compute expected values in Python and compare directly. For TOTAL rows needing verification, write computed values (see SKILL.md Design Principle #1 Exception) |
