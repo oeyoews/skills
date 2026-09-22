@@ -206,7 +206,7 @@ See `references/chart-templates.md`.
 ## Dependencies
 
 - **pandoc**: Text extraction
-- **docx**: `bun add docx` or `npm install docx` (creating)
+- **docx**: `npm install -g docx` (creating)
 - **defusedxml**: Secure XML parsing
 - **python-docx**: Simple comment operations
 

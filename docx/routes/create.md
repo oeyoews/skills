@@ -12,7 +12,7 @@
 6. Plan document structure (outline)
 7. Write JS/TS using docx library
    ⚠️ **BEFORE writing any string**: scan ALL Chinese text for curly quotes `""''` and replace with `\u201c \u201d \u2018 \u2019` — bare curly quotes break JS syntax (see docx-js-advanced.md § Quotes Escaping)
-8. Run with `bun run generate.js` (or `node generate.js`)
+8. Run with `node generate.js`
 9. If TOC → run `python3 "$DOCX_SCRIPTS/add_toc_placeholders.py" output.docx --auto`
 10. Run post-generation checklist (see SKILL.md)
 ```
