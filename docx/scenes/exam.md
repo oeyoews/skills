@@ -504,49 +504,44 @@ The answer key file should include:
 
 ## 12. Figures & Illustrations
 
-### Image Insertion
-```js
-new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 100, after: 60 },
-  children: [new ImageRun({ data: imageBuffer, transformation: { width: 300, height: 200 }, type: "png" })] })
-new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 100 },
-  children: [new TextRun({ text: "(Figure 1)", size: 18, color: "666666", font: "SimSun" })] })
+**No image generation in this environment.** A figure a question needs is delivered as a **text
+figure description** placed where the figure would go — never as an embedded image.
+
+```
+[Figure: Triangle ABC with vertices labeled; angle A = 60°, side BC = 8cm; right angle at C]
 ```
 
 ### Key Principles
-- Images set as inline (default) to prevent floating
-- Resolution sufficient for print clarity
-- **B&W print compatible:** images must remain distinguishable when printed in grayscale
-- Figure numbers and captions complete
-- Figures adjacent to corresponding questions
-- Maps must have: scale bar, north arrow, legend
-- Coordinate graphs must have: axis labels, tick marks, units
+- Figure description is a standalone, centered paragraph followed by a numbered caption
+- Description must carry everything the question depends on: labels, angles, side lengths, key points
+- Figure descriptions adjacent to corresponding questions
+- Maps must specify: scale, orientation, legend entries
+- Coordinate graphs must specify: axis labels, tick values, units, marked key points
 
 ### ⚠️ Figure-Text Order (Strictly Enforced)
 
 **For questions with figures, element order must be:**
 ```
 1. Question stem (keepNext: true)
-2. Figure (centered, keepNext: true)
+2. Figure description paragraph (centered, keepNext: true)
 3. Answer lines / answer area
 ```
 
-**Forbidden:** answer lines between stem and figure, or figure after answer lines.
+**Forbidden:** answer lines between stem and figure description, or figure description after answer lines.
 
 ### Figure Content Matching
-- **Figures must be semantically consistent with question stem:** if question says "triangle ABC", figure must label vertices A, B, C
+- **Figure descriptions must be semantically consistent with question stem:** if question says "triangle ABC", description must label vertices A, B, C
 - Geometry annotations must match described angles, side lengths
 - Function graphs must mark key points mentioned in the question
 - Physics experiment diagrams must match described apparatus
-- Figure width: geometry ≤ 50% page width, data/experiment ≤ 70%
+- Keep each description to one or two lines so it does not dominate the question
 
 ### ⚠️ Figure Diversity Rule (Mandatory)
 
-**No duplicate figures in the entire paper.** Even if two questions involve the same type (e.g., both triangles), each must have a distinct figure:
+**No duplicate figure descriptions in the entire paper.** Even if two questions involve the same type (e.g., both triangles), each must be distinct:
 1. Different labels (different vertex letters, angles, side lengths)
 2. Different shapes (acute vs. right vs. obtuse triangle)
-3. Different styling (if applicable)
-
-If using matplotlib, each call must use **different parameters and data** — never copy the same generation code.
+3. Different styling details (if applicable)
 
 ### Subject-Specific Figure Requirements
 
@@ -565,7 +560,7 @@ If using matplotlib, each call must use **different parameters and data** — ne
 ### Formulas
 Math/physics/chemistry formulas use **LaTeX → docx-js Math mapping** (see `references/math-formulas.md`):
 - Basic (fractions, sub/superscript, roots) → docx-js Math components
-- Complex (3+ nesting, matrices) → matplotlib PNG fallback
+- Complex (3+ nesting, matrices) → compose from docx-js Math components — no image fallback in this environment
 - Never hand-type Unicode formula approximations
 
 ### Common Unicode Math Symbols

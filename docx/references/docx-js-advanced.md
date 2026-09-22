@@ -79,20 +79,19 @@ new Paragraph({
 })
 // Table immediately follows on same page
 
-// Caption stays with image
+// Caption stays with its table
 new Paragraph({
   keepNext: true,
   alignment: AlignmentType.CENTER,
-  children: [new TextRun({ text: "Figure 1: Architecture Diagram", italics: true, size: 20 })],
+  children: [new TextRun({ text: "Table 1: Results", italics: true, size: 20 })],
 })
-// ImageRun paragraph follows
+// Table paragraph follows
 ```
 
 Use `keepNext: true` for:
 - Heading → first paragraph of section
 - Table caption → table
-- Image → image caption
-- "Figure X" label → image
+- "Table X" label → table
 
 ## Page Break Rules
 

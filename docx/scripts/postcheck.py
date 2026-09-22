@@ -21,9 +21,8 @@ Checks:
   10. Cover separation — whether cover and body are in different sections
   11. ShadingType — whether SOLID is misused causing black cells
   12. TOC quality — whether TOC field exists, whether headings use standard Heading styles
-  13. Image aspect ratio — whether images are stretched/distorted
-  14. Document cleanliness — whether placeholder text, Markdown syntax, or draft expressions remain
-  15. Report content quality — whether summary exists, whether titles are specific, whether vague conclusions are used
+  13. Document cleanliness — whether placeholder text, Markdown syntax, or draft expressions remain
+  14. Report content quality — whether summary exists, whether titles are specific, whether vague conclusions are used
 """
 
 import json
@@ -306,111 +305,6 @@ def check_image_overflow(root: ET.Element) -> CheckResult:
     return CheckResult(
         "image-overflow", True,
         f"All images within page width ({len(drawings)} images)"
-    )
-
-
-def check_image_aspect_ratio(docx_path: str, root: ET.Element) -> CheckResult:
-    """Check whether images are stretched/distorted (aspect ratio drift).
-
-    Compares the original aspect ratio of embedded images with the display aspect ratio set in wp:extent.
-    Drift >10% is considered distortion (pie charts becoming elliptical, radar charts becoming diamond-shaped, etc).
-    """
-    import zipfile as _zf
-
-    # Build a mapping: rId → image file path inside the zip
-    # We need to parse word/_rels/document.xml.rels
-    rid_to_path = {}
-    try:
-        with _zf.ZipFile(docx_path, 'r') as z:
-            rels_path = 'word/_rels/document.xml.rels'
-            if rels_path in z.namelist():
-                rels_xml = z.read(rels_path)
-                rels_root = ET.fromstring(rels_xml)
-                rels_ns = 'http://schemas.openxmlformats.org/package/2006/relationships'
-                for rel in rels_root.findall(f'{{{rels_ns}}}Relationship'):
-                    rid = rel.get('Id', '')
-                    target = rel.get('Target', '')
-                    rel_type = rel.get('Type', '')
-                    if 'image' in rel_type:
-                        # Target is relative to word/ directory
-                        if not target.startswith('/'):
-                            img_path = 'word/' + target
-                        else:
-                            img_path = target.lstrip('/')
-                        rid_to_path[rid] = img_path
-
-            # Now check each drawing
-            drawings = root.findall(".//wp:inline", NS) + root.findall(".//wp:anchor", NS)
-            distorted = []
-
-            for dwg in drawings:
-                extent = dwg.find("wp:extent", NS)
-                if extent is None:
-                    continue
-                display_cx = int(extent.get("cx", "0"))
-                display_cy = int(extent.get("cy", "0"))
-                if display_cx == 0 or display_cy == 0:
-                    continue
-
-                # Find the blip rId
-                blip = dwg.find(".//a:blip", NS)
-                if blip is None:
-                    continue
-                r_embed = blip.get(f"{{{NS['r']}}}embed", "")
-                if not r_embed or r_embed not in rid_to_path:
-                    continue
-
-                img_zip_path = rid_to_path[r_embed]
-                if img_zip_path not in z.namelist():
-                    continue
-
-                # Read actual image dimensions
-                try:
-                    img_data = z.read(img_zip_path)
-                    import io as _io
-
-                    from PIL import Image as _PILImage
-                    pil_img = _PILImage.open(_io.BytesIO(img_data))
-                    orig_w, orig_h = pil_img.size
-                    if orig_w == 0 or orig_h == 0:
-                        continue
-                except Exception:
-                    continue
-
-                # Compare aspect ratios
-                orig_ratio = orig_w / orig_h
-                display_ratio = display_cx / display_cy
-                drift = abs(orig_ratio - display_ratio) / orig_ratio
-
-                if drift > 0.10:  # >10% distortion
-                    pct = drift * 100
-                    distorted.append(
-                        f"{img_zip_path.split('/')[-1]}: "
-                        f"original {orig_w}×{orig_h} (ratio={orig_ratio:.2f}), "
-                        f"display ratio={display_ratio:.2f}, distortion {pct:.0f}%"
-                    )
-
-    except Exception:
-        return CheckResult(
-            "image-aspect-ratio", True,
-            "Cannot check image aspect ratio (zip read error)",
-            "info"
-        )
-
-    if distorted:
-        detail = "; ".join(distorted[:3])
-        if len(distorted) > 3:
-            detail += f" ...and {len(distorted)} more"
-        return CheckResult(
-            "image-aspect-ratio", False,
-            f"{len(distorted)} images have aspect ratio distortion: {detail}",
-            "warning"
-        )
-
-    img_count = len(drawings)
-    return CheckResult(
-        "image-aspect-ratio", True,
-        f"All images have correct aspect ratio ({img_count} images)"
     )
 
 
@@ -753,12 +647,6 @@ def run_all_checks(docx_path: str) -> list[CheckResult]:
         results.append(check_toc(root, docx_path))
     except Exception as e:
         results.append(CheckResult("toc", False, f"Check error: {e}", "error"))
-
-    # Image aspect ratio check needs both root and docx_path
-    try:
-        results.append(check_image_aspect_ratio(docx_path, root))
-    except Exception as e:
-        results.append(CheckResult("image-aspect-ratio", False, f"Check error: {e}", "error"))
 
     return results
 

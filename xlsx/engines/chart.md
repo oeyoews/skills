@@ -4,13 +4,16 @@
 
 ---
 
-## Decision: Native Excel Chart vs Matplotlib Image
+## Decision: Native Excel Charts Only
+
+This environment has **no image generation capability** — every chart is a native Excel chart
+(`openpyxl.chart`). Never embed a chart as an image.
 
 | Situation | Use |
 |-----------|-----|
 | User will interact with chart in Excel (resize, filter, update) | **Native Excel chart** (openpyxl.chart) |
-| Publication-quality or complex visualization (heatmap, multi-axis) | **Matplotlib image** → embed in Excel |
-| Dashboard with multiple small charts | **Matplotlib** (more layout control) |
+| Publication-quality or complex visualization (heatmap, multi-axis) | **Native Excel chart** — approximate with the closest native type (bar/line/scatter) |
+| Dashboard with multiple small charts | **Native Excel charts**, one per anchor cell |
 | Simple bar/line/pie from sheet data | **Native Excel chart** |
 
 ---
@@ -61,12 +64,11 @@ When user doesn't specify chart type, auto-select:
 
 ## Critical Rules
 
-1. **Anti-Overlap**: Always `fig.tight_layout(pad=2.0)` before `savefig()`; use `plt.legend(loc='best')`
-2. **`titles_from_data=True`**: First row of data reference MUST contain text headers
-3. **Cached Values**: Excel-native charts read cached cell values, so point them at cells that hold computed values (or at the source data range) — never at freshly written formulas, which have no cached value
-4. **Hidden Data**: Set `chart.plot_visible_only = False` when chart data comes from hidden rows
-5. **Aspect Ratio**: When embedding matplotlib PNGs, always calculate proportional height from original dimensions
-6. **Chinese Font**: Must configure Noto Sans SC before any matplotlib plotting
+1. **`titles_from_data=True`**: First row of data reference MUST contain text headers
+2. **Cached Values**: Excel-native charts read cached cell values, so point them at cells that hold computed values (or at the source data range) — never at freshly written formulas, which have no cached value
+3. **Hidden Data**: Set `chart.plot_visible_only = False` when chart data comes from hidden rows
+4. **Chinese Font**: All chart titles and axis titles MUST go through `make_chart_title()` from `templates/base.py` — it bakes the CJK font into the chart's rich text so WPS and Office render identically
+5. **Native charts only**: No image-based charts — this environment has no image generation capability
 
 ### Color Palette
 
@@ -84,4 +86,4 @@ Chart colors are derived from **`engines/design.md §9`**. Do NOT define indepen
 
 ## Code Templates
 
-For specific chart implementation code (bar, line, pie, scatter, combo, matplotlib embed), load `engines/chart-templates.md`.
+For specific chart implementation code (bar, line, pie, scatter, combo), load `engines/chart-templates.md`.

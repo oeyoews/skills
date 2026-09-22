@@ -96,56 +96,10 @@ ws.add_chart(bar, "E2")
 
 ---
 
-## Matplotlib Charts (embedded as images)
-
-### Chinese Font Setup
+## Smart Chart Recommend Function
 ```python
-import matplotlib
-import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
+import pandas as pd
 
-fm.fontManager.addfont('/usr/share/fonts/truetype/chinese/NotoSansSC-Regular.ttf')
-fm.fontManager.addfont('/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf')
-# Noto Sans SC for Chinese, DejaVu Sans catches symbols Noto Sans SC lacks (²³♠ etc.)
-plt.rcParams['font.sans-serif'] = ['Noto Sans SC', 'DejaVu Sans']
-plt.rcParams['axes.unicode_minus'] = False
-```
-
-### Standard Template
-```python
-fig, ax = plt.subplots(figsize=(10, 6))
-ax.bar(categories, values, color='#4A90D9')
-ax.set_title('Chart Title', fontsize=14, fontweight='bold', pad=15)
-ax.set_xlabel('X Label', fontsize=11)
-ax.set_ylabel('Y Label', fontsize=11)
-ax.spines['top'].set_visible(False)
-ax.spines['right'].set_visible(False)
-ax.tick_params(axis='x', rotation=45)
-fig.tight_layout(pad=2.0)
-plt.legend(loc='best', fontsize='small')
-fig.savefig('chart.png', dpi=150, bbox_inches='tight', facecolor='white')
-plt.close()
-```
-
-### Embed in Excel (preserving aspect ratio)
-```python
-from openpyxl.drawing.image import Image as XlImage
-from PIL import Image as PILImage
-
-pil_img = PILImage.open('chart.png')
-orig_w, orig_h = pil_img.size
-target_w = 600
-scale = target_w / orig_w
-
-xl_img = XlImage('chart.png')
-xl_img.width = target_w
-xl_img.height = int(orig_h * scale)
-
-ws.add_image(xl_img, 'B20')
-```
-
-### Smart Chart Recommend Function
-```python
 def recommend_chart(df, x_col, y_cols):
     if pd.api.types.is_datetime64_any_dtype(df[x_col]):
         return "line"

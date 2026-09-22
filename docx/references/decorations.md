@@ -2,10 +2,8 @@
 
 ### Design Philosophy
 
-Uses only docx-js native capabilities for visual decoration — no external tools (like Playwright screenshots). Suitable for covers, chapter separators, page background enhancement.
-
-**When to fall back to Playwright?**
-Only when gradients, complex illustrations, or brand visuals are needed that pure OOXML cannot express. Default: prefer native solutions below.
+Uses only docx-js native capabilities for visual decoration — no external tools, no screenshots, no
+images. Suitable for covers, chapter separators, page background enhancement.
 
 ### Decoration Element Library
 

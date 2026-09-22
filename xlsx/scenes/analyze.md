@@ -13,7 +13,7 @@ This scene bridges **pandas analysis** with **openpyxl output**. The deliverable
 3. ANALYZE    → Compute metrics, aggregations, statistical tests
 4. DESIGN     → Plan Excel output (sheets, charts, KPIs)
 5. BUILD      → Write analysis results to .xlsx with formatting
-6. CHART      → Add charts (Excel-native or embedded matplotlib)
+6. CHART      → Add native Excel charts
 7. QA         → audit → scan → chart-verify
 8. PIVOT      → If needed, run xlsx.py pivot as final step
 9. VALIDATE   → validate → deliver

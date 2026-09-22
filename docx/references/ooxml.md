@@ -138,48 +138,6 @@ doc.add_comment(start=new_nodes[0], end=new_nodes[1], text="Changed per requirem
 doc.reply_to_comment(parent_comment_id=0, text="I agree")
 ```
 
-### Images
-
-```python
-from PIL import Image
-import shutil, os
-
-doc = Document('unpacked')
-media_dir = os.path.join(doc.unpacked_path, 'word/media')
-os.makedirs(media_dir, exist_ok=True)
-shutil.copy('image.png', os.path.join(media_dir, 'image1.png'))
-
-img = Image.open(os.path.join(media_dir, 'image1.png'))
-width_emus = int(6.5 * 914400)  # 6.5" usable width
-height_emus = int(width_emus * img.size[1] / img.size[0])
-
-# Add relationship
-rels_editor = doc['word/_rels/document.xml.rels']
-next_rid = rels_editor.get_next_rid()
-rels_editor.append_to(rels_editor.dom.documentElement,
-    f'<Relationship Id="{next_rid}" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image" Target="media/image1.png"/>')
-doc['[Content_Types].xml'].append_to(doc['[Content_Types].xml'].dom.documentElement,
-    '<Default Extension="png" ContentType="image/png"/>')
-
-# Insert
-node = doc["word/document.xml"].get_node(tag="w:p", line_number=100)
-doc["word/document.xml"].insert_after(node, f'''<w:p><w:r><w:drawing>
-  <wp:inline distT="0" distB="0" distL="0" distR="0">
-    <wp:extent cx="{width_emus}" cy="{height_emus}"/>
-    <wp:docPr id="1" name="Picture 1"/>
-    <a:graphic xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main">
-      <a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/picture">
-        <pic:pic xmlns:pic="http://schemas.openxmlformats.org/drawingml/2006/picture">
-          <pic:nvPicPr><pic:cNvPr id="1" name="image1.png"/><pic:cNvPicPr/></pic:nvPicPr>
-          <pic:blipFill><a:blip r:embed="{next_rid}"/><a:stretch><a:fillRect/></a:stretch></pic:blipFill>
-          <pic:spPr><a:xfrm><a:ext cx="{width_emus}" cy="{height_emus}"/></a:xfrm><a:prstGeom prst="rect"><a:avLst/></a:prstGeom></pic:spPr>
-        </pic:pic>
-      </a:graphicData>
-    </a:graphic>
-  </wp:inline>
-</w:drawing></w:r></w:p>''')
-```
-
 ### Saving
 
 ```python

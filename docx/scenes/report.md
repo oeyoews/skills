@@ -234,7 +234,8 @@ When charts are needed but cannot be directly generated:
 - Placeholder must be a standalone paragraph — never inline
 - Never use vague placeholders like "insert chart here"
 
-**Prefer direct generation:** Charts that can be produced via matplotlib should be generated as embedded PNGs. Placeholders are a fallback only.
+**Placeholders are the only mechanism in this environment** — no image generation is available, so a
+chart that cannot be expressed as a table is always delivered as a placeholder.
 
 ---
 

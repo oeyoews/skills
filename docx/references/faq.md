@@ -82,34 +82,6 @@ shading: { type: ShadingType.CLEAR, fill: "F1F5F9" }
 
 ---
 
-## Bug: Chinese characters garbled in matplotlib charts
-
-**Symptom**: Chinese text shows as empty boxes □□□ in generated PNG charts.
-
-**Fix**: Configure SimHei font before plotting:
-```python
-from matplotlib.font_manager import FontProperties
-zh_font = FontProperties(fname="/path/to/SimHei.ttf")
-plt.title("中文标题", fontproperties=zh_font)
-plt.rcParams["axes.unicode_minus"] = False
-```
-
----
-
-## Bug: Image stretched/squashed in document
-
-**Symptom**: Embedded image appears distorted.
-
-**Fix**: Calculate display height from width using original aspect ratio:
-```js
-const aspectRatio = originalHeight / originalWidth;
-const displayWidth = 500;
-const displayHeight = Math.round(displayWidth * aspectRatio);
-new ImageRun({ data: buf, transformation: { width: displayWidth, height: displayHeight }, type: "png" });
-```
-
----
-
 ## Bug: TOC shows empty in generated document
 
 → See `references/toc.md` — "5 Common TOC Bugs" section for diagnosis and fixes.

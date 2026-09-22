@@ -228,49 +228,19 @@ const kineticEnergy = new OoxmlMath({
 });
 ```
 
-## Complexity Fallback Strategy
+## Complexity Strategy
 
-When formulas are too complex (nesting >3 levels) for docx-js Math, **fall back to matplotlib PNG rendering:**
+All formulas are built with docx-js Math components — **there is no image fallback in this
+environment** (no matplotlib, no PNG embedding).
 
-```python
-import matplotlib
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
+Use the conversion table above for anything with a direct mapping. For structures with no direct
+mapping (matrices, determinants, piecewise functions, multi-level nested fractions), compose them
+from the available components — `MathFraction`, `MathRadical`, `MathSubSuperScript`, `MathSum`,
+`MathRun` — and fall back to a prose description only where composition would be unreadable.
 
-def latex_to_png(latex_str: str, output_path: str, fontsize: int = 14, dpi: int = 200):
-    """Render LaTeX formula as PNG image"""
-    fig, ax = plt.subplots(figsize=(0.1, 0.1))
-    ax.axis("off")
-    text = ax.text(0, 0.5, f"${latex_str}$", fontsize=fontsize,
-                   transform=ax.transAxes, verticalalignment="center")
-
-    fig.canvas.draw()
-    bbox = text.get_window_extent(fig.canvas.get_renderer())
-    fig.set_size_inches(bbox.width / dpi + 0.2, bbox.height / dpi + 0.2)
-
-    plt.savefig(output_path, dpi=dpi, bbox_inches="tight",
-                pad_inches=0.05, transparent=True)
-    plt.close()
-    return output_path
-```
-
-Then embed the PNG in the document:
-
-```js
-const formulaImg = fs.readFileSync("formula.png");
-new Paragraph({
-  alignment: AlignmentType.CENTER,
-  children: [new ImageRun({
-    data: formulaImg,
-    transformation: { width: 300, height: 40 }, // adjust based on actual size
-    type: "png",
-  })],
-})
-```
-
-**Fallback rules:**
-- Nested fractions >2 levels → fallback
-- Matrices/determinants → fallback
-- Complex integrals (multiple integrals + limits + integrand) → fallback
-- Piecewise functions → fallback
-- All other cases → prefer docx-js Math
+**Rules:**
+- Nested fractions >2 levels → compose nested `MathFraction`
+- Matrices/determinants → compose from `MathRun` rows separated by line breaks
+- Complex integrals (multiple integrals + limits + integrand) → compose nested `MathSubScript`/`MathSuperScript` under `MathSum`
+- Piecewise functions → compose with `MathFraction`-free `MathRun` cases, or describe in prose
+- All other cases → direct mapping from the conversion table

@@ -568,10 +568,11 @@ Where X = chapter number, Y = sequential number within chapter.
 - Caption **below** figure, Wu Hao SimSun, centered
 - Format: "Figure X-Y Description"
 - Must be referenced in text: "as shown in Figure 3-1"
+- **No image generation in this environment** — a figure is delivered as a text description paragraph occupying the position the figure would take
 
 ```js
-new Paragraph({ alignment: AlignmentType.CENTER,
-  children: [new ImageRun({ data: imgBuf, transformation: { width: w, height: h }, type: "png" })] }),
+new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 100, after: 60 },
+  children: [new TextRun({ text: "[Figure: three-tier client-server architecture — web tier, application tier, data tier; arrows show request flow downward and response flow upward]", size: 21, color: "666666", font: { eastAsia: "SimSun", ascii: "Times New Roman" } })] }),
 new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 60, after: 200 },
   children: [new TextRun({ text: "图3-1 System Architecture", size: 21,
     font: { eastAsia: "SimSun", ascii: "Times New Roman" } })] }),

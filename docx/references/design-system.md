@@ -204,16 +204,6 @@ For **English documents** (document language = English):
 
 For **English text within Chinese documents**, use the Chinese document's ascii font (Calibri by default).
 
-### Font Paths (for matplotlib / image generation)
-
-```python
-# macOS
-SIMHEI = "/System/Library/Fonts/Supplemental/SimHei.ttf"
-# Linux
-SIMHEI = "/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc"
-# Fallback: download SimHei.ttf to working directory
-```
-
 ### docx-js Font Configuration
 
 ```js
@@ -1670,72 +1660,6 @@ function blendColors(hex1, hex2, ratio) {
 ## Geometric Decoration System
 
 → See `references/decorations.md` for the full geometric decoration element library (decoration elements, usage scenarios, code examples).
-
-## Chinese Plot PNG Method (matplotlib)
-
-```python
-import matplotlib
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
-from matplotlib.font_manager import FontProperties
-
-font_paths = [
-    "/System/Library/Fonts/Supplemental/SimHei.ttf",
-    "/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc",
-    "./SimHei.ttf",
-]
-zh_font = None
-for fp in font_paths:
-    try:
-        zh_font = FontProperties(fname=fp)
-        break
-    except:
-        continue
-
-plt.rcParams["axes.unicode_minus"] = False
-```
-
-## Chart Quality Rules
-
-### Chart Color Palette
-
-Default: **low-saturation (Morandi style)** palette to avoid flashy high-saturation. High-saturation palette only for explicitly energetic scenarios (events/education/creative).
-
-```js
-const chartColors = {
-  // Default: low saturation, professional (S: 25-40%, L: 55-68%)
-  default: ["6B9DAD", "C49B72", "7BA68A", "B87472", "9687A8", "C8B87C", "7AADA0", "7A9BB8"],
-  // Vivid: only for energetic/creative scenes
-  vivid:   ["2F97B8", "E67E22", "27AE60", "E74C3C", "9B59B6", "F1C40F", "1ABC9C", "3498DB"],
-};
-
-// Scene selection:
-// - report/whitepaper/consulting/academic/contract → default
-// - activity/education/creative copy → vivid (optional)
-```
-
-**Color usage rules:**
-- Max **5 colors** per chart; excess categories use depth variants of same hue
-- Emphasis data uses document accent color; non-emphasis uses grey `#B0B0B0`
-- Adjacent segments in pie/bar charts must have hue gap ≥ 60°
-
-1. **Anti-overlap**: If >6 x-axis labels, rotate 45° (`plt.xticks(rotation=45, ha='right')`)
-2. **Anti-stretch**: Always set figure size explicitly (`fig, ax = plt.subplots(figsize=(10, 6))`)
-3. **Aspect ratio (CRITICAL)**: When embedding in docx, MUST read actual image dimensions and calculate height proportionally. NEVER hardcode both width and height — pie charts become ellipses, radar charts become diamonds.
-   ```js
-   const sizeOf = require("image-size");
-   const dims = sizeOf(chartBuffer);
-   const displayWidth = 500;
-   const displayHeight = Math.round(displayWidth * (dims.height / dims.width));
-   // transformation: { width: displayWidth, height: displayHeight }
-   ```
-4. **DPI**: Save at 200+ DPI (`plt.savefig("chart.png", dpi=200, bbox_inches="tight")`)
-5. **Colors**: Use palette accent color for primary data series
-6. **Legend**: Place outside plot area if >4 series
-7. **Square charts**: Pie and radar charts MUST use `figsize=(8, 8)` (equal width/height) to preserve circular/radial shape
-7. **Grid**: Light gray grid (`ax.grid(True, alpha=0.3)`)
-
----
 
 ## Typography Rules
 

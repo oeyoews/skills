@@ -81,9 +81,6 @@ Covers use **7 validated layout recipes (R1–R7)**, auto-selected by `selectCov
 ### Load Math Formulas?
 When: exam papers, academic papers, physics/math/chemistry → load `references/math-formulas.md`
 
-### Load Chart Templates?
-When: data visualization, reports with charts → load `references/chart-templates.md`
-
 ## Outline Rules
 
 **User provides outline** → Follow EXACTLY. No additions, deletions, or reordering.
@@ -126,7 +123,7 @@ Generate complete, substantive content — not skeletons.
 
 - **Length**: "detailed report" = 3000+ words. "brief summary" = 500–1000.
 - **Data**: Use user's data, or generate realistic placeholders
-- **Charts**: Use `references/chart-templates.md` matplotlib templates → PNG → embed
+- **Charts**: No image generation available — present data as tables; if a chart is unavoidable use the placeholder convention in `scenes/report.md`
 - **Math**: Use `references/math-formulas.md` LaTeX → docx-js Math mapping
 - **Tables**: For structured data, not layout
 - **Numbering**: Figures, tables numbered sequentially with cross-references

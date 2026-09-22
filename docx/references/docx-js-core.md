@@ -7,7 +7,7 @@ Complete API for creating .docx documents with the `docx` npm package. For advan
 ```js
 const {
   Document, Packer, Paragraph, TextRun, Table, TableRow, TableCell,
-  ImageRun, PageBreak, Header, Footer, PageNumber, NumberFormat,
+  PageBreak, Header, Footer, PageNumber, NumberFormat,
   AlignmentType, HeadingLevel, WidthType, BorderStyle, ShadingType,
   PageOrientation, TabStopType, TabStopPosition, ExternalHyperlink,
   InternalHyperlink, Bookmark, LevelFormat, TableOfContents,
@@ -131,29 +131,6 @@ new Table({
 width: { size: 3000, type: WidthType.DXA }
 // Percentage
 width: { size: 50, type: WidthType.PERCENTAGE }
-```
-
-## ImageRun
-
-**⚠️ CRITICAL**: Always include `type` parameter. Always preserve aspect ratio.
-
-```js
-const imageBuffer = fs.readFileSync("chart.png");
-// Calculate dimensions preserving aspect ratio
-const displayWidth = 500;
-const aspectRatio = originalHeight / originalWidth;
-const displayHeight = Math.round(displayWidth * aspectRatio);
-
-new Paragraph({
-  alignment: AlignmentType.CENTER,
-  children: [
-    new ImageRun({
-      data: imageBuffer,
-      transformation: { width: displayWidth, height: displayHeight },
-      type: "png", // REQUIRED: "png", "jpg", "gif", "bmp"
-    }),
-  ],
-});
 ```
 
 ## PageBreak

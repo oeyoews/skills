@@ -97,7 +97,6 @@ if DOCX_SCRIPTS not in sys.path:
 - **Line spacing**: 1.3x (`line: 312`) — MANDATORY. Exceptions: resume 1.15x, official doc 28pt fixed, copywriting `400`, contract 1.5x
 - **CJK body**: Justified + 2-char indent (`firstLine: 480` SimSun / `420` YaHei)
 - **Tables**: `margins` set, `ShadingType.CLEAR`, `tableHeader: true`, `cantSplit: true`, title `keepNext: true`
-- **Images**: `type` parameter required, preserve aspect ratio via `image-size`, PageBreak inside Paragraph
 - **Full-page Table row**: `rule: "exact"` with 1200 twips safety margin
 
 ## Unit Quick Reference
@@ -119,12 +118,10 @@ For Chinese font size table and common margins, see `references/common-rules.md`
 - [ ] Line spacing is 1.3x (`line: 312`) or scene-specific override
 - [ ] CJK body has 2-char indent (`firstLine: 480` or `420`)
 - [ ] Tables have margins set
-- [ ] Images preserve aspect ratio via `image-size` — NEVER hardcode both width and height
 - [ ] PageBreak inside Paragraph
 - [ ] ShadingType uses CLEAR
 - [ ] Each numbered list uses unique `reference`
 - [ ] **⚠️ CRITICAL — Quotation marks in JS strings properly escaped.** Chinese curly quotes (`""` `''`) MUST use Unicode escapes (`\u201c` `\u201d` `\u2018` `\u2019`); straight quotes (`"` `'`) use `\"` `\'` or alternate delimiters. **This is the #1 most common code generation bug.** Chinese text frequently contains `""` for emphasis or proper nouns (e.g., "双11", "前低后高", "618") — every occurrence MUST be escaped. Failure to escape produces JS syntax errors that silently break document generation.
-- [ ] ImageRun includes `type` parameter
 - [ ] Header/footer present (unless scene says otherwise)
 
 #### Heading Styles
@@ -180,7 +177,7 @@ For Chinese font size table and common margins, see `references/common-rules.md`
 python3 "$DOCX_SCRIPTS/postcheck.py" output.docx
 ```
 
-Automatically checks 14 business rules: blank pages, **cover overflow (font size/spacing/trailing content)**, line spacing consistency, table margins, table cross-page control (cantSplit/tblHeader), image overflow, image aspect ratio distortion, font fallback, CJK indent, heading hierarchy, ShadingType misuse, TOC quality, document cleanliness (placeholder text/Markdown/HTML residuals), report content quality (abstract presence/heading specificity/vague conclusion detection).
+Automatically checks 13 business rules: blank pages, **cover overflow (font size/spacing/trailing content)**, line spacing consistency, table margins, table cross-page control (cantSplit/tblHeader), image overflow, font fallback, CJK indent, heading hierarchy, ShadingType misuse, TOC quality, document cleanliness (placeholder text/Markdown/HTML residuals), report content quality (abstract presence/heading specificity/vague conclusion detection).
 
 ⚠️ **After generating any document, MUST run postcheck.py and fix all ❌ errors.**
 
@@ -189,19 +186,18 @@ Automatically checks 14 business rules: blank pages, **cover overflow (font size
 Formula input uses **LaTeX syntax**, internally converted to docx-js Math objects.
 
 - **Basic formulas** (fractions, sub/superscript, roots, summation) → docx-js Math components
-- **Complex formulas** (3+ nesting, matrices, piecewise functions) → matplotlib PNG fallback
+- **Complex formulas** (3+ nesting, matrices, piecewise functions) → compose from docx-js Math components — there is no image fallback in this environment
 
 See `references/math-formulas.md`.
 
 ## Charts
 
-Default: **matplotlib template library** generates PNG for embedding.
+**No image generation in this environment** — no matplotlib, no PNG embedding, no chart images of any
+kind. Present data as **tables** (three-line table for academic scenes).
 
-6 ready-to-use templates: bar, line, pie, box, radar, heatmap.
-Colors auto-derived from document palette.accent for style consistency.
-Default palette: Morandi low-saturation (see design-system.md).
-
-See `references/chart-templates.md`.
+When a chart is genuinely required and cannot be expressed as a table, use the text placeholder
+convention in `scenes/report.md` § Chart Placeholder Convention. Never reference or embed an image
+file.
 
 ## Dependencies
 
