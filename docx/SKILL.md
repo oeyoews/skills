@@ -8,7 +8,7 @@ description: "用在任何需要创建、编辑、分析或转换 DOCX/Word 文�
 ## Quick Setup
 
 ```bash
-bash "$SKILL_DIR/setup.sh"    # Interactive environment check + install
+bash "$SKILL_DIR/setup.sh"    # Environment check (dependencies are pre-installed)
 ```
 
 > **Local-font-first.** Inspect fonts available in the user's local environment and prefer a suitable
@@ -202,9 +202,13 @@ file.
 ## Dependencies
 
 - **pandoc**: Text extraction
-- **docx**: `npm install -g docx` (creating)
+- **docx**: pre-installed in the npm global prefix (creating)
 - **defusedxml**: Secure XML parsing
 - **python-docx**: Simple comment operations
+
+> **`docx` is pre-installed and resolved by the host through `NODE_PATH` — never run `npm install`
+> in the working directory.** If `require('docx')` fails, report the missing dependency and stop;
+> do not attempt a local or global install to work around it.
 
 > **No rendering engine in this environment.** DOCX → PDF, legacy `.doc` → `.docx`, and rendered
 > visual checks are all unavailable. Deliver the `.docx` itself and let the user open/export it in

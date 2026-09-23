@@ -167,9 +167,9 @@ pptxgenjs generates `.pptx` files in **JavaScript / Node.js**. Coordinates are i
 
 ## Setup & basic structure
 
-```bash
-npm install -g pptxgenjs
-```
+`pptxgenjs` is pre-installed in the npm global prefix and resolved by the host through
+`NODE_PATH` — there is no install step. If `require("pptxgenjs")` fails, report the missing
+dependency; never run `npm install` in the working directory.
 
 ```javascript
 const pptxgen = require("pptxgenjs");
@@ -651,7 +651,7 @@ Skip `word_wrap = False`: it makes text overflow the box invisibly in PowerPoint
 Required dependencies (should already be installed):
 
 - **markitdown**: `pip install "markitdown[pptx]"` (text extraction)
-- **pptxgenjs**: `npm install -g pptxgenjs` (creating presentations)
+- **pptxgenjs**: pre-installed in the npm global prefix (creating presentations)
 - **defusedxml**: `pip install defusedxml` (secure XML parsing)
 
 ## Final response citations

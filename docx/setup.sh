@@ -2,10 +2,12 @@
 # ---
 # name: docx-setup
 # version: "1.0"
-# description: Environment setup for the DOCX skill. Checks and installs all required dependencies.
+# description: Environment setup for the DOCX skill. Checks and verifies required dependencies.
+#              npm packages are pre-installed and only checked, never installed.
 # ---
 #
-# Installs only dependencies required by the DOCX skill.
+# Checks the dependencies required by the DOCX skill.
+# npm packages are pre-installed and only verified, never installed.
 set -euo pipefail
 
 RED='\033[0;31m'; GREEN='\033[0;32m'; YELLOW='\033[1;33m'; BLUE='\033[0;34m'; NC='\033[0m'
@@ -67,27 +69,16 @@ else
     esac
 fi
 
-# ── 3. npm package: docx ──
+# ── 3. npm package: docx (pre-installed — verify only, never install) ──
 echo ""
 echo "--- npm Packages ---"
-if node -e "require('docx')" 2>/dev/null || npm list -g docx &>/dev/null; then
-    DOCX_VER=$(node -e "try{console.log(require('docx/package.json').version)}catch(e){console.log('installed')}" 2>/dev/null)
+DOCX_DIR="$(npm root -g 2>/dev/null || true)"
+if [ -n "$DOCX_DIR" ] && [ -f "$DOCX_DIR/docx/package.json" ]; then
+    DOCX_VER=$(node -e "console.log(require('$DOCX_DIR/docx/package.json').version)" 2>/dev/null || echo "unknown")
     ok "docx ($DOCX_VER)"
 else
-    fail "docx not installed"
-    info "Install: npm install -g docx"
-    echo ""
-    if [ -t 0 ]; then
-        read -p "  Install now? [Y/n] " -n 1 -r REPLY
-        echo ""
-        REPLY=${REPLY:-Y}
-    else
-        warn "Non-interactive mode — skipping auto-install."
-        REPLY=N
-    fi
-    if [[ ! $REPLY =~ ^[Nn]$ ]]; then
-        npm install -g docx 2>/dev/null && ok "Installed: docx" || fail "npm install failed"
-    fi
+    fail "docx not found in $DOCX_DIR (expected pre-installed)"
+    info "Report the missing dependency — never run npm install in the working directory."
 fi
 
 # ── 4. Python 3 (post-processing scripts) ──

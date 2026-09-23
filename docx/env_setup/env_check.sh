@@ -23,6 +23,13 @@ check "node"        command -v node
 check "python3"     command -v python3
 check "defusedxml"  python3 -c "import defusedxml"
 
+# npm global package: docx — pre-installed, verify only (never install)
+DOCX_GLOBAL_DIR="$(npm root -g 2>/dev/null || true)"
+if [ -z "$DOCX_GLOBAL_DIR" ] || [ ! -f "$DOCX_GLOBAL_DIR/docx/package.json" ]; then
+    $QUIET || echo "MISSING: docx (expected pre-installed in $DOCX_GLOBAL_DIR)"
+    FAIL=1
+fi
+
 # Font check
 if command -v fc-list &>/dev/null; then
     fc-list :lang=zh 2>/dev/null | grep -qi "noto\|simhei\|wenquanyi" || { $QUIET || echo "MISSING: CJK fonts"; FAIL=1; }

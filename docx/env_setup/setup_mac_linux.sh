@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 # ---
 # name: docx-env-setup (macOS / Linux)
-# description: Environment detection, dependency check & install for DOCX skill on macOS and Linux.
+# description: Environment detection and dependency check for DOCX skill on macOS and Linux.
+#              npm packages are pre-installed and only verified, never installed.
 # ---
 set -euo pipefail
 
@@ -43,7 +44,6 @@ echo ""
 # ── China mirror detection & config ──
 USE_CN_MIRROR=false
 PIP_MIRROR_ARGS=""
-NPM_MIRROR_ARGS=""
 
 if [ "${USE_CN_MIRROR_FORCE:-}" = "true" ]; then
     USE_CN_MIRROR=true
@@ -56,8 +56,7 @@ fi
 
 if [ "$USE_CN_MIRROR" = true ]; then
     PIP_MIRROR_ARGS="-i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn"
-    NPM_MIRROR_ARGS="--registry https://registry.npmmirror.com"
-    info "China mirrors enabled (pip: tuna, npm: npmmirror)"
+    info "China mirror enabled (pip: tuna)"
     echo ""
 fi
 
@@ -101,21 +100,16 @@ else
 fi
 echo ""
 
-# ── Step 2c: npm package: docx ──
+# ── Step 2c: npm package: docx (pre-installed — verify only, never install) ──
 echo "--- [3/7] npm package: docx ---"
-if node -e "require('docx')" 2>/dev/null || npm list -g docx &>/dev/null; then
-    DOCX_VER=$(node -e "try{console.log(require('docx/package.json').version)}catch(e){console.log('installed')}" 2>/dev/null)
+DOCX_DIR="$(npm root -g 2>/dev/null || true)"
+if [ -n "$DOCX_DIR" ] && [ -f "$DOCX_DIR/docx/package.json" ]; then
+    DOCX_VER=$(node -e "console.log(require('$DOCX_DIR/docx/package.json').version)" 2>/dev/null || echo "unknown")
     ok "docx ($DOCX_VER)"
 else
-    fail "docx not installed"
-    info "Installing docx..."
-    if [ "$USE_CN_MIRROR" = true ]; then
-        npm install -g docx $NPM_MIRROR_ARGS 2>/dev/null && ok "Installed: docx" \
-            || { fail "npm install failed. Try: npm install -g docx $NPM_MIRROR_ARGS"; ERRORS=$((ERRORS + 1)); }
-    else
-        npm install -g docx 2>/dev/null && ok "Installed: docx" \
-            || { fail "npm install failed. Try: npm install -g docx"; ERRORS=$((ERRORS + 1)); }
-    fi
+    fail "docx not found in $DOCX_DIR (expected pre-installed)"
+    info "Report the missing dependency — never run npm install in the working directory."
+    ERRORS=$((ERRORS + 1))
 fi
 echo ""
 

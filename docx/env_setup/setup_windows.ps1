@@ -3,8 +3,9 @@
 .SYNOPSIS
     DOCX Skill — Environment Setup for Windows (Win10/Win11)
 .DESCRIPTION
-    Detects platform, checks and installs all dependencies for the DOCX skill.
-    Supports China mirror fallback for pip/npm.
+    Detects the platform and verifies that all dependencies for the DOCX skill are present.
+    The npm package docx is pre-installed and only verified, never installed.
+    Fonts are downloaded from the CDN; pip supports a China mirror fallback.
 #>
 
 param(
@@ -38,7 +39,6 @@ Write-Host ""
 
 # ── China mirror detection ──
 $PipMirrorArgs = @()
-$NpmMirrorArgs = @()
 
 if ($UseChinaMirror) {
     $global:UseCN = $true
@@ -47,15 +47,14 @@ if ($UseChinaMirror) {
         $null = Invoke-WebRequest -Uri "https://pypi.org" -TimeoutSec 3 -UseBasicParsing -ErrorAction Stop
         $global:UseCN = $false
     } catch {
-        Write-Warn "pypi.org unreachable - enabling China mirrors"
+        Write-Warn "pypi.org unreachable - enabling China mirror"
         $global:UseCN = $true
     }
 }
 
 if ($global:UseCN) {
     $PipMirrorArgs = @("-i", "https://pypi.tuna.tsinghua.edu.cn/simple", "--trusted-host", "pypi.tuna.tsinghua.edu.cn")
-    $NpmMirrorArgs = @("--registry", "https://registry.npmmirror.com")
-    Write-Info "China mirrors enabled (pip: tuna, npm: npmmirror)"
+    Write-Info "China mirror enabled (pip: tuna)"
     Write-Host ""
 }
 
@@ -90,25 +89,18 @@ try {
 }
 Write-Host ""
 
-# ── Step 2b: npm package: docx ──
+# ── Step 2b: npm package: docx (pre-installed — verify only, never install) ──
 Write-Host "--- [2/6] npm package: docx ---"
-try {
-    $null = & node -e "require('docx')" 2>&1
-    if ($LASTEXITCODE -eq 0) {
-        $docxVer = & node -e "try{console.log(require('docx/package.json').version)}catch(e){console.log('installed')}" 2>&1
-        Write-Ok "docx ($docxVer)"
-    } else { throw "no docx" }
-} catch {
-    Write-Fail "docx not installed"
-    Write-Info "Installing docx..."
-    try {
-        $installArgs = @("install", "-g", "docx") + $NpmMirrorArgs
-        & npm @installArgs 2>&1 | Out-Null
-        Write-Ok "Installed: docx"
-    } catch {
-        Write-Fail "npm install failed. Try: npm install -g docx $($NpmMirrorArgs -join ' ')"
-        $Errors++
-    }
+$docxRoot = $null
+try { $docxRoot = & npm root -g 2>$null | Select-Object -First 1 } catch { $docxRoot = $null }
+$docxPkg = if ($docxRoot) { Join-Path $docxRoot "docx\package.json" } else { $null }
+if ($docxPkg -and (Test-Path $docxPkg)) {
+    $docxVer = (Get-Content $docxPkg -Raw | ConvertFrom-Json).version
+    Write-Ok "docx ($docxVer)"
+} else {
+    Write-Fail "docx not found in $docxRoot (expected pre-installed)"
+    Write-Info "Report the missing dependency - never run npm install in the working directory."
+    $Errors++
 }
 Write-Host ""
 

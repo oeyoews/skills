@@ -44,10 +44,14 @@ Run the platform-appropriate setup script:
 | Category | Package | Purpose |
 |----------|---------|---------|
 | Runtime | Node.js + npm | DOCX generation (docx-js) |
-| npm pkg | docx | Word document creation library |
+| npm pkg | docx | Word document creation library — pre-installed; verify with `npm root -g` |
 | Runtime | Python 3 + pip | Post-processing scripts |
 | Python pkg | defusedxml | Safe XML parsing for validation |
 | Font | CJK fonts (from CDN) | Chinese text in documents |
+
+> The `docx` npm package is pre-installed in the global npm prefix and resolved by the host via
+> `NODE_PATH`. **Never run `npm install` (local or global) to work around a missing package** —
+> verify it, and report the gap if it is absent.
 
 ### Manual Install by Platform
 
@@ -55,7 +59,7 @@ Run the platform-appropriate setup script:
 
 ```bash
 brew install node python3
-npm install -g docx
+ls "$(npm root -g)/docx/package.json"   # docx: verify pre-installed, never install
 python3 -m pip install defusedxml
 ```
 
@@ -63,7 +67,7 @@ python3 -m pip install defusedxml
 
 ```bash
 sudo apt install nodejs npm python3 python3-pip
-npm install -g docx
+ls "$(npm root -g)/docx/package.json"   # docx: verify pre-installed, never install
 python3 -m pip install defusedxml
 ```
 
@@ -72,7 +76,7 @@ python3 -m pip install defusedxml
 ```powershell
 winget install OpenJS.NodeJS.LTS
 winget install Python.Python.3.11
-npm install -g docx
+Test-Path "$(npm root -g)\docx\package.json"   # docx: verify pre-installed, never install
 python -m pip install defusedxml
 ```
 
@@ -152,8 +156,10 @@ If default sources are unreachable, use China mirrors:
 
 ### npm (npmmirror)
 
+No mirror needed: `docx` is pre-installed in the npm global prefix. Verify it only:
+
 ```bash
-npm install -g docx --registry https://registry.npmmirror.com
+ls "$(npm root -g)/docx/package.json"
 ```
 
 ### pip (Tsinghua mirror)
@@ -167,7 +173,7 @@ python3 -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple \
 ### Windows (PowerShell) China mirrors
 
 ```powershell
-npm install -g docx --registry https://registry.npmmirror.com
+Test-Path "$(npm root -g)\docx\package.json"   # docx: verify pre-installed, no mirror needed
 python -m pip install -i https://pypi.tuna.tsinghua.edu.cn/simple --trusted-host pypi.tuna.tsinghua.edu.cn defusedxml
 ```
 
