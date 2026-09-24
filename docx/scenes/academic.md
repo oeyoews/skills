@@ -6,11 +6,11 @@
 
 ```js
 const palette = {
-  primary: "#000000",   // Title — pure black
-  body: "#000000",      // Body — pure black
-  secondary: "#333333", // Header/caption — dark grey
-  accent: "#8B7E5A",    // Cover decoration line — cover only
-  surface: "#F5F7FA",   // Table header light bg — three-line tables only
+  primary: '#000000',   // Title — pure black
+  body: '#000000',      // Body — pure black
+  secondary: '#333333', // Header/caption — dark grey
+  accent: '#8B7E5A',    // Cover decoration line — cover only
+  surface: '#F5F7FA',   // Table header light bg — three-line tables only
 };
 ```
 
@@ -70,19 +70,19 @@ For binding margin, add 0.5–1.0 cm to left (i.e., left: 1985–2268).
 styles: {
   default: {
     document: {
-      run: { font: { ascii: "Times New Roman", eastAsia: "SimSun" }, size: 24, color: "000000" },
+      run: { font: { ascii: 'Times New Roman', eastAsia: 'SimSun' }, size: 24, color: '000000' },
       paragraph: { spacing: { line: 360 } },
     },
     heading1: {
-      run: { font: { ascii: "Times New Roman", eastAsia: "SimHei" }, size: 32, bold: true, color: "000000" },
+      run: { font: { ascii: 'Times New Roman', eastAsia: 'SimHei' }, size: 32, bold: true, color: '000000' },
       paragraph: { alignment: AlignmentType.CENTER, spacing: { before: 480, after: 360, line: 360 } },
     },
     heading2: {
-      run: { font: { ascii: "Times New Roman", eastAsia: "SimHei" }, size: 30, bold: true, color: "000000" },
+      run: { font: { ascii: 'Times New Roman', eastAsia: 'SimHei' }, size: 30, bold: true, color: '000000' },
       paragraph: { spacing: { before: 360, after: 240, line: 360 } },
     },
     heading3: {
-      run: { font: { ascii: "Times New Roman", eastAsia: "SimHei" }, size: 28, bold: true, color: "000000" },
+      run: { font: { ascii: 'Times New Roman', eastAsia: 'SimHei' }, size: 28, bold: true, color: '000000' },
       paragraph: { spacing: { before: 240, after: 120, line: 360 } },
     },
   },
@@ -112,11 +112,11 @@ styles: {
 // ✅ Correct
 new Paragraph({
   heading: HeadingLevel.HEADING_1,
-  children: [new TextRun({ text: "第一章 绪论", bold: true, size: 32, font: { eastAsia: "SimHei", ascii: "Times New Roman" } })]
+  children: [new TextRun({ text: '第一章 绪论', bold: true, size: 32, font: { eastAsia: 'SimHei', ascii: 'Times New Roman' } })]
 })
 new Paragraph({
   heading: HeadingLevel.HEADING_2,
-  children: [new TextRun({ text: "1.1 研究背景", bold: true, size: 30, font: { eastAsia: "SimHei", ascii: "Times New Roman" } })]
+  children: [new TextRun({ text: '1.1 研究背景', bold: true, size: 30, font: { eastAsia: 'SimHei', ascii: 'Times New Roman' } })]
 })
 ```
 
@@ -147,7 +147,7 @@ Section 8: Acknowledgments (if any) → Arabic numerals continued
 ### Page Number Implementation
 
 ```js
-const { NumberFormat } = require("docx");
+const { NumberFormat } = require('docx');
 
 // Section 1: Cover — no page number
 {
@@ -167,7 +167,7 @@ const { NumberFormat } = require("docx");
       pageNumbers: { start: 1, formatType: NumberFormat.UPPER_ROMAN },
     },
   },
-  headers: { default: buildHeader("Thesis Title") },
+  headers: { default: buildHeader('Thesis Title') },
   footers: { default: buildPageNumberFooter() },
   children: buildAbstractCN(...),
 }
@@ -181,7 +181,7 @@ const { NumberFormat } = require("docx");
       pageNumbers: { formatType: NumberFormat.UPPER_ROMAN },  // no start → continues from previous
     },
   },
-  headers: { default: buildHeader("Thesis Title") },
+  headers: { default: buildHeader('Thesis Title') },
   footers: { default: buildPageNumberFooter() },
   children: buildAbstractEN(...),
 }
@@ -195,7 +195,7 @@ const { NumberFormat } = require("docx");
       pageNumbers: { start: 1, formatType: NumberFormat.DECIMAL },
     },
   },
-  headers: { default: buildHeader("Thesis Title") },
+  headers: { default: buildHeader('Thesis Title') },
   footers: { default: buildPageNumberFooter() },
   children: buildMainContent(...),
 }
@@ -208,9 +208,9 @@ const { NumberFormat } = require("docx");
 function buildHeader(title) {
   return new Header({ children: [
     new Paragraph({ alignment: AlignmentType.CENTER,
-      border: { bottom: { style: BorderStyle.SINGLE, size: 1, color: "000000" } },
-      children: [new TextRun({ text: title, size: 18, color: "333333",
-        font: { ascii: "Times New Roman", eastAsia: "SimSun" } })],
+      border: { bottom: { style: BorderStyle.SINGLE, size: 1, color: '000000' } },
+      children: [new TextRun({ text: title, size: 18, color: '333333',
+        font: { ascii: 'Times New Roman', eastAsia: 'SimSun' } })],
     }),
   ] });
 }
@@ -219,9 +219,9 @@ function buildPageNumberFooter() {
   return new Footer({ children: [
     new Paragraph({ alignment: AlignmentType.CENTER,
       children: [
-        new TextRun({ text: "- ", size: 21 }),
+        new TextRun({ text: '- ', size: 21 }),
         new TextRun({ children: [PageNumber.CURRENT], size: 21 }),
-        new TextRun({ text: " -", size: 21 }),
+        new TextRun({ text: ' -', size: 21 }),
       ],
     }),
   ] });
@@ -280,11 +280,11 @@ function buildAcademicCover(info) {
 
   // ⚠️ Use safeText() for all values — never output "undefined"
   const infoRows = [
-    ["College", safeText(college, "【College】")],
-    ["Major", safeText(major, "【Major】")],
-    ["Author", safeText(author, "【Author】")],
-    ["Student ID", safeText(studentId, "【Student ID】")],
-    ["Advisor", safeText(advisor, "【Advisor】")],
+    ['College', safeText(college, '【College】')],
+    ['Major', safeText(major, '【Major】')],
+    ['Author', safeText(author, '【Author】')],
+    ['Student ID', safeText(studentId, '【Student ID】')],
+    ['Advisor', safeText(advisor, '【Advisor】')],
   ];
 
   const infoTable = new Table({
@@ -296,19 +296,19 @@ function buildAcademicCover(info) {
       children: [
         new TableCell({
           width: { size: 35, type: WidthType.PERCENTAGE },
-          borders: { bottom: { style: BorderStyle.SINGLE, size: 1, color: "000000" }, top: NB, left: NB, right: NB },
+          borders: { bottom: { style: BorderStyle.SINGLE, size: 1, color: '000000' }, top: NB, left: NB, right: NB },
           margins: { top: 60, bottom: 60, left: 120, right: 120 },
           children: [new Paragraph({
             alignment: AlignmentType.RIGHT,
-            children: [new TextRun({ text: label + ":", size: 28, font: { eastAsia: "SimHei", ascii: "Times New Roman" } })],
+            children: [new TextRun({ text: label + ':', size: 28, font: { eastAsia: 'SimHei', ascii: 'Times New Roman' } })],
           })],
         }),
         new TableCell({
-          borders: { bottom: { style: BorderStyle.SINGLE, size: 1, color: "000000" }, top: NB, left: NB, right: NB },
+          borders: { bottom: { style: BorderStyle.SINGLE, size: 1, color: '000000' }, top: NB, left: NB, right: NB },
           margins: { top: 60, bottom: 60, left: 120, right: 120 },
           children: [new Paragraph({
             alignment: AlignmentType.CENTER,
-            children: [new TextRun({ text: value, size: 28, font: { eastAsia: "SimSun", ascii: "Times New Roman" } })],
+            children: [new TextRun({ text: value, size: 28, font: { eastAsia: 'SimSun', ascii: 'Times New Roman' } })],
           })],
         }),
       ],
@@ -318,18 +318,18 @@ function buildAcademicCover(info) {
   // ⚠️ Correct order: school → doc type → TITLE → info table → date
   // ★ Rule 8: All large-font paragraphs must set explicit line spacing
   return [
-    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 1200, after: 400, line: Math.ceil(22 * 23), lineRule: "atLeast" },
-      children: [new TextRun({ text: safeText(school, "【University Name】"), size: 44, bold: true, font: { eastAsia: "SimHei" } })] }),
-    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 800, line: Math.ceil(18 * 23), lineRule: "atLeast" },
-      children: [new TextRun({ text: "Undergraduate Thesis", size: 36, font: { eastAsia: "SimHei" } })] }),
-    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 200, line: Math.ceil(18 * 23), lineRule: "atLeast" },
-      children: [new TextRun({ text: safeText(title, "【Thesis Title】"), size: 36, bold: true, font: { eastAsia: "SimHei", ascii: "Times New Roman" } })] }),
-    titleEN ? new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 1200, line: Math.ceil(16 * 23), lineRule: "atLeast" },
-      children: [new TextRun({ text: titleEN, size: 32, font: { ascii: "Times New Roman" } })] })
+    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 1200, after: 400, line: Math.ceil(22 * 23), lineRule: 'atLeast' },
+      children: [new TextRun({ text: safeText(school, '【University Name】'), size: 44, bold: true, font: { eastAsia: 'SimHei' } })] }),
+    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 800, line: Math.ceil(18 * 23), lineRule: 'atLeast' },
+      children: [new TextRun({ text: 'Undergraduate Thesis', size: 36, font: { eastAsia: 'SimHei' } })] }),
+    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 200, line: Math.ceil(18 * 23), lineRule: 'atLeast' },
+      children: [new TextRun({ text: safeText(title, '【Thesis Title】'), size: 36, bold: true, font: { eastAsia: 'SimHei', ascii: 'Times New Roman' } })] }),
+    titleEN ? new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 1200, line: Math.ceil(16 * 23), lineRule: 'atLeast' },
+      children: [new TextRun({ text: titleEN, size: 32, font: { ascii: 'Times New Roman' } })] })
       : new Paragraph({ spacing: { after: 1200 }, children: [] }),
     infoTable,
-    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 1200, line: Math.ceil(14 * 23), lineRule: "atLeast" },
-      children: [new TextRun({ text: safeText(date, "2026/XX"), size: 28, font: { eastAsia: "SimSun" } })] }),
+    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 1200, line: Math.ceil(14 * 23), lineRule: 'atLeast' },
+      children: [new TextRun({ text: safeText(date, '2026/XX'), size: 28, font: { eastAsia: 'SimSun' } })] }),
   ];
 }
 ```
@@ -368,9 +368,9 @@ function buildProposalCover(info) {
 
   // ⚠️ Use safeText() for all values
   const infoRows = [
-    ["姓名 (Name)", safeText(author, "XXX")],
-    ["专业 (Major)", safeText(major, "XXX")],
-    ["入学时间 (Enrollment)", safeText(info.enrollment, "XXX")],
+    ['姓名 (Name)', safeText(author, 'XXX')],
+    ['专业 (Major)', safeText(major, 'XXX')],
+    ['入学时间 (Enrollment)', safeText(info.enrollment, 'XXX')],
   ];
 
   const infoTable = new Table({
@@ -381,19 +381,19 @@ function buildProposalCover(info) {
       children: [
         new TableCell({
           width: { size: 35, type: WidthType.PERCENTAGE },
-          borders: { bottom: { style: BorderStyle.SINGLE, size: 1, color: "000000" }, top: NB, left: NB, right: NB },
+          borders: { bottom: { style: BorderStyle.SINGLE, size: 1, color: '000000' }, top: NB, left: NB, right: NB },
           margins: { top: 60, bottom: 60, left: 120, right: 120 },
           children: [new Paragraph({
             alignment: AlignmentType.CENTER,
-            children: [new TextRun({ text: label, size: 28, bold: true, font: { eastAsia: "SimHei", ascii: "Times New Roman" } })],
+            children: [new TextRun({ text: label, size: 28, bold: true, font: { eastAsia: 'SimHei', ascii: 'Times New Roman' } })],
           })],
         }),
         new TableCell({
-          borders: { bottom: { style: BorderStyle.SINGLE, size: 1, color: "000000" }, top: NB, left: NB, right: NB },
+          borders: { bottom: { style: BorderStyle.SINGLE, size: 1, color: '000000' }, top: NB, left: NB, right: NB },
           margins: { top: 60, bottom: 60, left: 120, right: 120 },
           children: [new Paragraph({
             alignment: AlignmentType.CENTER,
-            children: [new TextRun({ text: value, size: 28, font: { eastAsia: "SimSun", ascii: "Times New Roman" } })],
+            children: [new TextRun({ text: value, size: 28, font: { eastAsia: 'SimSun', ascii: 'Times New Roman' } })],
           })],
         }),
       ],
@@ -404,19 +404,19 @@ function buildProposalCover(info) {
   // Layout balanced: upper 40% for header + info, middle 20% for title, lower 40% for whitespace
   // ★ Rule 8: All large-font paragraphs must set explicit line spacing
   return [
-    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 1500, after: 600, line: Math.ceil(18 * 23), lineRule: "atLeast" },
-      children: [new TextRun({ text: safeText(year, "2025") + " 届本科毕业论文开题报告",
-        size: 36, bold: true, font: { eastAsia: "SimHei", ascii: "Times New Roman" } })] }),
+    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 1500, after: 600, line: Math.ceil(18 * 23), lineRule: 'atLeast' },
+      children: [new TextRun({ text: safeText(year, '2025') + ' 届本科毕业论文开题报告',
+        size: 36, bold: true, font: { eastAsia: 'SimHei', ascii: 'Times New Roman' } })] }),
     infoTable,
     new Paragraph({ spacing: { before: 1200 } }),  // Balanced whitespace
     new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 200 },
-      children: [new TextRun({ text: "论文题目", size: 28, font: { eastAsia: "SimSun", ascii: "Times New Roman" } })] }),
-    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 200, line: Math.ceil(16 * 23), lineRule: "atLeast" },
-      children: [new TextRun({ text: safeText(title, "【Thesis Title】"), size: 32, bold: true,
-        font: { eastAsia: "SimHei", ascii: "Times New Roman" } })] }),
+      children: [new TextRun({ text: '论文题目', size: 28, font: { eastAsia: 'SimSun', ascii: 'Times New Roman' } })] }),
+    new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 200, line: Math.ceil(16 * 23), lineRule: 'atLeast' },
+      children: [new TextRun({ text: safeText(title, '【Thesis Title】'), size: 32, bold: true,
+        font: { eastAsia: 'SimHei', ascii: 'Times New Roman' } })] }),
     subtitle ? new Paragraph({ alignment: AlignmentType.CENTER, spacing: { after: 800 },
-      children: [new TextRun({ text: "——" + subtitle, size: 28,
-        font: { eastAsia: "SimSun", ascii: "Times New Roman" } })] })
+      children: [new TextRun({ text: '——' + subtitle, size: 28,
+        font: { eastAsia: 'SimSun', ascii: 'Times New Roman' } })] })
       : new Paragraph({ spacing: { after: 800 }, children: [] }),
   ];
 }

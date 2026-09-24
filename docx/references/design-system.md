@@ -31,99 +31,99 @@ Instead of 10 fixed palettes, combine dimensions to generate colors dynamically:
 **Cool + Heavy + Calm** → Deep Sea Academic (Academic / Research)
 ```js
 const academic = {
-  primary: "#162032", body: "#1C2A3D", secondary: "#5B6B7D",
-  accent: "#8B7E5A", surface: "#F5F7FA"
+  primary: '#162032', body: '#1C2A3D', secondary: '#5B6B7D',
+  accent: '#8B7E5A', surface: '#F5F7FA'
 };
 ```
 
 **Warm + Heavy + Calm** → Legal Wood (Legal / Compliance)
 ```js
 const legal = {
-  primary: "#28201C", body: "#36302C", secondary: "#6E6560",
-  accent: "#7A5C3A", surface: "#FBF9F7"
+  primary: '#28201C', body: '#36302C', secondary: '#6E6560',
+  accent: '#7A5C3A', surface: '#FBF9F7'
 };
 ```
 
 **Cool + Light + Active** → Dawn Mist Tech (Tech / Digital)
 ```js
 const tech = {
-  primary: "#0A1628", body: "#1A2B40", secondary: "#6878A0",
-  accent: "#5B8DB8", surface: "#F4F8FC"
+  primary: '#0A1628', body: '#1A2B40', secondary: '#6878A0',
+  accent: '#5B8DB8', surface: '#F4F8FC'
 };
 ```
 
 **Warm + Light + Active** → Warm Sun (Education / Training)
 ```js
 const education = {
-  primary: "#2A3518", body: "#384228", secondary: "#6B8040",
-  accent: "#D4A030", surface: "#F8FAF4"
+  primary: '#2A3518', body: '#384228', secondary: '#6B8040',
+  accent: '#D4A030', surface: '#F8FAF4'
 };
 ```
 
 **Neutral + Medium + Calm** → Plain Paper (Default / General)
 ```js
 const general = {
-  primary: "#101820", body: "#182030", secondary: "#506070",
-  accent: "#8090A0", surface: "#F2F4F6"
+  primary: '#101820', body: '#182030', secondary: '#506070',
+  accent: '#8090A0', surface: '#F2F4F6'
 };
 ```
 
 **Warm + Medium + Calm** → Terracotta (Consulting / Architecture)
 ```js
 const consulting = {
-  primary: "#241E1A", body: "#3A3430", secondary: "#68605A",
-  accent: "#B08050", surface: "#FDFBF9"
+  primary: '#241E1A', body: '#3A3430', secondary: '#68605A',
+  accent: '#B08050', surface: '#FDFBF9'
 };
 ```
 
 **Cool + Medium + Active** → Mint Medical (Medical / Clinical)
 ```js
 const medical = {
-  primary: "#0E2030", body: "#1E2E40", secondary: "#4A6580",
-  accent: "#3888A8", surface: "#F0F6FA"
+  primary: '#0E2030', body: '#1E2E40', secondary: '#4A6580',
+  accent: '#3888A8', surface: '#F0F6FA'
 };
 ```
 
 **Neutral + Light + Calm** → White Porcelain (Product Manuals / Minimalist)
 ```js
 const minimal = {
-  primary: "#303030", body: "#484848", secondary: "#808080",
-  accent: "#B89870", surface: "#FAFAF8"
+  primary: '#303030', body: '#484848', secondary: '#808080',
+  accent: '#B89870', surface: '#FAFAF8'
 };
 ```
 
 **Cool + Light + Active (Gradient)** → Lapis Tech (Tech / AI / Innovation)
 ```js
 const liuliTech = {
-  primary: "#1A1F36", body: "#000000", secondary: "#5A6080",
-  accent: "#667eea", surface: "#F8F9FF",
-  gradient: ["#667eea", "#764ba2"],  // Purple-blue gradient (blendColors 5-step)
+  primary: '#1A1F36', body: '#000000', secondary: '#5A6080',
+  accent: '#667eea', surface: '#F8F9FF',
+  gradient: ['#667eea', '#764ba2'],  // Purple-blue gradient (blendColors 5-step)
 };
 ```
 
 **Cool + Heavy + Active (Gradient)** → Deep Sea Blue-Gold (Finance / Investment / Premium)
 ```js
 const deepBlueGold = {
-  primary: "#0F2027", body: "#000000", secondary: "#4A6575",
-  accent: "#D4AF37", surface: "#F5F7FA",
-  gradient: ["#0F2027", "#203A43", "#2C5364"],  // 3-step deep sea blue gradient
+  primary: '#0F2027', body: '#000000', secondary: '#4A6575',
+  accent: '#D4AF37', surface: '#F5F7FA',
+  gradient: ['#0F2027', '#203A43', '#2C5364'],  // 3-step deep sea blue gradient
 };
 ```
 
 **Warm + Light + Active (Gradient)** → Mint Dawn (Education / Health / Green)
 ```js
 const mintMorning = {
-  primary: "#1A3A3A", body: "#000000", secondary: "#507070",
-  accent: "#3CB4A0", surface: "#F0FFFE",
-  gradient: ["#3CB4A0", "#a8edea"],  // Mint green gradient
+  primary: '#1A3A3A', body: '#000000', secondary: '#507070',
+  accent: '#3CB4A0', surface: '#F0FFFE',
+  gradient: ['#3CB4A0', '#a8edea'],  // Mint green gradient
 };
 ```
 
 **Neutral + Medium + Active** → Graphite Orange (Professional but Energetic)
 ```js
 const graphiteOrange = {
-  primary: "#2C3E50", body: "#000000", secondary: "#607080",
-  accent: "#E67E22", surface: "#FDF8F3",
+  primary: '#2C3E50', body: '#000000', secondary: '#607080',
+  accent: '#E67E22', surface: '#FDF8F3',
 };
 ```
 
@@ -212,7 +212,7 @@ styles: {
   default: {
     document: {
       run: {
-        font: { ascii: "Calibri", eastAsia: "Microsoft YaHei" },
+        font: { ascii: 'Calibri', eastAsia: 'Microsoft YaHei' },
         size: 24, // Xiao Si 小四 12pt
         color: palette.body,
       },
@@ -222,7 +222,7 @@ styles: {
     },
     heading1: {
       run: {
-        font: { ascii: "Calibri", eastAsia: "SimHei" },
+        font: { ascii: 'Calibri', eastAsia: 'SimHei' },
         size: 32, // San Hao 三号 16pt
         bold: true,
         color: palette.primary,
@@ -230,7 +230,7 @@ styles: {
     },
     heading2: {
       run: {
-        font: { ascii: "Calibri", eastAsia: "SimHei" },
+        font: { ascii: 'Calibri', eastAsia: 'SimHei' },
         size: 28, // Si Hao 四号 14pt
         bold: true,
         color: palette.primary,
@@ -254,8 +254,8 @@ Only three horizontal lines: top of table, bottom of header, bottom of table.
 const threeLineTable = new Table({
   width: { size: 100, type: WidthType.PERCENTAGE },
   borders: {
-    top: { style: BorderStyle.SINGLE, size: 4, color: "000000" },
-    bottom: { style: BorderStyle.SINGLE, size: 4, color: "000000" },
+    top: { style: BorderStyle.SINGLE, size: 4, color: '000000' },
+    bottom: { style: BorderStyle.SINGLE, size: 4, color: '000000' },
     left: { style: BorderStyle.NONE },
     right: { style: BorderStyle.NONE },
     insideHorizontal: { style: BorderStyle.NONE },
@@ -266,7 +266,7 @@ const threeLineTable = new Table({
       children: headerCells.map(text => new TableCell({
         children: [new Paragraph({ children: [new TextRun({ text, bold: true, size: 21 })] })],
         borders: {
-          bottom: { style: BorderStyle.SINGLE, size: 2, color: "000000" },
+          bottom: { style: BorderStyle.SINGLE, size: 2, color: '000000' },
           top: { style: BorderStyle.NONE },
           left: { style: BorderStyle.NONE },
           right: { style: BorderStyle.NONE },
@@ -288,7 +288,7 @@ function zebraRow(cells, index, palette) {
       children: [new Paragraph({ children: [new TextRun({ text, size: 21 })] })],
       shading: index % 2 === 0
         ? { type: ShadingType.CLEAR, fill: palette.surface }
-        : { type: ShadingType.CLEAR, fill: "FFFFFF" },
+        : { type: ShadingType.CLEAR, fill: 'FFFFFF' },
       margins: { top: 60, bottom: 60, left: 120, right: 120 },
     })),
   });
@@ -301,11 +301,11 @@ function zebraRow(cells, index, palette) {
 const horizontalTable = new Table({
   width: { size: 100, type: WidthType.PERCENTAGE },
   borders: {
-    top: { style: BorderStyle.SINGLE, size: 2, color: palette.accent.replace("#","") },
-    bottom: { style: BorderStyle.SINGLE, size: 2, color: palette.accent.replace("#","") },
+    top: { style: BorderStyle.SINGLE, size: 2, color: palette.accent.replace('#','') },
+    bottom: { style: BorderStyle.SINGLE, size: 2, color: palette.accent.replace('#','') },
     left: { style: BorderStyle.NONE },
     right: { style: BorderStyle.NONE },
-    insideHorizontal: { style: BorderStyle.SINGLE, size: 1, color: "D0D0D0" },
+    insideHorizontal: { style: BorderStyle.SINGLE, size: 1, color: 'D0D0D0' },
     insideVertical: { style: BorderStyle.NONE },
   },
   rows: [/* header row with accent shading, then data rows */],
@@ -328,7 +328,7 @@ Each palette in `coverPalettes` provides a `table` object with pre-computed colo
 
 **Usage:**
 ```js
-const palette = coverPalettes["DS-1"];
+const palette = coverPalettes['DS-1'];
 const t = palette.table;
 // Three-Line: use t.accentLine for border colors
 // Zebra: use t.headerBg, t.headerText, t.surface
@@ -365,90 +365,90 @@ new TextRun({ text: P.titleColor, color: P.titleColor })  // displays "FFFFFF" a
 ```js
 const coverPalettes = {
   // ── Light backgrounds (7) ──
-  "WM-1": { // Warm Teal — education, training, marketing
-    bg: "F4F1E9", primary: "15857A", accent: "FF6A3B",
-    cover: { titleColor: "15857A", subtitleColor: "606060", metaColor: "707070", footerColor: "A0A0A0" },
-    table: { headerBg: "15857A", headerText: "FFFFFF", accentLine: "15857A", innerLine: "D5D0C8", surface: "F0EDE5" },
+  'WM-1': { // Warm Teal — education, training, marketing
+    bg: 'F4F1E9', primary: '15857A', accent: 'FF6A3B',
+    cover: { titleColor: '15857A', subtitleColor: '606060', metaColor: '707070', footerColor: 'A0A0A0' },
+    table: { headerBg: '15857A', headerText: 'FFFFFF', accentLine: '15857A', innerLine: 'D5D0C8', surface: 'F0EDE5' },
   },
-  "CM-2": { // Blue Orange — tech, corporate, whitepaper
-    bg: "FEFEFE", primary: "1284BA", accent: "FF862F",
-    cover: { titleColor: "1284BA", subtitleColor: "606060", metaColor: "707070", footerColor: "A0A0A0" },
-    table: { headerBg: "1284BA", headerText: "FFFFFF", accentLine: "1284BA", innerLine: "D8E4EC", surface: "EDF4F9" },
+  'CM-2': { // Blue Orange — tech, corporate, whitepaper
+    bg: 'FEFEFE', primary: '1284BA', accent: 'FF862F',
+    cover: { titleColor: '1284BA', subtitleColor: '606060', metaColor: '707070', footerColor: 'A0A0A0' },
+    table: { headerBg: '1284BA', headerText: 'FFFFFF', accentLine: '1284BA', innerLine: 'D8E4EC', surface: 'EDF4F9' },
   },
-  "SN-2": { // Soft Purple — creative, branding, events (⚠️ NOT for business)
-    bg: "EBDCEF", primary: "73593C", accent: "B13DC6",
-    cover: { titleColor: "73593C", subtitleColor: "606060", metaColor: "707070", footerColor: "A0A0A0" },
-    table: { headerBg: "7A4D8A", headerText: "FFFFFF", accentLine: "7A4D8A", innerLine: "D8D0DE", surface: "F2EDF5" },
+  'SN-2': { // Soft Purple — creative, branding, events (⚠️ NOT for business)
+    bg: 'EBDCEF', primary: '73593C', accent: 'B13DC6',
+    cover: { titleColor: '73593C', subtitleColor: '606060', metaColor: '707070', footerColor: 'A0A0A0' },
+    table: { headerBg: '7A4D8A', headerText: 'FFFFFF', accentLine: '7A4D8A', innerLine: 'D8D0DE', surface: 'F2EDF5' },
   },
-  "MIN-1": { // Warm Gold — consulting, minimalist business, premium proposals
-    bg: "F3F1ED", primary: "000000", accent: "D6C096",
-    cover: { titleColor: "000000", subtitleColor: "606060", metaColor: "707070", footerColor: "A0A0A0" },
-    table: { headerBg: "D6C096", headerText: "1A1A1A", accentLine: "000000", innerLine: "DDD8CC", surface: "F5F3ED" },
+  'MIN-1': { // Warm Gold — consulting, minimalist business, premium proposals
+    bg: 'F3F1ED', primary: '000000', accent: 'D6C096',
+    cover: { titleColor: '000000', subtitleColor: '606060', metaColor: '707070', footerColor: 'A0A0A0' },
+    table: { headerBg: 'D6C096', headerText: '1A1A1A', accentLine: '000000', innerLine: 'DDD8CC', surface: 'F5F3ED' },
   },
-  "WR-2": { // Retro Green — traditional industry, finance compliance, legal
-    bg: "F4F1E9", primary: "2A4A3A", accent: "C89F62",
-    cover: { titleColor: "2A4A3A", subtitleColor: "606060", metaColor: "707070", footerColor: "A0A0A0" },
-    table: { headerBg: "2A4A3A", headerText: "FFFFFF", accentLine: "2A4A3A", innerLine: "D0D8D0", surface: "F0EDE5" },
+  'WR-2': { // Retro Green — traditional industry, finance compliance, legal
+    bg: 'F4F1E9', primary: '2A4A3A', accent: 'C89F62',
+    cover: { titleColor: '2A4A3A', subtitleColor: '606060', metaColor: '707070', footerColor: 'A0A0A0' },
+    table: { headerBg: '2A4A3A', headerText: 'FFFFFF', accentLine: '2A4A3A', innerLine: 'D0D8D0', surface: 'F0EDE5' },
   },
-  "MC-1": { // Medical Blue — healthcare, clinical reports
-    bg: "F5F8FC", primary: "1A5276", accent: "2E86C1",
-    cover: { titleColor: "1A5276", subtitleColor: "606060", metaColor: "707070", footerColor: "A0A0A0" },
-    table: { headerBg: "2E86C1", headerText: "FFFFFF", accentLine: "1A5276", innerLine: "D0DDE8", surface: "EDF3F8" },
+  'MC-1': { // Medical Blue — healthcare, clinical reports
+    bg: 'F5F8FC', primary: '1A5276', accent: '2E86C1',
+    cover: { titleColor: '1A5276', subtitleColor: '606060', metaColor: '707070', footerColor: 'A0A0A0' },
+    table: { headerBg: '2E86C1', headerText: 'FFFFFF', accentLine: '1A5276', innerLine: 'D0DDE8', surface: 'EDF3F8' },
   },
-  "GV-1": { // Official Red — government, state-owned enterprise, party building
-    bg: "FAFAFA", primary: "1A1A1A", accent: "C0392B",
-    cover: { titleColor: "1A1A1A", subtitleColor: "606060", metaColor: "707070", footerColor: "A0A0A0" },
-    table: { headerBg: "C0392B", headerText: "FFFFFF", accentLine: "C0392B", innerLine: "DDD0D0", surface: "F8F0F0" },
+  'GV-1': { // Official Red — government, state-owned enterprise, party building
+    bg: 'FAFAFA', primary: '1A1A1A', accent: 'C0392B',
+    cover: { titleColor: '1A1A1A', subtitleColor: '606060', metaColor: '707070', footerColor: 'A0A0A0' },
+    table: { headerBg: 'C0392B', headerText: 'FFFFFF', accentLine: 'C0392B', innerLine: 'DDD0D0', surface: 'F8F0F0' },
   },
 
   // ── Dark backgrounds (5) ──
-  "DS-1": { // Deep Sea — annual report, general business
-    bg: "0B1C2C", primary: "FFFFFF", accent: "529286",
-    cover: { titleColor: "FFFFFF", subtitleColor: "B0B8C0", metaColor: "90989F", footerColor: "687078" },
-    table: { headerBg: "529286", headerText: "FFFFFF", accentLine: "529286", innerLine: "BECFCC", surface: "E8ECEB" },
+  'DS-1': { // Deep Sea — annual report, general business
+    bg: '0B1C2C', primary: 'FFFFFF', accent: '529286',
+    cover: { titleColor: 'FFFFFF', subtitleColor: 'B0B8C0', metaColor: '90989F', footerColor: '687078' },
+    table: { headerBg: '529286', headerText: 'FFFFFF', accentLine: '529286', innerLine: 'BECFCC', surface: 'E8ECEB' },
   },
-  "IG-1": { // Ink Gold — finance, investment, luxury brand
-    bg: "1A1A1A", primary: "FFFFFF", accent: "C9A84C",
-    cover: { titleColor: "FFFFFF", subtitleColor: "B0B8C0", metaColor: "90989F", footerColor: "687078" },
-    table: { headerBg: "C9A84C", headerText: "1A1A1A", accentLine: "C9A84C", innerLine: "DDD5C0", surface: "F5F2E8" },
+  'IG-1': { // Ink Gold — finance, investment, luxury brand
+    bg: '1A1A1A', primary: 'FFFFFF', accent: 'C9A84C',
+    cover: { titleColor: 'FFFFFF', subtitleColor: 'B0B8C0', metaColor: '90989F', footerColor: '687078' },
+    table: { headerBg: 'C9A84C', headerText: '1A1A1A', accentLine: 'C9A84C', innerLine: 'DDD5C0', surface: 'F5F2E8' },
   },
-  "DM-1": { // Deep Cyan — AI, tech proposals, digital transformation
-    bg: "162235", primary: "FFFFFF", accent: "37DCF2",
-    cover: { titleColor: "FFFFFF", subtitleColor: "B0B8C0", metaColor: "90989F", footerColor: "687078" },
+  'DM-1': { // Deep Cyan — AI, tech proposals, digital transformation
+    bg: '162235', primary: 'FFFFFF', accent: '37DCF2',
+    cover: { titleColor: 'FFFFFF', subtitleColor: 'B0B8C0', metaColor: '90989F', footerColor: '687078' },
     // ⚠️ Table uses darkened accent (#1B6B7A) — bright #37DCF2 is too saturated for white-page tables
-    table: { headerBg: "1B6B7A", headerText: "FFFFFF", accentLine: "1B6B7A", innerLine: "C8DDE2", surface: "EDF3F5" },
+    table: { headerBg: '1B6B7A', headerText: 'FFFFFF', accentLine: '1B6B7A', innerLine: 'C8DDE2', surface: 'EDF3F5' },
   },
-  "FG-1": { // Forest Mint — ESG, environmental, sustainability, agriculture
-    bg: "0C1F1A", primary: "FFFFFF", accent: "3DDBB5",
-    cover: { titleColor: "FFFFFF", subtitleColor: "B0B8C0", metaColor: "90989F", footerColor: "687078" },
+  'FG-1': { // Forest Mint — ESG, environmental, sustainability, agriculture
+    bg: '0C1F1A', primary: 'FFFFFF', accent: '3DDBB5',
+    cover: { titleColor: 'FFFFFF', subtitleColor: 'B0B8C0', metaColor: '90989F', footerColor: '687078' },
     // ⚠️ Table uses darkened accent (#2A7A65) — bright #3DDBB5 is too saturated for white-page tables
-    table: { headerBg: "2A7A65", headerText: "FFFFFF", accentLine: "2A7A65", innerLine: "C5D8D0", surface: "EDF5F2" },
+    table: { headerBg: '2A7A65', headerText: 'FFFFFF', accentLine: '2A7A65', innerLine: 'C5D8D0', surface: 'EDF5F2' },
   },
-  "GO-1": { // Graphite Orange — proposals, bidding, PRD
-    bg: "1A2330", primary: "FFFFFF", accent: "D4875A",
-    cover: { titleColor: "FFFFFF", subtitleColor: "B0B8C0", metaColor: "90989F", footerColor: "687078" },
-    table: { headerBg: "D4875A", headerText: "FFFFFF", accentLine: "D4875A", innerLine: "DDD0C8", surface: "F8F0EB" },
+  'GO-1': { // Graphite Orange — proposals, bidding, PRD
+    bg: '1A2330', primary: 'FFFFFF', accent: 'D4875A',
+    cover: { titleColor: 'FFFFFF', subtitleColor: 'B0B8C0', metaColor: '90989F', footerColor: '687078' },
+    table: { headerBg: 'D4875A', headerText: 'FFFFFF', accentLine: 'D4875A', innerLine: 'DDD0C8', surface: 'F8F0EB' },
   },
 
   // ── Special (R5 only) ──
-  "ED-1": { // Editorial Warm — lesson plans, cultural/creative, light reports, newsletters
-    bg: "F7F7F5", primary: "2C2C2C", accent: "D4D4D0",
-    cover: { titleColor: "2C2C2C", subtitleColor: "6B6B6B", metaColor: "9A9A9A", footerColor: "9A9A9A" },
-    table: { headerBg: "E8E8E4", headerText: "2C2C2C", accentLine: "D4D4D0", innerLine: "E8E8E4", surface: "FAFAF8" },
+  'ED-1': { // Editorial Warm — lesson plans, cultural/creative, light reports, newsletters
+    bg: 'F7F7F5', primary: '2C2C2C', accent: 'D4D4D0',
+    cover: { titleColor: '2C2C2C', subtitleColor: '6B6B6B', metaColor: '9A9A9A', footerColor: '9A9A9A' },
+    table: { headerBg: 'E8E8E4', headerText: '2C2C2C', accentLine: 'D4D4D0', innerLine: 'E8E8E4', surface: 'FAFAF8' },
     // Note: R6 exclusive. Minimal editorial style — warm grey tones, no colored headers.
   },
 
-  "ST-1": { // Swiss Tech — cultural/creative research, trend reports, brand strategy
-    bg: "E2E8F0", primary: "0F172A", accent: "0042E6",
-    cover: { titleColor: "0F172A", subtitleColor: "475569", metaColor: "475569", footerColor: "475569" },
-    table: { headerBg: "475569", headerText: "FFFFFF", accentLine: "0042E6", innerLine: "CBD5E1", surface: "F1F5F9" },
+  'ST-1': { // Swiss Tech — cultural/creative research, trend reports, brand strategy
+    bg: 'E2E8F0', primary: '0F172A', accent: '0042E6',
+    cover: { titleColor: '0F172A', subtitleColor: '475569', metaColor: '475569', footerColor: '475569' },
+    table: { headerBg: '475569', headerText: 'FFFFFF', accentLine: '0042E6', innerLine: 'CBD5E1', surface: 'F1F5F9' },
     // Note: R7 exclusive. Swiss minimalist — slate grey bg, Klein blue accent, open-frame tables.
   },
 
-  "ACADEMIC": { // Academic Black — thesis, standards (R5 exclusive, not in general routing)
-    bg: "FFFFFF", primary: "000000", accent: "000000",
-    cover: { titleColor: "000000", subtitleColor: "404040", metaColor: "606060", footerColor: "808080" },
-    table: { headerBg: "000000", headerText: "000000", accentLine: "000000", innerLine: "000000", surface: "FFFFFF" },
+  'ACADEMIC': { // Academic Black — thesis, standards (R5 exclusive, not in general routing)
+    bg: 'FFFFFF', primary: '000000', accent: '000000',
+    cover: { titleColor: '000000', subtitleColor: '404040', metaColor: '606060', footerColor: '808080' },
+    table: { headerBg: '000000', headerText: '000000', accentLine: '000000', innerLine: '000000', surface: 'FFFFFF' },
     // Note: Academic uses Three-Line table only, with pure black lines. No colored headers.
   },
 };
@@ -493,62 +493,62 @@ It MUST NOT be used for: business reports, consulting, finance, legal, governmen
 ```js
 function selectCoverRecipe(docType, industry, titleLength) {
   // No cover for these types
-  if (["contract", "official", "exam", "resume"].includes(docType)) return null;
+  if (['contract', 'official', 'exam', 'resume'].includes(docType)) return null;
 
   // Academic
-  if (docType === "academic") return { recipe: "R5", palette: "ACADEMIC" };
+  if (docType === 'academic') return { recipe: 'R5', palette: 'ACADEMIC' };
 
   // Thesis proposal report (开题报告)
-  if (docType === "proposal_report") return { recipe: "R5", palette: "ACADEMIC" };
+  if (docType === 'proposal_report') return { recipe: 'R5', palette: 'ACADEMIC' };
 
   // Lesson plans — R6 editorial for arts/general, R4 for STEM
-  if (docType === "lesson_plan" || docType === "lessonplan") {
-    const stemKeywords = ["math", "physics", "chemistry", "biology", "science", "tech", "computer", "engineering"];
-    if (stemKeywords.some(k => (industry || "").toLowerCase().includes(k))) {
-      return { recipe: "R4", palette: "DM-1" };
+  if (docType === 'lesson_plan' || docType === 'lessonplan') {
+    const stemKeywords = ['math', 'physics', 'chemistry', 'biology', 'science', 'tech', 'computer', 'engineering'];
+    if (stemKeywords.some(k => (industry || '').toLowerCase().includes(k))) {
+      return { recipe: 'R4', palette: 'DM-1' };
     }
     // Arts, general, and all other lesson plans → R6 editorial
-    return { recipe: "R6", palette: "ED-1" };
+    return { recipe: 'R6', palette: 'ED-1' };
   }
 
   // Creative/branding/design (formal) → R3 centered card frame
-  if (["creative", "branding", "design"].includes(docType)) {
-    return { recipe: "R3", palette: "SN-2" };
+  if (['creative', 'branding', 'design'].includes(docType)) {
+    return { recipe: 'R3', palette: 'SN-2' };
   }
 
   // Cultural/newsletter/internal (casual) → R6 editorial
-  if (["cultural", "newsletter", "internal"].includes(docType)) {
-    return { recipe: "R6", palette: "ED-1" };
+  if (['cultural', 'newsletter', 'internal'].includes(docType)) {
+    return { recipe: 'R6', palette: 'ED-1' };
   }
 
   // Activity/event planning → R6 editorial
-  if (docType === "activity") return { recipe: "R6", palette: "ED-1" };
+  if (docType === 'activity') return { recipe: 'R6', palette: 'ED-1' };
 
   // Trend/research reports in cultural/creative/brand fields → R7 Swiss Tech
-  if (docType === "trend_report" || docType === "research_report") {
-    if (["cultural", "creative", "brand", "design"].includes(industry)) {
-      return { recipe: "R7", palette: "ST-1" };
+  if (docType === 'trend_report' || docType === 'research_report') {
+    if (['cultural', 'creative', 'brand', 'design'].includes(industry)) {
+      return { recipe: 'R7', palette: 'ST-1' };
     }
   }
 
   // Formal/business subtypes
-  if (docType === "whitepaper") return { recipe: "R2", palette: industry === "finance" ? "IG-1" : "CM-2" };
-  if (docType === "consulting") return { recipe: "R2", palette: "MIN-1" };
-  if (docType === "proposal" || docType === "plan") return { recipe: "R4", palette: "GO-1" };
+  if (docType === 'whitepaper') return { recipe: 'R2', palette: industry === 'finance' ? 'IG-1' : 'CM-2' };
+  if (docType === 'consulting') return { recipe: 'R2', palette: 'MIN-1' };
+  if (docType === 'proposal' || docType === 'plan') return { recipe: 'R4', palette: 'GO-1' };
 
   // Reports — palette by industry, use R1
-  if (docType === "report") {
+  if (docType === 'report') {
     const paletteMap = {
-      finance: "IG-1", consulting: "MIN-1",
-      tech: "DM-1", ai: "DM-1",
-      education: "WM-1", green: "FG-1",
-      medical: "MC-1", government: "GV-1",
+      finance: 'IG-1', consulting: 'MIN-1',
+      tech: 'DM-1', ai: 'DM-1',
+      education: 'WM-1', green: 'FG-1',
+      medical: 'MC-1', government: 'GV-1',
     };
-    return { recipe: "R1", palette: paletteMap[industry] || "DS-1" };
+    return { recipe: 'R1', palette: paletteMap[industry] || 'DS-1' };
   }
 
   // Default
-  return { recipe: "R1", palette: "DS-1" };
+  return { recipe: 'R1', palette: 'DS-1' };
 }
 
 // ── Long-title override (applied AFTER initial recipe selection) ──
@@ -556,19 +556,19 @@ function selectCoverRecipe(docType, industry, titleLength) {
 function applyLongTitleOverride(result, titleLength) {
   if (!result || !result.recipe) return result;
   // R5 (academic) is never overridden — it has its own calcTitleLayoutMixed()
-  if (result.recipe === "R5") return result;
+  if (result.recipe === 'R5') return result;
   // R6 (editorial) is designed for short titles only (≤20 chars, single line)
   // Long titles → fall back to R1 (handles long titles best)
-  if (titleLength > 20 && result.recipe === "R6") {
-    return { recipe: "R1", palette: "WM-1" }; // ED-1 has no dark bg, use WM-1 (warm teal)
+  if (titleLength > 20 && result.recipe === 'R6') {
+    return { recipe: 'R1', palette: 'WM-1' }; // ED-1 has no dark bg, use WM-1 (warm teal)
   }
   // R3/R4 struggle with long titles → fall back to R1 (same palette)
-  if (titleLength > 20 && ["R3", "R4"].includes(result.recipe)) {
-    return { recipe: "R1", palette: result.palette };
+  if (titleLength > 20 && ['R3', 'R4'].includes(result.recipe)) {
+    return { recipe: 'R1', palette: result.palette };
   }
   // Very long titles: even R2 centered looks scattered → R1 left-aligned
-  if (titleLength > 30 && result.recipe === "R2") {
-    return { recipe: "R1", palette: result.palette };
+  if (titleLength > 30 && result.recipe === 'R2') {
+    return { recipe: 'R1', palette: result.palette };
   }
   return result;
 }
@@ -652,7 +652,7 @@ sections: [
 
 ```js
 // ✅ MANDATORY: Define and use allNoBorders for every cover table
-const NB = { style: BorderStyle.NONE, size: 0, color: "FFFFFF" };
+const NB = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' };
 const noBorders = { top: NB, bottom: NB, left: NB, right: NB };
 const allNoBorders = { top: NB, bottom: NB, left: NB, right: NB,
                        insideHorizontal: NB, insideVertical: NB };
@@ -675,7 +675,7 @@ new Paragraph({
 
 // ❌ FORBIDDEN — text character line (renders inconsistently)
 new Paragraph({
-  children: [new TextRun({ text: "───────────────", color: P.accent })]
+  children: [new TextRun({ text: '───────────────', color: P.accent })]
 })
 ```
 9. **Post-generation overflow check (mandatory)**: After building cover children, estimate total height:
@@ -712,7 +712,7 @@ new Paragraph({
 **Every paragraph with font size > body text MUST set explicit line spacing** to prevent top clipping:
 ```js
 // ★ MANDATORY: prevent inherited small line spacing from clipping large fonts
-spacing: { line: Math.ceil(titlePt * 23), lineRule: "atLeast", after: 100 }
+spacing: { line: Math.ceil(titlePt * 23), lineRule: 'atLeast', after: 100 }
 // Example: 36pt → line: 828; 44pt → line: 1012
 ```
 Without this, the paragraph inherits body text line spacing (e.g., 560tw), which is shorter than the font height → top of characters gets clipped.
@@ -1002,8 +1002,8 @@ function buildCoverR1(config) {
     children.push(new Paragraph({
       indent: { left: padL, right: padR }, spacing: { after: 500 },
       border: { bottom: { style: BorderStyle.SINGLE, size: 6, color: P.accent, space: 8 } },
-      children: [new TextRun({ text: config.englishLabel.split("").join("  "),
-        size: 18, color: P.accent, font: { ascii: "Calibri", eastAsia: "SimHei" }, characterSpacing: 40 })],
+      children: [new TextRun({ text: config.englishLabel.split('').join('  '),
+        size: 18, color: P.accent, font: { ascii: 'Calibri', eastAsia: 'SimHei' }, characterSpacing: 40 })],
     }));
   }
 
@@ -1011,9 +1011,9 @@ function buildCoverR1(config) {
   for (let i = 0; i < titleLines.length; i++) {
     children.push(new Paragraph({
       indent: { left: padL },
-      spacing: { after: i < titleLines.length - 1 ? 100 : 300, line: Math.ceil(titlePt * 23), lineRule: "atLeast" },
+      spacing: { after: i < titleLines.length - 1 ? 100 : 300, line: Math.ceil(titlePt * 23), lineRule: 'atLeast' },
       children: [new TextRun({ text: titleLines[i], size: titleSize, bold: true,
-        color: P.titleColor, font: { eastAsia: "SimHei", ascii: "Arial" } })],
+        color: P.titleColor, font: { eastAsia: 'SimHei', ascii: 'Arial' } })],
     }));
   }
 
@@ -1022,7 +1022,7 @@ function buildCoverR1(config) {
     children.push(new Paragraph({
       indent: { left: padL }, spacing: { after: 800 },
       children: [new TextRun({ text: config.subtitle, size: 24, color: P.subtitleColor,
-        font: { eastAsia: "Microsoft YaHei", ascii: "Arial" } })],
+        font: { eastAsia: 'Microsoft YaHei', ascii: 'Arial' } })],
     }));
   }
 
@@ -1032,7 +1032,7 @@ function buildCoverR1(config) {
       indent: { left: padL + 200 }, spacing: { after: 80 },
       border: { left: accentLeft },
       children: [new TextRun({ text: line, size: 24, color: P.metaColor,
-        font: { eastAsia: "Microsoft YaHei", ascii: "Arial" } })],
+        font: { eastAsia: 'Microsoft YaHei', ascii: 'Arial' } })],
     }));
   }
 
@@ -1045,9 +1045,9 @@ function buildCoverR1(config) {
     border: { top: { style: BorderStyle.SINGLE, size: 2, color: P.accent, space: 8 } },
     spacing: { before: 200 },
     children: [
-      new TextRun({ text: config.footerLeft || "", size: 16, color: P.footerColor, font: { ascii: "Arial" } }),
-      new TextRun({ text: "                                        " }),
-      new TextRun({ text: config.footerRight || "", size: 16, color: P.footerColor, font: { ascii: "Arial" } }),
+      new TextRun({ text: config.footerLeft || '', size: 16, color: P.footerColor, font: { ascii: 'Arial' } }),
+      new TextRun({ text: '                                        ' }),
+      new TextRun({ text: config.footerRight || '', size: 16, color: P.footerColor, font: { ascii: 'Arial' } }),
     ],
   }));
 
@@ -1057,7 +1057,7 @@ function buildCoverR1(config) {
     layout: TableLayoutType.FIXED,
     borders: allNoBorders,
     rows: [new TableRow({
-      height: { value: 16838, rule: "exact" },
+      height: { value: 16838, rule: 'exact' },
       children: [new TableCell({
         shading: { type: ShadingType.CLEAR, fill: P.bg }, borders: noBorders,
         children,
@@ -1113,8 +1113,8 @@ function buildCoverR2(config) {
   if (config.englishLabel) {
     children.push(new Paragraph({
       alignment: AlignmentType.CENTER, spacing: { after: 500 },
-      children: [new TextRun({ text: config.englishLabel.split("").join("  "),
-        size: 18, color: P.accent, font: { ascii: "Calibri" }, characterSpacing: 40 })],
+      children: [new TextRun({ text: config.englishLabel.split('').join('  '),
+        size: 18, color: P.accent, font: { ascii: 'Calibri' }, characterSpacing: 40 })],
     }));
   }
 
@@ -1122,9 +1122,9 @@ function buildCoverR2(config) {
   for (let i = 0; i < titleLines.length; i++) {
     children.push(new Paragraph({
       alignment: AlignmentType.CENTER,
-      spacing: { after: i < titleLines.length - 1 ? 80 : 300, line: Math.ceil(titlePt * 23), lineRule: "atLeast" },
+      spacing: { after: i < titleLines.length - 1 ? 80 : 300, line: Math.ceil(titlePt * 23), lineRule: 'atLeast' },
       children: [new TextRun({ text: titleLines[i], size: titleSize, bold: true,
-        color: P.titleColor, font: { eastAsia: "SimHei", ascii: "Arial" } })],
+        color: P.titleColor, font: { eastAsia: 'SimHei', ascii: 'Arial' } })],
     }));
   }
 
@@ -1133,7 +1133,7 @@ function buildCoverR2(config) {
     children.push(new Paragraph({
       alignment: AlignmentType.CENTER, spacing: { after: 400 },
       children: [new TextRun({ text: config.subtitle, size: 24, color: P.subtitleColor,
-        font: { eastAsia: "Microsoft YaHei", ascii: "Arial" } })],
+        font: { eastAsia: 'Microsoft YaHei', ascii: 'Arial' } })],
     }));
   }
 
@@ -1144,9 +1144,9 @@ function buildCoverR2(config) {
   for (const line of (config.metaLines || [])) {
     children.push(new Paragraph({
       alignment: AlignmentType.CENTER,
-      spacing: { after: 100, line: Math.ceil(18 * 23), lineRule: "atLeast" },
+      spacing: { after: 100, line: Math.ceil(18 * 23), lineRule: 'atLeast' },
       children: [new TextRun({ text: line, size: 36, color: P.metaColor,
-        font: { eastAsia: "Microsoft YaHei", ascii: "Arial" } })],
+        font: { eastAsia: 'Microsoft YaHei', ascii: 'Arial' } })],
     }));
   }
 
@@ -1158,7 +1158,7 @@ function buildCoverR2(config) {
     alignment: AlignmentType.CENTER,
     indent: { left: padL - 400, right: padR - 400 }, spacing: { before: 200 },
     border: { bottom: thickBorder },
-    children: [new TextRun({ text: config.footerRight || "", size: 18, color: P.footerColor, font: { ascii: "Arial" } })],
+    children: [new TextRun({ text: config.footerRight || '', size: 18, color: P.footerColor, font: { ascii: 'Arial' } })],
   }));
 
   // Single 16838 wrapper — the ONLY table
@@ -1167,7 +1167,7 @@ function buildCoverR2(config) {
     layout: TableLayoutType.FIXED,
     borders: allNoBorders,
     rows: [new TableRow({
-      height: { value: 16838, rule: "exact" },
+      height: { value: 16838, rule: 'exact' },
       children: [new TableCell({
         shading: { type: ShadingType.CLEAR, fill: P.bg }, borders: noBorders,
         children,
@@ -1231,8 +1231,8 @@ function buildCoverR3(config) {
     children.push(new Paragraph({
       alignment: AlignmentType.CENTER, indent: { left: cardIndent, right: cardIndent },
       spacing: { after: 500 }, border: sides,
-      children: [new TextRun({ text: config.englishLabel.split("").join("  "),
-        size: 16, color: P.accent, font: { ascii: "Calibri" }, characterSpacing: 30 })],
+      children: [new TextRun({ text: config.englishLabel.split('').join('  '),
+        size: 16, color: P.accent, font: { ascii: 'Calibri' }, characterSpacing: 30 })],
     }));
   }
 
@@ -1240,10 +1240,10 @@ function buildCoverR3(config) {
   for (let i = 0; i < titleLines.length; i++) {
     children.push(new Paragraph({
       alignment: AlignmentType.CENTER, indent: { left: cardIndent, right: cardIndent },
-      spacing: { after: i < titleLines.length - 1 ? 60 : 300, line: Math.ceil(titlePt * 23), lineRule: "atLeast" },
+      spacing: { after: i < titleLines.length - 1 ? 60 : 300, line: Math.ceil(titlePt * 23), lineRule: 'atLeast' },
       border: sides,
       children: [new TextRun({ text: titleLines[i], size: titleSize, bold: true,
-        color: P.titleColor, font: { eastAsia: "SimHei", ascii: "Arial" } })],
+        color: P.titleColor, font: { eastAsia: 'SimHei', ascii: 'Arial' } })],
     }));
   }
 
@@ -1253,7 +1253,7 @@ function buildCoverR3(config) {
       alignment: AlignmentType.CENTER, indent: { left: cardIndent, right: cardIndent },
       spacing: { after: 400 }, border: sides,
       children: [new TextRun({ text: config.subtitle, size: 22, color: P.subtitleColor,
-        font: { eastAsia: "Microsoft YaHei", ascii: "Arial" } })],
+        font: { eastAsia: 'Microsoft YaHei', ascii: 'Arial' } })],
     }));
   }
 
@@ -1270,7 +1270,7 @@ function buildCoverR3(config) {
       alignment: AlignmentType.CENTER, indent: { left: cardIndent, right: cardIndent },
       spacing: { after: isLast ? 400 : 80 }, border: sides,
       children: [new TextRun({ text: config.metaLines[i], size: 24, color: P.metaColor,
-        font: { eastAsia: "Microsoft YaHei", ascii: "Arial" } })],
+        font: { eastAsia: 'Microsoft YaHei', ascii: 'Arial' } })],
     }));
   }
 
@@ -1286,7 +1286,7 @@ function buildCoverR3(config) {
   // 10. Footer
   children.push(new Paragraph({
     alignment: AlignmentType.CENTER,
-    children: [new TextRun({ text: config.footerRight || "", size: 16, color: P.footerColor, font: { ascii: "Arial" } })],
+    children: [new TextRun({ text: config.footerRight || '', size: 16, color: P.footerColor, font: { ascii: 'Arial' } })],
   }));
 
   // Single 16838 wrapper — the ONLY table
@@ -1295,7 +1295,7 @@ function buildCoverR3(config) {
     layout: TableLayoutType.FIXED,
     borders: allNoBorders,
     rows: [new TableRow({
-      height: { value: 16838, rule: "exact" },
+      height: { value: 16838, rule: 'exact' },
       children: [new TableCell({
         shading: { type: ShadingType.CLEAR, fill: P.bg }, borders: noBorders,
         children,
@@ -1347,10 +1347,10 @@ function buildCoverR4(config) {
     layout: TableLayoutType.FIXED,
     borders: allNoBorders,
     rows: [new TableRow({
-      height: { value: UPPER_H, rule: "exact" },
+      height: { value: UPPER_H, rule: 'exact' },
       children: [new TableCell({
         shading: { fill: P.bg }, borders: noBorders,
-        verticalAlign: "top",
+        verticalAlign: 'top',
         // ★ KEY: Only left/right margins. NO top/bottom margins.
         // Vertical positioning uses spacing.before on the first paragraph.
         margins: { left: padL, right: padR },
@@ -1358,18 +1358,18 @@ function buildCoverR4(config) {
           new Paragraph({ spacing: { before: topSpacing } }),
           config.englishLabel ? new Paragraph({
             spacing: { after: 500 },
-            children: [new TextRun({ text: config.englishLabel.split("").join(" "),
-              size: 18, color: P.accent, font: { ascii: "Calibri" }, characterSpacing: 60 })],
+            children: [new TextRun({ text: config.englishLabel.split('').join(' '),
+              size: 18, color: P.accent, font: { ascii: 'Calibri' }, characterSpacing: 60 })],
           }) : null,
           ...titleLines.map((line, i) => new Paragraph({
             spacing: { after: i < titleLines.length - 1 ? 100 : 200 },
             children: [new TextRun({ text: line, size: titleSize, bold: true,
-              color: P.titleColor, font: { eastAsia: "SimHei", ascii: "Arial" } })],
+              color: P.titleColor, font: { eastAsia: 'SimHei', ascii: 'Arial' } })],
           })),
           config.subtitle ? new Paragraph({
             spacing: { after: 100 },
             children: [new TextRun({ text: config.subtitle, size: 24, color: P.subtitleColor,
-              font: { eastAsia: "Microsoft YaHei", ascii: "Arial" } })],
+              font: { eastAsia: 'Microsoft YaHei', ascii: 'Arial' } })],
           }) : null,
         ].filter(Boolean),
       })],
@@ -1381,7 +1381,7 @@ function buildCoverR4(config) {
     width: { size: 100, type: WidthType.PERCENTAGE },
     borders: allNoBorders,
     rows: [new TableRow({
-      height: { value: DIVIDER_H, rule: "exact" },
+      height: { value: DIVIDER_H, rule: 'exact' },
       children: [new TableCell({ borders: noBorders,
         shading: { fill: P.accent }, children: [emptyPara()] })],
     })],
@@ -1393,15 +1393,15 @@ function buildCoverR4(config) {
     ...(config.metaLines || []).map(line => new Paragraph({
       indent: { left: padL }, spacing: { after: 100 },
       children: [new TextRun({ text: line, size: 28, color: P.metaColor,
-        font: { eastAsia: "Microsoft YaHei", ascii: "Arial" } })],
+        font: { eastAsia: 'Microsoft YaHei', ascii: 'Arial' } })],
     })),
     new Paragraph({ spacing: { before: 2000 } }),
     new Paragraph({
       indent: { left: padL },
       children: [
-        new TextRun({ text: config.footerLeft || "", size: 22, color: "909090" }),
-        new TextRun({ text: "          " }),
-        new TextRun({ text: config.footerRight || "", size: 22, color: "909090" }),
+        new TextRun({ text: config.footerLeft || '', size: 22, color: '909090' }),
+        new TextRun({ text: '          ' }),
+        new TextRun({ text: config.footerRight || '', size: 22, color: '909090' }),
       ],
     }),
   ];
@@ -1414,10 +1414,10 @@ function buildCoverR4(config) {
     layout: TableLayoutType.FIXED,
     borders: allNoBorders,
     rows: [new TableRow({
-      height: { value: 16838, rule: "exact" },
+      height: { value: 16838, rule: 'exact' },
       children: [new TableCell({
-        shading: { fill: "FFFFFF" }, borders: noBorders,
-        verticalAlign: "top",
+        shading: { fill: 'FFFFFF' }, borders: noBorders,
+        verticalAlign: 'top',
         children: [
           upperBlock,
           divider,
@@ -1496,7 +1496,7 @@ function buildR5MetaTable(metaEntries) {
   // metaEntries: [{ label: "学院", value: "计算机科学与技术学院" }, ...]
   const { tablePct, labelPct } = calcR5MetaLayout(metaEntries);
   const valuePct = 100 - labelPct;
-  const bottomBorder = { style: BorderStyle.SINGLE, size: 4, color: "000000" };
+  const bottomBorder = { style: BorderStyle.SINGLE, size: 4, color: '000000' };
 
   const rows = metaEntries.map(entry => new TableRow({
     children: [
@@ -1509,8 +1509,8 @@ function buildR5MetaTable(metaEntries) {
           alignment: AlignmentType.LEFT,
           spacing: { before: 60, after: 60, line: 400 },
           children: [new TextRun({
-            text: entry.label + "：",
-            size: 24, font: { eastAsia: "SimSun", ascii: "Times New Roman" },
+            text: entry.label + '：',
+            size: 24, font: { eastAsia: 'SimSun', ascii: 'Times New Roman' },
           })],
         })],
       }),
@@ -1524,7 +1524,7 @@ function buildR5MetaTable(metaEntries) {
           spacing: { before: 60, after: 60, line: 400 },
           children: [new TextRun({
             text: entry.value,
-            size: 24, font: { eastAsia: "SimSun", ascii: "Times New Roman" },
+            size: 24, font: { eastAsia: 'SimSun', ascii: 'Times New Roman' },
           })],
         })],
       }),
@@ -1553,9 +1553,9 @@ function buildCoverR5(config) {
 
   // Parse meta entries
   const metaEntries = (config.metaLines || []).map(line => {
-    const sep = line.indexOf("：") !== -1 ? "：" : ":";
+    const sep = line.indexOf('：') !== -1 ? '：' : ':';
     const idx = line.indexOf(sep);
-    if (idx === -1) return { label: line, value: "" };
+    if (idx === -1) return { label: line, value: '' };
     return { label: line.slice(0, idx).trim(), value: line.slice(idx + sep.length).trim() };
   });
 
@@ -1583,7 +1583,7 @@ function buildCoverR5(config) {
     children.push(new Paragraph({
       alignment: AlignmentType.CENTER, spacing: { after: 400 },
       children: [new TextRun({ text: config.schoolName, size: 44, characterSpacing: 40,
-        font: { eastAsia: "SimSun", ascii: "Times New Roman" } })],
+        font: { eastAsia: 'SimSun', ascii: 'Times New Roman' } })],
     }));
   }
 
@@ -1592,7 +1592,7 @@ function buildCoverR5(config) {
     children.push(new Paragraph({
       alignment: AlignmentType.CENTER, spacing: { after: i < titleLines.length - 1 ? 120 : 300 },
       children: [new TextRun({ text: titleLines[i], size: titleSize, bold: true,
-        font: { eastAsia: "SimHei", ascii: "Times New Roman" } })],
+        font: { eastAsia: 'SimHei', ascii: 'Times New Roman' } })],
     }));
   }
 
@@ -1601,7 +1601,7 @@ function buildCoverR5(config) {
     children.push(new Paragraph({
       alignment: AlignmentType.CENTER, spacing: { after: 200 },
       children: [new TextRun({ text: config.subtitle, size: 30,
-        font: { eastAsia: "SimSun", ascii: "Times New Roman" } })],
+        font: { eastAsia: 'SimSun', ascii: 'Times New Roman' } })],
     }));
   }
 
@@ -1616,8 +1616,8 @@ function buildCoverR5(config) {
   if (config.footerRight) {
     children.push(new Paragraph({
       alignment: AlignmentType.CENTER,
-      children: [new TextRun({ text: config.footerRight, size: 24, color: "404040",
-        font: { eastAsia: "SimSun", ascii: "Times New Roman" } })],
+      children: [new TextRun({ text: config.footerRight, size: 24, color: '404040',
+        font: { eastAsia: 'SimSun', ascii: 'Times New Roman' } })],
     }));
   }
 
@@ -1627,10 +1627,10 @@ function buildCoverR5(config) {
     layout: TableLayoutType.FIXED,
     borders: allNoBorders,
     rows: [new TableRow({
-      height: { value: PAGE_H, rule: "exact" },
+      height: { value: PAGE_H, rule: 'exact' },
       children: [new TableCell({
-        shading: { type: ShadingType.CLEAR, fill: "FFFFFF" },
-        borders: noBorders, verticalAlign: "top",
+        shading: { type: ShadingType.CLEAR, fill: 'FFFFFF' },
+        borders: noBorders, verticalAlign: 'top',
         margins: { left: simMarginLR, right: simMarginLR },
         children,
       })],
@@ -1648,10 +1648,10 @@ function buildCoverR5(config) {
 
 ```js
 function blendColors(hex1, hex2, ratio) {
-  const p = (s, i) => parseInt(s.replace("#","").slice(i, i+2), 16);
+  const p = (s, i) => parseInt(s.replace('#','').slice(i, i+2), 16);
   const mix = (c1, c2) => Math.round(c1 + (c2 - c1) * ratio);
   const r = mix(p(hex1,0), p(hex2,0)), g = mix(p(hex1,2), p(hex2,2)), b = mix(p(hex1,4), p(hex2,4));
-  return [r, g, b].map(v => v.toString(16).padStart(2,"0")).join("");
+  return [r, g, b].map(v => v.toString(16).padStart(2,'0')).join('');
 }
 ```
 

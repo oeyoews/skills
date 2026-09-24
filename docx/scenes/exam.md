@@ -81,8 +81,8 @@ sections: [
 headers: { default: new Header({ children: [
   new Paragraph({ alignment: AlignmentType.CENTER,
     children: [new TextRun({
-      text: ".............. Seal ...... Line ...... Do ...... Not ...... Answer ...... Inside ..............",
-      size: 16, color: "999999", font: "SimSun" })] })
+      text: '.............. Seal ...... Line ...... Do ...... Not ...... Answer ...... Inside ..............',
+      size: 16, color: '999999', font: 'SimSun' })] })
 ] }) }
 ```
 
@@ -106,9 +106,9 @@ headers: { default: new Header({ children: [
 new Table({
   alignment: AlignmentType.CENTER, columnWidths: [2800, 2800, 2800],
   rows: [new TableRow({ children: [
-    cell("Name: ______________"),
-    cell("Class: ______________", AlignmentType.CENTER),
-    cell("ID: ______________", AlignmentType.RIGHT),
+    cell('Name: ______________'),
+    cell('Class: ______________', AlignmentType.CENTER),
+    cell('ID: ______________', AlignmentType.RIGHT),
   ] })]
 })
 ```
@@ -162,8 +162,8 @@ Should include: total score, exam duration, answer method, special requirements 
 ```js
 // Exam papers use only black/white/grey for clear photocopying
 const C = {
-  title: "000000", body: "000000", section: "333333",
-  seal: "999999", answerLine: "CCCCCC", headerBg: "F0F0F0", gridLine: "DDDDDD",
+  title: '000000', body: '000000', section: '333333',
+  seal: '999999', answerLine: 'CCCCCC', headerBg: 'F0F0F0', gridLine: 'DDDDDD',
 };
 ```
 
@@ -190,10 +190,10 @@ Entire paper uses consistent three-level numbering:
 ```js
 // ✅ Correct — plain TextRun manual numbering
 new Paragraph({ spacing: { before: 120, after: 60, line: 360 },
-  children: [new TextRun({ text: `${i+1}. ${question}`, size: 21, font: { eastAsia: "SimSun" } })] })
+  children: [new TextRun({ text: `${i+1}. ${question}`, size: 21, font: { eastAsia: 'SimSun' } })] })
 
 // ❌ Wrong — numbering causes Word to add bullets
-new Paragraph({ numbering: { reference: "xxx", level: 0 }, // ← Forbidden!
+new Paragraph({ numbering: { reference: 'xxx', level: 0 }, // ← Forbidden!
   children: [new TextRun({ text: question })] })
 ```
 
@@ -234,14 +234,14 @@ When a question references "underlined part" (划线部分), the relevant text M
 ```js
 // ✅ Correct — actual underline on the referenced text
 new Paragraph({ children: [
-  new TextRun({ text: "1. It is ", size: 21, font: { ascii: "Times New Roman" } }),
-  new TextRun({ text: "a butterfly", size: 21, font: { ascii: "Times New Roman" },
-    underline: { type: UnderlineType.SINGLE, color: "000000" } }),
-  new TextRun({ text: ". (Ask about the underlined part)", size: 21, font: { ascii: "Times New Roman" } }),
+  new TextRun({ text: '1. It is ', size: 21, font: { ascii: 'Times New Roman' } }),
+  new TextRun({ text: 'a butterfly', size: 21, font: { ascii: 'Times New Roman' },
+    underline: { type: UnderlineType.SINGLE, color: '000000' } }),
+  new TextRun({ text: '. (Ask about the underlined part)', size: 21, font: { ascii: 'Times New Roman' } }),
 ]})
 
 // ❌ Wrong — underlined part described as annotation text
-new TextRun({ text: "1. It is a butterfly. (对划线部分提问) 注：划线部分为 a butterfly" })
+new TextRun({ text: '1. It is a butterfly. (对划线部分提问) 注：划线部分为 a butterfly' })
 ```
 
 ### Font Hierarchy
@@ -281,11 +281,11 @@ answerLine: 500  // Answer line spacing for writing room
 // Short options: 4 columns in 1 row
 new Table({
   columnWidths: [2200, 2200, 2200, 2200],
-  rows: [new TableRow({ children: ["A","B","C","D"].map((label, i) =>
+  rows: [new TableRow({ children: ['A','B','C','D'].map((label, i) =>
     new TableCell({ borders: NBs, width: { size: 2200, type: WidthType.DXA },
       margins: { top: 0, bottom: 0, left: 60, right: 60 },
       children: [new Paragraph({ spacing: { before: 0, after: 0 },
-        children: [new TextRun({ text: `${label}. ${options[i]}`, size: 21, font: "SimSun" })] })]
+        children: [new TextRun({ text: `${label}. ${options[i]}`, size: 21, font: 'SimSun' })] })]
     })
   ) })]
 })
@@ -297,9 +297,9 @@ new Table({
 ```js
 function getOptionLayout(options) {
   const maxLen = Math.max(...options.map(o => o.length));
-  if (maxLen <= 6) return "4col";
-  if (maxLen <= 15) return "2col";
-  return "1col";
+  if (maxLen <= 6) return '4col';
+  if (maxLen <= 15) return '2col';
+  return '1col';
 }
 ```
 
@@ -313,7 +313,7 @@ function getOptionLayout(options) {
 // Medium (phrase): 14 underscores
 // Long (sentence): 20 underscores
 new Paragraph({ spacing: { before: 140, after: 80, line: 400 },
-  children: [new TextRun({ text: `${num}. Question text ________________.`, size: 21, font: "SimSun" })] })
+  children: [new TextRun({ text: `${num}. Question text ________________.`, size: 21, font: 'SimSun' })] })
 ```
 
 ⚠️ Fill-in lines must not break across lines — if line is too long, put the blank on the next line.
@@ -325,7 +325,7 @@ new Paragraph({ spacing: { before: 140, after: 80, line: 400 },
 ### Question + Points
 ```js
 new Paragraph({ spacing: { before: 200, after: 60, line: 360 }, keepNext: true,
-  children: [new TextRun({ text: `${num}. (${points} pts) ${question}`, size: 21, font: "SimSun" })] })
+  children: [new TextRun({ text: `${num}. (${points} pts) ${question}`, size: 21, font: 'SimSun' })] })
 ```
 
 ### Answer Lines
@@ -335,8 +335,8 @@ new Paragraph({ spacing: { before: 200, after: 60, line: 360 }, keepNext: true,
 function answerLines(count) {
   return Array(count).fill(null).map(() =>
     new Paragraph({ spacing: { before: 0, after: 0, line: 500 },
-      borders: { bottom: { style: BorderStyle.SINGLE, size: 1, color: "CCCCCC" } },
-      children: [new TextRun({ text: " ", size: 21 })] })
+      borders: { bottom: { style: BorderStyle.SINGLE, size: 1, color: 'CCCCCC' } },
+      children: [new TextRun({ text: ' ', size: 21 })] })
   );
 }
 ```
@@ -367,10 +367,10 @@ Use **only spacing** (`spacing.before: 200`) for visual separation between quest
 ```js
 // Material area — indented + KaiTi to differentiate
 new Paragraph({ indent: { left: 420, right: 420 }, spacing: { before: 100, after: 100, line: 380 },
-  children: [new TextRun({ text: materialText, size: 21, font: "KaiTi" })] })
+  children: [new TextRun({ text: materialText, size: 21, font: 'KaiTi' })] })
 // Source attribution
 new Paragraph({ alignment: AlignmentType.RIGHT, indent: { right: 420 },
-  children: [new TextRun({ text: "— from \"XXX\"", size: 18, color: "666666", font: "SimSun" })] })
+  children: [new TextRun({ text: '— from "XXX"', size: 18, color: '666666', font: 'SimSun' })] })
 ```
 
 ### Key Principles
@@ -414,7 +414,7 @@ function compositionGrid(rows, colsPerRow) {
       new TableRow({
         height: { value: cellSize, rule: HeightRule.EXACT },
         children: Array(colsPerRow).fill(null).map(() =>
-          new TableCell({ borders: thinBs("DDDDDD"), width: { size: cellSize, type: WidthType.DXA },
+          new TableCell({ borders: thinBs('DDDDDD'), width: { size: cellSize, type: WidthType.DXA },
             children: [new Paragraph({ children: [] })] })
         )
       })
@@ -431,8 +431,8 @@ function compositionGrid(rows, colsPerRow) {
 function writingLines(count) {
   return Array(count).fill(null).map(() =>
     new Paragraph({ spacing: { before: 0, after: 0, line: 560 },
-      borders: { bottom: { style: BorderStyle.SINGLE, size: 1, color: "CCCCCC" } },
-      children: [new TextRun({ text: " ", size: 21 })] })
+      borders: { bottom: { style: BorderStyle.SINGLE, size: 1, color: 'CCCCCC' } },
+      children: [new TextRun({ text: ' ', size: 21 })] })
   );
 }
 ```

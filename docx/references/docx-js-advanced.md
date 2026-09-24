@@ -25,7 +25,7 @@ const coverSection = {
       alignment: AlignmentType.CENTER,
       children: [new TextRun({
         text: title,
-        font: { ascii: "Calibri", eastAsia: "SimHei" },
+        font: { ascii: 'Calibri', eastAsia: 'SimHei' },
         size: 52, bold: true, color: palette.primary,
       })],
     }),
@@ -39,22 +39,22 @@ For multi-section documents, put the cover in its own section so it can have dif
 ## Footnotes
 
 ```js
-const { FootnoteReferenceRun, Footnote } = require("docx");
+const { FootnoteReferenceRun, Footnote } = require('docx');
 
 const doc = new Document({
   footnotes: {
-    1: { children: [new Paragraph({ children: [new TextRun({ text: "Smith, J. (2024). Research Methods. Academic Press, pp. 45-67.", size: 18 })] })] },
-    2: { children: [new Paragraph({ children: [new TextRun({ text: "Zhang, W. (2023). \u201c数据分析方法研究\u201d. 科学通报, 68(12), 1234-1250.", size: 18 })] })] },
+    1: { children: [new Paragraph({ children: [new TextRun({ text: 'Smith, J. (2024). Research Methods. Academic Press, pp. 45-67.', size: 18 })] })] },
+    2: { children: [new Paragraph({ children: [new TextRun({ text: 'Zhang, W. (2023). \u201c数据分析方法研究\u201d. 科学通报, 68(12), 1234-1250.', size: 18 })] })] },
   },
   sections: [{
     children: [
       new Paragraph({
         children: [
-          new TextRun({ text: "According to recent studies" }),
+          new TextRun({ text: 'According to recent studies' }),
           new FootnoteReferenceRun(1), // superscript [1]
-          new TextRun({ text: ", data analysis methods have evolved" }),
+          new TextRun({ text: ', data analysis methods have evolved' }),
           new FootnoteReferenceRun(2), // superscript [2]
-          new TextRun({ text: "." }),
+          new TextRun({ text: '.' }),
         ],
       }),
     ],
@@ -75,7 +75,7 @@ Prevent page breaks between related elements:
 new Paragraph({
   heading: HeadingLevel.HEADING_2,
   keepNext: true, // don't break after this
-  children: [new TextRun({ text: "Table 1: Results" })],
+  children: [new TextRun({ text: 'Table 1: Results' })],
 })
 // Table immediately follows on same page
 
@@ -83,7 +83,7 @@ new Paragraph({
 new Paragraph({
   keepNext: true,
   alignment: AlignmentType.CENTER,
-  children: [new TextRun({ text: "Table 1: Results", italics: true, size: 20 })],
+  children: [new TextRun({ text: 'Table 1: Results', italics: true, size: 20 })],
 })
 // Table paragraph follows
 ```
@@ -114,19 +114,19 @@ Follow the document type strategy defined in SOUL.md Rule 1.
 new Paragraph({
   heading: HeadingLevel.HEADING_1,
   keepNext: true,
-  children: [new TextRun("Chapter Title")],
+  children: [new TextRun('Chapter Title')],
 })
 
 // Table caption stays with table
 new Paragraph({
   keepNext: true,
-  children: [new TextRun({ text: "Table 1: Summary", italics: true })],
+  children: [new TextRun({ text: 'Table 1: Summary', italics: true })],
 })
 
 // Image caption stays with image
 new Paragraph({
   keepNext: true,
-  children: [new TextRun({ text: "Figure 1: Architecture", italics: true })],
+  children: [new TextRun({ text: 'Figure 1: Architecture', italics: true })],
 })
 ```
 
@@ -144,32 +144,43 @@ new Paragraph({ children: [new PageBreak()] })
 
 **⚠️⚠️⚠️ CRITICAL — #1 MOST COMMON BUG ⚠️⚠️⚠️**
 
-Bare Chinese curly quotation marks (`""` `''`) in JS string literals **WILL break syntax and crash document generation**. This bug occurs most often in **Chinese body text** where curly quotes are used for emphasis, proper nouns, event names, or quoted speech — e.g., `"双11"`, `"前低后高"`, `"618"大促`. **Every single occurrence** of `""''` in text content MUST be Unicode-escaped. No exceptions.
+The hazard is **any quote character that matches the literal's delimiter**. All code in this skill
+uses **single-quote** string literals, so the dangerous character is the ASCII apostrophe `'`:
 
-**MANDATORY RULE: Before writing ANY `TextRun`, `para()`, or string containing Chinese text, scan the text for `""''` characters and replace ALL of them with `\u201c \u201d \u2018 \u2019`.**
+- ASCII `'` inside copy is the real risk — Chinese copy regularly carries apostrophes from English
+  words (`It's`, `don't`, `Agent's`) and from quoted English terms
+- ASCII `"` inside copy is **safe** under single quotes and needs no escaping
+- Full-width Chinese quotes `“ ”` `‘ ’` (U+201C/U+201D, U+2018/U+2019) are **not** JS delimiters.
+  They never break syntax and can be written directly — no Unicode escaping is required for them
 
-| Character | Unicode | Escape method |
-|-----------|---------|---------------|
-| `"` `"` | `\u201c` `\u201d` | Unicode escape `\u201c` `\u201d` |
-| `'` `'` | `\u2018` `\u2019` | Unicode escape `\u2018` `\u2019` |
-| `"` | U+0022 | `\"` or wrap string in single quotes / template literal |
-| `'` | U+0027 | `\'` or wrap string in double quotes / template literal |
+| Character | Handling under the single-quote convention |
+|-----------|---------------------------------------------|
+| `“` `”` U+201C/U+201D | Write directly — never a syntax problem |
+| `‘` `’` U+2018/U+2019 | Write directly — never a syntax problem |
+| `"` U+0022 | Safe inside `'...'` — write it directly |
+| `'` U+0027 | Must be escaped (`\'`), or the literal switched to `"..."` / a template literal |
 
 ```js
-// ❌ WRONG — curly quotes in Chinese text break JS syntax (VERY COMMON MISTAKE)
+// ❌ WRONG — bare ASCII apostrophe inside a single-quoted literal: SyntaxError
+new TextRun({ text: 'It's a test' })
+new TextRun({ text: 'Agent 的 don\'t 问题' })
+
+// ❌ WRONG — delimiter collision: the ASCII quotes terminate the literal early
 content.push(para("2025年四个季度行业增速呈现"前低后高"的态势。在"618"大促、"双11""双12"活动拉动下增长显著。"));
 new TextRun({ text: "他说"你好"" })
-new TextRun({ text: 'It's a test' })
 
-// ✅ CORRECT — ALL curly quotes replaced with Unicode escapes
-content.push(para("2025年四个季度行业增速呈现\u201c前低后高\u201d的态势。在\u201c618\u201d大促、\u201c双11\u201d\u201c双12\u201d活动拉动下增长显著。"));
-new TextRun({ text: "他说\u201c你好\u201d" })
-new TextRun({ text: "It\u2019s a test" })
-
-// ✅ CORRECT — straight quotes escaped or use alternate delimiters
-new TextRun({ text: "He said \"hello\"" })
+// ✅ CORRECT — ASCII double quotes are safe under single quotes
 new TextRun({ text: 'He said "hello"' })
-new TextRun({ text: `He said "hello"` })
+new TextRun({ text: '行业正从"手写 Prompt"走向平台化工程' })
+
+// ✅ CORRECT — copy containing an apostrophe: switch delimiter, escape, or use a template literal
+new TextRun({ text: "It's a test" })
+new TextRun({ text: 'It\'s a test' })
+new TextRun({ text: `It's a test` })
+
+// ✅ CORRECT — full-width Chinese quotes need no escaping at all
+new TextRun({ text: '他说“你好”' })
+new TextRun({ text: '2025年四个季度行业增速呈现“前低后高”的态势。' })
 ```
 
 ## Multi-Section Documents
@@ -217,7 +228,7 @@ const doc = new Document({
         default: new Header({
           children: [new Paragraph({
             alignment: AlignmentType.CENTER,
-            children: [new TextRun({ text: docTitle, size: 18, color: "888888" })],
+            children: [new TextRun({ text: docTitle, size: 18, color: '888888' })],
           })],
         }),
       },

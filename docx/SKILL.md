@@ -121,7 +121,7 @@ For Chinese font size table and common margins, see `references/common-rules.md`
 - [ ] PageBreak inside Paragraph
 - [ ] ShadingType uses CLEAR
 - [ ] Each numbered list uses unique `reference`
-- [ ] **⚠️ CRITICAL — Quotation marks in JS strings properly escaped.** Chinese curly quotes (`""` `''`) MUST use Unicode escapes (`\u201c` `\u201d` `\u2018` `\u2019`); straight quotes (`"` `'`) use `\"` `\'` or alternate delimiters. **This is the #1 most common code generation bug.** Chinese text frequently contains `""` for emphasis or proper nouns (e.g., "双11", "前低后高", "618") — every occurrence MUST be escaped. Failure to escape produces JS syntax errors that silently break document generation.
+- [ ] **⚠️ CRITICAL — String delimiter safety in JS.** All code in this skill uses **single-quote** string literals, so the dangerous character is the ASCII apostrophe `'`. Chinese copy regularly carries apostrophes from English words (`It's`, `don't`, `Agent's`) — a bare `'` inside a `'...'` literal is a guaranteed `SyntaxError`. In that case use double quotes, a template literal, or `\'`. ASCII `"` inside copy is safe and needs no escaping; full-width Chinese quotes `“ ”` are not JS delimiters and also need no escaping. This is the #1 most common code generation bug — see `references/docx-js-advanced.md` § Quotes Escaping in JS Strings
 - [ ] Header/footer present (unless scene says otherwise)
 
 #### Heading Styles

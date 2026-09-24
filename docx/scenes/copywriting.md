@@ -71,14 +71,14 @@ sectionGap: { before: 400, after: 200 }
 ### Key Point Highlighting
 Use **bold** or **accent-colored text** to mark key selling points:
 ```js
-new TextRun({ text: "Key selling point", bold: true, color: c(P.accent) })
+new TextRun({ text: 'Key selling point', bold: true, color: c(P.accent) })
 ```
 
 ### Rhythm Markers (optional)
 Insert small grey markers where pauses, emphasis, or tone changes are needed:
 ```js
 new Paragraph({ spacing: { before: 60, after: 60 },
-  children: [new TextRun({ text: "[Pause 2 sec]", size: 21, color: "999999", italics: true })] })
+  children: [new TextRun({ text: '[Pause 2 sec]', size: 21, color: '999999', italics: true })] })
 // Or inline: new TextRun({ text: " [emphasis] ", size: 18, color: "999999", italics: true })
 ```
 
@@ -117,11 +117,11 @@ Broadcast scripts use clean, simple colors — no complex visual design needed:
 
 ```js
 const P = {
-  primary: "#1A1A1A",    // Title
-  body: "#333333",       // Body
-  secondary: "#666666",  // Notes
-  accent: "#E85D3A",     // Key highlight (warm, energetic)
-  surface: "#FFF8F5",    // Background (if needed)
+  primary: '#1A1A1A',    // Title
+  body: '#333333',       // Body
+  secondary: '#666666',  // Notes
+  accent: '#E85D3A',     // Key highlight (warm, energetic)
+  surface: '#FFF8F5',    // Background (if needed)
 };
 ```
 

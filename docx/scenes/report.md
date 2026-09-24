@@ -22,13 +22,13 @@ Auto-select structure and expression style based on user intent. If not explicit
 
 ```js
 function selectReportType(keywords, topic) {
-  if (/analysis|competitor|industry|operations|data/.test(keywords)) return "analysis";
-  if (/experiment|lab|algorithm|engineering/.test(keywords)) return "experiment";
-  if (/test|QA|performance|security|compatibility/.test(keywords)) return "testing";
-  if (/survey|questionnaire|interview|market research/.test(keywords)) return "research";
-  if (/review|retrospective|post-mortem|summary/.test(keywords)) return "review";
-  if (/proposal|feasibility|implementation|optimization/.test(keywords)) return "proposal";
-  return "analysis"; // default
+  if (/analysis|competitor|industry|operations|data/.test(keywords)) return 'analysis';
+  if (/experiment|lab|algorithm|engineering/.test(keywords)) return 'experiment';
+  if (/test|QA|performance|security|compatibility/.test(keywords)) return 'testing';
+  if (/survey|questionnaire|interview|market research/.test(keywords)) return 'research';
+  if (/review|retrospective|post-mortem|summary/.test(keywords)) return 'review';
+  if (/proposal|feasibility|implementation|optimization/.test(keywords)) return 'proposal';
+  return 'analysis'; // default
 }
 ```
 

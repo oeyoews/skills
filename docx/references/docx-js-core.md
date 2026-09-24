@@ -11,8 +11,8 @@ const {
   AlignmentType, HeadingLevel, WidthType, BorderStyle, ShadingType,
   PageOrientation, TabStopType, TabStopPosition, ExternalHyperlink,
   InternalHyperlink, Bookmark, LevelFormat, TableOfContents,
-} = require("docx");
-const fs = require("fs");
+} = require('docx');
+const fs = require('fs');
 ```
 
 ## Document Creation + Export
@@ -35,7 +35,7 @@ const doc = new Document({
 });
 
 const buffer = await Packer.toBuffer(doc);
-fs.writeFileSync("output.docx", buffer);
+fs.writeFileSync('output.docx', buffer);
 ```
 
 ## Paragraph + TextRun
@@ -48,23 +48,23 @@ new Paragraph({
   indent: { firstLine: 480 }, // 2-char CJK indent (480 SimSun / 420 YaHei)
   children: [
     new TextRun({
-      text: "Hello",
+      text: 'Hello',
       bold: true,
       italics: true,
       size: 24, // 12pt = Xiao Si
-      font: { ascii: "Calibri", eastAsia: "Microsoft YaHei" },
-      color: "000000", // Pure black for Profile A; for Profile B use palette.body
+      font: { ascii: 'Calibri', eastAsia: 'Microsoft YaHei' },
+      color: '000000', // Pure black for Profile A; for Profile B use palette.body
     }),
   ],
 });
 
 // Additional text formatting options
-new TextRun({ text: "Underlined", underline: { type: UnderlineType.SINGLE } })
-new TextRun({ text: "Highlighted", highlight: "yellow" })
-new TextRun({ text: "Strikethrough", strike: true })
-new TextRun({ text: "x²", superScript: true })
-new TextRun({ text: "H₂O", subScript: true })
-new SymbolRun({ char: "2022", font: "Symbol" }) // Bullet •
+new TextRun({ text: 'Underlined', underline: { type: UnderlineType.SINGLE } })
+new TextRun({ text: 'Highlighted', highlight: 'yellow' })
+new TextRun({ text: 'Strikethrough', strike: true })
+new TextRun({ text: 'x²', superScript: true })
+new TextRun({ text: 'H₂O', subScript: true })
+new SymbolRun({ char: '2022', font: 'Symbol' }) // Bullet •
 ```
 
 ## Table
@@ -82,17 +82,17 @@ new SymbolRun({ char: "2022", font: "Symbol" }) // Bullet •
 // ⚠️ Title before table — keepNext keeps title with table
 new Paragraph({
   keepNext: true,  // ← critical
-  children: [new TextRun({ text: "Table 1 Feature Comparison", bold: true, size: 21 })],
+  children: [new TextRun({ text: 'Table 1 Feature Comparison', bold: true, size: 21 })],
 }),
 
 new Table({
   width: { size: 100, type: WidthType.PERCENTAGE },
   borders: {
-    top: { style: BorderStyle.SINGLE, size: 2, color: "9AA6B2" },
-    bottom: { style: BorderStyle.SINGLE, size: 2, color: "9AA6B2" },
+    top: { style: BorderStyle.SINGLE, size: 2, color: '9AA6B2' },
+    bottom: { style: BorderStyle.SINGLE, size: 2, color: '9AA6B2' },
     left: { style: BorderStyle.NONE },
     right: { style: BorderStyle.NONE },
-    insideHorizontal: { style: BorderStyle.SINGLE, size: 1, color: "D0D0D0" },
+    insideHorizontal: { style: BorderStyle.SINGLE, size: 1, color: 'D0D0D0' },
     insideVertical: { style: BorderStyle.NONE },
   },
   rows: [
@@ -100,10 +100,10 @@ new Table({
     new TableRow({
       tableHeader: true,   // auto-repeat on page break
       cantSplit: true,      // prevent row split
-      children: ["Header 1", "Header 2"].map(text =>
+      children: ['Header 1', 'Header 2'].map(text =>
         new TableCell({
           children: [new Paragraph({ children: [new TextRun({ text, bold: true, size: 21 })] })],
-          shading: { type: ShadingType.CLEAR, fill: "F1F5F9" },
+          shading: { type: ShadingType.CLEAR, fill: 'F1F5F9' },
           margins: { top: 60, bottom: 60, left: 120, right: 120 },
           width: { size: 50, type: WidthType.PERCENTAGE },
         })
@@ -112,7 +112,7 @@ new Table({
     // ⚠️ Data rows — cantSplit
     new TableRow({
       cantSplit: true,      // prevent row split
-      children: ["Data 1", "Data 2"].map(text =>
+      children: ['Data 1', 'Data 2'].map(text =>
         new TableCell({
           children: [new Paragraph({ children: [new TextRun({ text, size: 21 })] })],
           margins: { top: 60, bottom: 60, left: 120, right: 120 },
@@ -143,7 +143,7 @@ width: { size: 50, type: WidthType.PERCENTAGE }
 // ✅ Recommended — PageBreak attached to content paragraph
 new Paragraph({
   children: [
-    new TextRun({ text: "End of section" }),
+    new TextRun({ text: 'End of section' }),
     new PageBreak()
   ]
 })
@@ -163,7 +163,7 @@ headers: {
     children: [
       new Paragraph({
         alignment: AlignmentType.CENTER,
-        children: [new TextRun({ text: "Document Title", size: 18, color: "888888" })],
+        children: [new TextRun({ text: 'Document Title', size: 18, color: '888888' })],
       }),
     ],
   }),
@@ -193,23 +193,23 @@ styles: {
   default: {
     document: {
       run: {
-        font: { ascii: "Calibri", eastAsia: "Microsoft YaHei" },
-        size: 24, color: "000000", // Pure black for Profile A; for Profile B use palette.body
+        font: { ascii: 'Calibri', eastAsia: 'Microsoft YaHei' },
+        size: 24, color: '000000', // Pure black for Profile A; for Profile B use palette.body
       },
       paragraph: {
         spacing: { line: 312 }, // 1.3x mandatory
       },
     },
     heading1: {
-      run: { font: { ascii: "Calibri", eastAsia: "SimHei" }, size: 32, bold: true, color: "0B1220" },
+      run: { font: { ascii: 'Calibri', eastAsia: 'SimHei' }, size: 32, bold: true, color: '0B1220' },
       paragraph: { spacing: { before: 360, after: 160, line: 312 } },
     },
     heading2: {
-      run: { font: { ascii: "Calibri", eastAsia: "SimHei" }, size: 28, bold: true, color: "0B1220" },
+      run: { font: { ascii: 'Calibri', eastAsia: 'SimHei' }, size: 28, bold: true, color: '0B1220' },
       paragraph: { spacing: { before: 240, after: 120, line: 312 } },
     },
     heading3: {
-      run: { font: { ascii: "Calibri", eastAsia: "SimHei" }, size: 24, bold: true, color: "0B1220" },
+      run: { font: { ascii: 'Calibri', eastAsia: 'SimHei' }, size: 24, bold: true, color: '0B1220' },
       paragraph: { spacing: { before: 200, after: 100, line: 312 } },
     },
   },
@@ -225,17 +225,17 @@ styles: {
 numbering: {
   config: [
     {
-      reference: "list-features",  // unique name!
+      reference: 'list-features',  // unique name!
       levels: [{
         level: 0,
         format: LevelFormat.DECIMAL,
-        text: "%1.",
+        text: '%1.',
         alignment: AlignmentType.LEFT,
         style: { paragraph: { indent: { left: 720, hanging: 360 } } },
       }],
     },
     {
-      reference: "list-benefits",  // different name for second list!
+      reference: 'list-benefits',  // different name for second list!
       levels: [{ /* same config */ }],
     },
   ],
@@ -243,8 +243,8 @@ numbering: {
 
 // Usage in paragraphs
 new Paragraph({
-  numbering: { reference: "list-features", level: 0 },
-  children: [new TextRun({ text: "First item" })],
+  numbering: { reference: 'list-features', level: 0 },
+  children: [new TextRun({ text: 'First item' })],
 })
 ```
 
@@ -253,7 +253,7 @@ new Paragraph({
 ```js
 new Paragraph({
   bullet: { level: 0 },
-  children: [new TextRun({ text: "Bullet item" })],
+  children: [new TextRun({ text: 'Bullet item' })],
 })
 ```
 
@@ -263,8 +263,8 @@ new Paragraph({
 
 ```js
 new ExternalHyperlink({
-  children: [new TextRun({ text: "Click here", style: "Hyperlink" })],
-  link: "https://example.com",
+  children: [new TextRun({ text: 'Click here', style: 'Hyperlink' })],
+  link: 'https://example.com',
 })
 ```
 
@@ -274,14 +274,14 @@ new ExternalHyperlink({
 // Define bookmark at target
 new Paragraph({
   children: [
-    new Bookmark({ id: "section1", children: [new TextRun("Section 1")] }),
+    new Bookmark({ id: 'section1', children: [new TextRun('Section 1')] }),
   ],
 })
 
 // Link to bookmark
 new InternalHyperlink({
-  children: [new TextRun({ text: "Go to Section 1", style: "Hyperlink" })],
-  anchor: "section1",
+  children: [new TextRun({ text: 'Go to Section 1', style: 'Hyperlink' })],
+  anchor: 'section1',
 })
 ```
 ## Table of Contents (TOC)
@@ -297,7 +297,7 @@ new Paragraph({
   tabStops: [
     { type: TabStopType.RIGHT, position: TabStopPosition.MAX },
   ],
-  children: [new TextRun("Left"), new TextRun("\t"), new TextRun("Right")]
+  children: [new TextRun('Left'), new TextRun('\t'), new TextRun('Right')]
 })
 ```
 

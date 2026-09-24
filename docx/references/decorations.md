@@ -18,9 +18,9 @@ function colorStrip(color, height = 80) {
     borders: { top: NB, bottom: NB, left: NB, right: NB,
                insideHorizontal: NB, insideVertical: NB },
     rows: [new TableRow({
-      height: { value: height, rule: "exact" },
+      height: { value: height, rule: 'exact' },
       children: [new TableCell({
-        shading: { type: ShadingType.CLEAR, fill: color.replace("#", "") },
+        shading: { type: ShadingType.CLEAR, fill: color.replace('#', '') },
         borders: { top: NB, bottom: NB, left: NB, right: NB },
         children: [new Paragraph({ children: [] })],
       })],
@@ -47,7 +47,7 @@ function buildCoverR6(config) {
   const ind = { left: PAD_L, right: PAD_R };
   const FOOTER_H = 900;
   const CONTENT_H = 16838 - FOOTER_H;
-  const shading = { fill: P.bg || "F7F7F5", type: ShadingType.CLEAR };
+  const shading = { fill: P.bg || 'F7F7F5', type: ShadingType.CLEAR };
 
   // ⚠️ R6 uses a simplified title layout: prefer single line, shrink font to fit
   const availW = 11906 - PAD_L - PAD_R;
@@ -75,8 +75,8 @@ function buildCoverR6(config) {
       indent: ind, spacing: { after: 900 },
       children: [new TextRun({
         text: config.englishLabel, size: 22,
-        color: P.cover.metaColor || "9A9A9A",
-        font: { ascii: "Calibri", eastAsia: "Microsoft YaHei" },
+        color: P.cover.metaColor || '9A9A9A',
+        font: { ascii: 'Calibri', eastAsia: 'Microsoft YaHei' },
         characterSpacing: 60,
       })],
     }));
@@ -86,11 +86,11 @@ function buildCoverR6(config) {
   for (let i = 0; i < titleLines.length; i++) {
     children.push(new Paragraph({
       indent: ind,
-      spacing: { after: i < titleLines.length - 1 ? 60 : 300, line: lineH, lineRule: "atLeast" },
+      spacing: { after: i < titleLines.length - 1 ? 60 : 300, line: lineH, lineRule: 'atLeast' },
       children: [new TextRun({
         text: titleLines[i], size: titleSize,
-        color: P.cover.titleColor || "2C2C2C",
-        font: { ascii: "Calibri", eastAsia: "Microsoft YaHei" },
+        color: P.cover.titleColor || '2C2C2C',
+        font: { ascii: 'Calibri', eastAsia: 'Microsoft YaHei' },
         characterSpacing: 30,
       })],
     }));
@@ -102,8 +102,8 @@ function buildCoverR6(config) {
       indent: ind, spacing: { after: 1200 },
       children: [new TextRun({
         text: config.subtitle, size: 28,
-        color: P.cover.subtitleColor || "6B6B6B",
-        font: { ascii: "Calibri", eastAsia: "Microsoft YaHei" },
+        color: P.cover.subtitleColor || '6B6B6B',
+        font: { ascii: 'Calibri', eastAsia: 'Microsoft YaHei' },
         characterSpacing: 15,
       })],
     }));
@@ -112,27 +112,27 @@ function buildCoverR6(config) {
   // 5. Meta fields (tab-aligned label + value)
   for (const line of (config.metaLines || [])) {
     // Expect "label：value" format or plain text
-    const sep = line.indexOf("：") !== -1 ? "：" : (line.indexOf(":") !== -1 ? ":" : null);
+    const sep = line.indexOf('：') !== -1 ? '：' : (line.indexOf(':') !== -1 ? ':' : null);
     const label = sep ? line.split(sep)[0].trim() : line;
-    const value = sep ? line.split(sep).slice(1).join(sep).trim() : "";
+    const value = sep ? line.split(sep).slice(1).join(sep).trim() : '';
     children.push(new Paragraph({
       indent: ind, spacing: { after: 100 },
       tabStops: [{ type: TabStopType.LEFT, position: PAD_L + 1600 }],
       children: [
-        new TextRun({ text: label, size: 22, color: P.cover.metaColor || "9A9A9A",
-          font: { ascii: "Calibri", eastAsia: "Microsoft YaHei" }, characterSpacing: 20 }),
+        new TextRun({ text: label, size: 22, color: P.cover.metaColor || '9A9A9A',
+          font: { ascii: 'Calibri', eastAsia: 'Microsoft YaHei' }, characterSpacing: 20 }),
         ...(value ? [
-          new TextRun({ text: "\t" }),
-          new TextRun({ text: value, size: 24, color: P.cover.subtitleColor || "6B6B6B",
-            font: { ascii: "Calibri", eastAsia: "Microsoft YaHei" }, characterSpacing: 8 }),
+          new TextRun({ text: '\t' }),
+          new TextRun({ text: value, size: 24, color: P.cover.subtitleColor || '6B6B6B',
+            font: { ascii: 'Calibri', eastAsia: 'Microsoft YaHei' }, characterSpacing: 8 }),
         ] : []),
       ],
     }));
   }
 
   // 6. Footer (2-column borderless table)
-  const footerLeft = config.footerLeft || "";
-  const footerRight = config.footerRight || "";
+  const footerLeft = config.footerLeft || '';
+  const footerRight = config.footerRight || '';
   // Adaptive font size for long English footer text
   const flSize = footerLeft.length > 60 ? 14 : (footerLeft.length > 40 ? 16 : 18);
   const flSpacing = footerLeft.length > 60 ? 5 : (footerLeft.length > 40 ? 10 : 20);
@@ -147,8 +147,8 @@ function buildCoverR6(config) {
           children: [new Paragraph({
             indent: { left: PAD_L },
             children: [new TextRun({ text: footerLeft, size: flSize,
-              color: P.cover.footerColor || "9A9A9A",
-              font: { ascii: "Calibri" }, characterSpacing: flSpacing })],
+              color: P.cover.footerColor || '9A9A9A',
+              font: { ascii: 'Calibri' }, characterSpacing: flSpacing })],
           })],
         }),
         new TableCell({
@@ -156,8 +156,8 @@ function buildCoverR6(config) {
           children: [new Paragraph({
             alignment: AlignmentType.RIGHT, indent: { right: PAD_R },
             children: [new TextRun({ text: footerRight, size: 18,
-              color: P.cover.footerColor || "9A9A9A",
-              font: { ascii: "Calibri" }, characterSpacing: 20 })],
+              color: P.cover.footerColor || '9A9A9A',
+              font: { ascii: 'Calibri' }, characterSpacing: 20 })],
           })],
         }),
       ],
@@ -170,7 +170,7 @@ function buildCoverR6(config) {
     layout: TableLayoutType.FIXED, borders: allNoBorders,
     rows: [
       new TableRow({
-        height: { value: CONTENT_H, rule: "exact" },
+        height: { value: CONTENT_H, rule: 'exact' },
         children: [new TableCell({
           shading, borders: noBorders,
           margins: { top: 0, bottom: 0, left: 0, right: 0 },
@@ -179,7 +179,7 @@ function buildCoverR6(config) {
         })],
       }),
       new TableRow({
-        height: { value: FOOTER_H, rule: "exact" },
+        height: { value: FOOTER_H, rule: 'exact' },
         children: [new TableCell({
           shading, borders: noBorders,
           margins: { top: 0, bottom: 0, left: 0, right: 0 },
@@ -225,7 +225,7 @@ Uses left border to create vertical ribbon effect.
 function sideRibbon(content, color, width = 14) {
   return new Paragraph({
     border: {
-      left: { style: BorderStyle.SINGLE, size: width, color: color.replace("#", ""), space: 12 },
+      left: { style: BorderStyle.SINGLE, size: width, color: color.replace('#', ''), space: 12 },
     },
     indent: { left: 240 },
     spacing: { before: 100, after: 100 },
@@ -292,7 +292,7 @@ function gradientStrip(startColor, endColor, steps = 5, totalHeight = 200) {
     const ratio = i / (steps - 1);
     const blended = blendColors(startColor, endColor, ratio);
     rows.push(new TableRow({
-      height: { value: h, rule: "exact" },
+      height: { value: h, rule: 'exact' },
       children: [new TableCell({
         shading: { type: ShadingType.CLEAR, fill: blended },
         borders: { top: NB, bottom: NB, left: NB, right: NB },
@@ -320,8 +320,8 @@ function blendColors(hex1, hex2, ratio) {
 
 ```js
 // Section divider line — for chapter separation
-function ornamentDivider(symbol = "◆", count = 3) {
-  const ornament = Array(count).fill(symbol).join("   ");
+function ornamentDivider(symbol = '◆', count = 3) {
+  const ornament = Array(count).fill(symbol).join('   ');
   return new Paragraph({
     alignment: AlignmentType.CENTER,
     spacing: { before: 400, after: 400 },
@@ -338,7 +338,7 @@ function ornamentDivider(symbol = "◆", count = 3) {
 
 ```js
 function infoCard(title, items, accentColor) {
-  const ac = accentColor.replace("#", "");
+  const ac = accentColor.replace('#', '');
   const headerRow = new TableRow({
     children: [new TableCell({
       columnSpan: 2,
@@ -346,7 +346,7 @@ function infoCard(title, items, accentColor) {
       margins: { top: 80, bottom: 80, left: 160, right: 160 },
       borders: { top: NB, bottom: NB, left: NB, right: NB },
       children: [new Paragraph({
-        children: [new TextRun({ text: title, bold: true, size: 24, color: "FFFFFF" })],
+        children: [new TextRun({ text: title, bold: true, size: 24, color: 'FFFFFF' })],
       })],
     })],
   });
@@ -356,14 +356,14 @@ function infoCard(title, items, accentColor) {
       new TableCell({
         width: { size: 30, type: WidthType.PERCENTAGE },
         margins: { top: 60, bottom: 60, left: 160, right: 80 },
-        shading: { type: ShadingType.CLEAR, fill: "F8F9FA" },
-        borders: { bottom: { style: BorderStyle.SINGLE, size: 1, color: "E0E0E0" },
+        shading: { type: ShadingType.CLEAR, fill: 'F8F9FA' },
+        borders: { bottom: { style: BorderStyle.SINGLE, size: 1, color: 'E0E0E0' },
                    top: NB, left: NB, right: NB },
-        children: [new Paragraph({ children: [new TextRun({ text: label, size: 21, color: "666666" })] })],
+        children: [new Paragraph({ children: [new TextRun({ text: label, size: 21, color: '666666' })] })],
       }),
       new TableCell({
         margins: { top: 60, bottom: 60, left: 80, right: 160 },
-        borders: { bottom: { style: BorderStyle.SINGLE, size: 1, color: "E0E0E0" },
+        borders: { bottom: { style: BorderStyle.SINGLE, size: 1, color: 'E0E0E0' },
                    top: NB, left: NB, right: NB },
         children: [new Paragraph({ children: [new TextRun({ text: value, size: 21 })] })],
       }),

@@ -21,8 +21,8 @@ new TableCell({
 **Fix**: Each separate numbered list MUST use a unique `reference` name in numbering config:
 ```js
 numbering: { config: [
-  { reference: "list-A", levels: [{ level: 0, format: LevelFormat.DECIMAL, text: "%1." }] },
-  { reference: "list-B", levels: [{ level: 0, format: LevelFormat.DECIMAL, text: "%1." }] },
+  { reference: 'list-A', levels: [{ level: 0, format: LevelFormat.DECIMAL, text: '%1.' }] },
+  { reference: 'list-B', levels: [{ level: 0, format: LevelFormat.DECIMAL, text: '%1.' }] },
 ]}
 ```
 
@@ -50,7 +50,7 @@ borders: { top: { style: BorderStyle.SINGLE, size: 4 }, bottom: { style: BorderS
   left: { style: BorderStyle.NONE }, right: { style: BorderStyle.NONE },
   insideHorizontal: { style: BorderStyle.NONE }, insideVertical: { style: BorderStyle.NONE } }
 // Header cells: bottom border only
-headerCell.borders = { bottom: { style: BorderStyle.SINGLE, size: 2, color: "000000" } }
+headerCell.borders = { bottom: { style: BorderStyle.SINGLE, size: 2, color: '000000' } }
 ```
 
 ---
@@ -75,9 +75,9 @@ See SKILL.md for complete conversion table.
 **Fix**: Use `ShadingType.CLEAR` not `ShadingType.SOLID`:
 ```js
 // ❌ WRONG
-shading: { type: ShadingType.SOLID, fill: "F1F5F9" }
+shading: { type: ShadingType.SOLID, fill: 'F1F5F9' }
 // ✅ CORRECT
-shading: { type: ShadingType.CLEAR, fill: "F1F5F9" }
+shading: { type: ShadingType.CLEAR, fill: 'F1F5F9' }
 ```
 
 ---
@@ -104,24 +104,35 @@ children: [new Paragraph({ children: [new PageBreak()] })]
 
 ## Bug: Quotation marks break JavaScript syntax — ⚠️ #1 MOST COMMON BUG
 
-**This is the single most frequent code generation error.** Chinese text routinely uses curly quotes `""` for emphasis, proper nouns, and event names (e.g., "双11", "前低后高", "618"大促). These MUST be Unicode-escaped — bare curly quotes silently break JS syntax.
+**This is the single most frequent code generation error.** The hazard is any quote character that
+matches the literal's delimiter. This skill's code uses **single-quote** literals, so the ASCII
+apostrophe `'` is the dangerous one — Chinese copy regularly carries apostrophes from English words
+(`It's`, `don't`, `Agent's`). ASCII `"` inside copy is safe under single quotes, and full-width
+Chinese quotes `“ ”` are not JS delimiters at all; neither needs escaping.
 
-**Rule: scan ALL Chinese text for `""''` and replace with `\u201c \u201d \u2018 \u2019` BEFORE writing the string.**
+**Rule: write single-quote literals. When the copy contains `'`, switch the literal to double quotes
+or a template literal, or escape it as `\'`.**
 
 ```js
-// ❌ WRONG — curly quotes in Chinese text break syntax (extremely common)
+// ❌ WRONG — bare ASCII apostrophe inside a single-quoted literal: SyntaxError
+'It's a test'
+para('Agent 的 don\'t 问题')
+
+// ❌ WRONG — delimiter collision: the ASCII quotes terminate the literal early
 para("行业增速呈现"前低后高"的态势，在"618"大促拉动下增长。")
 "他说"你好""       // \u201c \u201d
-'It's a test'      // \u2019
 
-// ✅ CORRECT — Unicode escapes for ALL curly quotes
-para("行业增速呈现\u201c前低后高\u201d的态势，在\u201c618\u201d大促拉动下增长。")
-"他说\u201c你好\u201d"
-"It\u2019s a test"
-
-// ✅ Straight quotes: escape or use alternate delimiters
-"He said \"hello\""
+// ✅ CORRECT — ASCII double quotes are safe under single quotes
+para('行业正从"手写 Prompt"走向平台化工程')
 'He said "hello"'
+
+// ✅ CORRECT — copy with an apostrophe: switch delimiter, escape, or use a template literal
+"It's a test"
+'It\'s a test'
+`It's a test`
+
+// ✅ CORRECT — full-width Chinese quotes need no escaping at all
+para('行业增速呈现“前低后高”的态势，在“618”大促拉动下增长。')
 ```
 
 ---
@@ -167,19 +178,19 @@ function removeTrailingPageBreak(section) {
 ### 1. `ShadingType.SOLID` shows black in WPS
 ```js
 // ❌ WPS shows solid black
-shading: { type: ShadingType.SOLID, fill: "F1F5F9" }
+shading: { type: ShadingType.SOLID, fill: 'F1F5F9' }
 // ✅ Both renderers show correct color
-shading: { type: ShadingType.CLEAR, fill: "F1F5F9" }
+shading: { type: ShadingType.CLEAR, fill: 'F1F5F9' }
 ```
 
 ### 2. `verticalAlign: "center"` in exact-height rows shifts content
 WPS ignores vertical centering in `rule: "exact"` rows — content stays at top, creating visual mismatch.
 ```js
 // ❌ Inconsistent between Word and WPS
-new TableRow({ height: { value: 800, rule: "exact" },
+new TableRow({ height: { value: 800, rule: 'exact' },
   children: [new TableCell({ verticalAlign: VerticalAlign.CENTER, ... })] })
 // ✅ Use top alignment + margins/spacing for positioning
-new TableRow({ height: { value: 800, rule: "exact" },
+new TableRow({ height: { value: 800, rule: 'exact' },
   children: [new TableCell({ verticalAlign: VerticalAlign.TOP,
     margins: { top: 200 }, ... })] })
 ```
@@ -189,11 +200,11 @@ Tab widths differ between Word and WPS. Never use tabs for alignment.
 ```js
 // ❌ Tab-based alignment — breaks in WPS
 new Paragraph({ tabStops: [{ type: TabStopType.RIGHT, position: 8000 }],
-  children: [new TextRun({ text: "Party A:\tCompany Name" })] })
+  children: [new TextRun({ text: 'Party A:\tCompany Name' })] })
 // ✅ Borderless table for alignment — consistent everywhere
 new Table({ borders: allNoBorders, rows: [new TableRow({ children: [
-  new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Party A:" })] })] }),
-  new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: "Company Name" })] })] }),
+  new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: 'Party A:' })] })] }),
+  new TableCell({ children: [new Paragraph({ children: [new TextRun({ text: 'Company Name' })] })] }),
 ] })] })
 ```
 
@@ -201,7 +212,7 @@ new Table({ borders: allNoBorders, rows: [new TableRow({ children: [
 Word calculates nested table heights more accurately than WPS. Use stacked tables instead.
 ```js
 // ❌ Nested table inside exact-height cell
-new TableRow({ height: { value: 16838, rule: "exact" },
+new TableRow({ height: { value: 16838, rule: 'exact' },
   children: [new TableCell({ children: [nestedTable1, nestedTable2] })] })
 // ✅ Stacked approach — content table + filler table
 [contentTable, fillerTable]  // both at top level, heights sum to 16838
@@ -236,14 +247,14 @@ WPS may not correctly hide first-page headers when using `titlePage: true`. Use 
 
 **Fix**: Every cover wrapper table MUST explicitly set `borders: allNoBorders`:
 ```js
-const NB = { style: BorderStyle.NONE, size: 0, color: "FFFFFF" };
+const NB = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' };
 const allNoBorders = { top: NB, bottom: NB, left: NB, right: NB,
                        insideHorizontal: NB, insideVertical: NB };
 
 new Table({
   borders: allNoBorders,  // ← MANDATORY
   rows: [new TableRow({
-    height: { value: 16838, rule: "exact" },
+    height: { value: 16838, rule: 'exact' },
     // ...
   })],
 });
@@ -269,7 +280,7 @@ new Paragraph({
 })
 
 // ❌ NEVER use text characters for decorative lines
-new TextRun({ text: "───────────────" })  // width varies across engines
+new TextRun({ text: '───────────────' })  // width varies across engines
 ```
 
 **Note**: This applies to ALL cover recipes (R1–R5). Recipe R2 uses `border.top` and `border.bottom` for its double-rule frame — follow this pattern.
@@ -285,9 +296,9 @@ new TextRun({ text: "───────────────" })  // width
 **Fix**: Use `safeText()` helper for ALL user-facing text values:
 ```js
 function safeText(value, placeholder) {
-  if (value === undefined || value === null || value === "" ||
-      String(value) === "NaN" || String(value) === "undefined") {
-    return placeholder || "【Please fill in】";
+  if (value === undefined || value === null || value === '' ||
+      String(value) === 'NaN' || String(value) === 'undefined') {
+    return placeholder || '【Please fill in】';
   }
   return String(value);
 }

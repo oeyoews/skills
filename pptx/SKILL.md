@@ -172,7 +172,7 @@ pptxgenjs generates `.pptx` files in **JavaScript / Node.js**. Coordinates are i
 dependency; never run `npm install` in the working directory.
 
 ```javascript
-const pptxgen = require("pptxgenjs");
+const pptxgen = require('pptxgenjs');
 
 let pres = new pptxgen();
 pres.layout = 'LAYOUT_WIDE';   // 13.33 × 7.5" — the default for this skill (see below)
@@ -183,9 +183,9 @@ pres.title  = 'Presentation Title';
 const W = 13.33, H = 7.5, M = 0.5;   // width, height, margin (true width is 13.333"; 13.33 keeps you inside it)
 
 let slide = pres.addSlide();
-slide.addText("Hello World!", { x: M, y: M, w: W - 2 * M, fontSize: 36, color: "363636" });
+slide.addText('Hello World!', { x: M, y: M, w: W - 2 * M, fontSize: 36, color: '363636' });
 
-pres.writeFile({ fileName: "Presentation.pptx" }).then(() => console.log("done"));
+pres.writeFile({ fileName: 'Presentation.pptx' }).then(() => console.log('done'));
 ```
 
 ## Layout dimensions
@@ -204,29 +204,29 @@ pres.writeFile({ fileName: "Presentation.pptx" }).then(() => console.log("done")
 
 ```javascript
 // Basic text
-slide.addText("Simple Text", {
-  x: 1, y: 1, w: 8, h: 2, fontSize: 24, fontFace: "Arial",
-  color: "363636", bold: true, align: "center", valign: "middle"
+slide.addText('Simple Text', {
+  x: 1, y: 1, w: 8, h: 2, fontSize: 24, fontFace: 'Arial',
+  color: '363636', bold: true, align: 'center', valign: 'middle'
 });
 
 // Character spacing: use charSpacing (letterSpacing is silently ignored)
-slide.addText("SPACED TEXT", { x: 1, y: 1, w: 8, h: 1, charSpacing: 6 });
+slide.addText('SPACED TEXT', { x: 1, y: 1, w: 8, h: 1, charSpacing: 6 });
 
 // Rich text array (mixed styles in one paragraph)
 slide.addText([
-  { text: "Bold ",   options: { bold: true } },
-  { text: "Italic ", options: { italic: true } }
+  { text: 'Bold ',   options: { bold: true } },
+  { text: 'Italic ', options: { italic: true } }
 ], { x: 1, y: 3, w: 8, h: 1 });
 
 // Multi-line (each line needs breakLine: true; the last may omit it)
 slide.addText([
-  { text: "Line 1", options: { breakLine: true } },
-  { text: "Line 2", options: { breakLine: true } },
-  { text: "Line 3" }
+  { text: 'Line 1', options: { breakLine: true } },
+  { text: 'Line 2', options: { breakLine: true } },
+  { text: 'Line 3' }
 ], { x: 0.5, y: 0.5, w: 8, h: 2 });
 
 // Text-box padding: set margin: 0 to align with shapes/lines
-slide.addText("Title", { x: 0.5, y: 0.3, w: 9, h: 0.6, margin: 0 });
+slide.addText('Title', { x: 0.5, y: 0.3, w: 9, h: 0.6, margin: 0 });
 ```
 
 > ⚠️ **Rich text arrays emit one `<a:pPr>` per run, not per paragraph.** Two or more consecutive items *without* `breakLine` land in the same `<a:p>`, each carrying its own `<a:pPr>` — which violates the `pPr? (r|br|fld)* endParaRPr?` schema. PowerPoint paints the first frame correctly, then re-lays-out the paragraph and the line garbles — and since no renderer is available here to catch it, the only defense is to never emit it. Two safe options: give every item `breakLine: true` (one run per paragraph), or, when you genuinely need mixed formatting inline, post-process the slide XML after `writeFile()` and drop every `<a:pPr>` after the first one inside each `<a:p>`. Do **not** fix it by splitting the runs into separate paragraphs — that silently turns one inline-mixed line into two lines and changes the layout you designed.
@@ -236,17 +236,17 @@ slide.addText("Title", { x: 0.5, y: 0.3, w: 9, h: 0.6, margin: 0 });
 ```javascript
 // ✅ Correct: multiple bullets
 slide.addText([
-  { text: "First item",  options: { bullet: true, breakLine: true } },
-  { text: "Second item", options: { bullet: true, breakLine: true } },
-  { text: "Third item",  options: { bullet: true } }
+  { text: 'First item',  options: { bullet: true, breakLine: true } },
+  { text: 'Second item', options: { bullet: true, breakLine: true } },
+  { text: 'Third item',  options: { bullet: true } }
 ], { x: 0.5, y: 0.5, w: 8, h: 3 });
 
 // ❌ Wrong: never use unicode bullets (creates double bullets)
-slide.addText("• First item", { ... });
+slide.addText('• First item', { ... });
 
 // Sub-items & numbered lists
-{ text: "Sub-item", options: { bullet: true, indentLevel: 1 } }
-{ text: "First",    options: { bullet: { type: "number" }, breakLine: true } }
+{ text: 'Sub-item', options: { bullet: true, indentLevel: 1 } }
+{ text: 'First',    options: { bullet: { type: 'number' }, breakLine: true } }
 ```
 
 ### Make bullets look good (default `bullet: true` looks amateurish)
@@ -256,13 +256,13 @@ The bare `bullet: true` renders a big dot with a **huge gap** to the text (pptxg
 ```javascript
 // bullet is a PARAGRAPH property — put it in EACH item's options, not top-level.
 // A top-level `bullet` only styles the first paragraph; the rest get <a:buNone/> (no dot).
-const bu = () => ({ code: "2022", indent: 14 });  // factory: fresh object per item (pptxgenjs mutates in place)
+const bu = () => ({ code: '2022', indent: 14 });  // factory: fresh object per item (pptxgenjs mutates in place)
 slide.addText([
-  { text: "First item",  options: { bullet: bu(), breakLine: true } },
-  { text: "Second item", options: { bullet: bu(), breakLine: true } },
-  { text: "Third item",  options: { bullet: bu() } }
+  { text: 'First item',  options: { bullet: bu(), breakLine: true } },
+  { text: 'Second item', options: { bullet: bu(), breakLine: true } },
+  { text: 'Third item',  options: { bullet: bu() } }
 ], {
-  x: 0.5, y: 0.5, w: 8, h: 3, fontSize: 15, color: "334155",
+  x: 0.5, y: 0.5, w: 8, h: 3, fontSize: 15, color: '334155',
   paraSpaceAfter: 8,   // item spacing (never lineSpacing)
   margin: 0,           // align glyph to x
 });
@@ -277,29 +277,29 @@ slide.addText([
 ```javascript
 slide.addShape(pres.shapes.RECTANGLE, {
   x: 0.5, y: 0.8, w: 1.5, h: 3.0,
-  fill: { color: "FF0000" }, line: { color: "000000", width: 2 }
+  fill: { color: 'FF0000' }, line: { color: '000000', width: 2 }
 });
 
-slide.addShape(pres.shapes.OVAL, { x: 4, y: 1, w: 2, h: 2, fill: { color: "0000FF" } });
+slide.addShape(pres.shapes.OVAL, { x: 4, y: 1, w: 2, h: 2, fill: { color: '0000FF' } });
 
 slide.addShape(pres.shapes.LINE, {
-  x: 1, y: 3, w: 5, h: 0, line: { color: "FF0000", width: 3, dashType: "dash" }
+  x: 1, y: 3, w: 5, h: 0, line: { color: 'FF0000', width: 3, dashType: 'dash' }
 });
 
 // Transparency
 slide.addShape(pres.shapes.RECTANGLE, {
-  x: 1, y: 1, w: 3, h: 2, fill: { color: "0088CC", transparency: 50 }
+  x: 1, y: 1, w: 3, h: 2, fill: { color: '0088CC', transparency: 50 }
 });
 
 // Rounded rectangle (rectRadius works only on ROUNDED_RECTANGLE, not RECTANGLE)
 slide.addShape(pres.shapes.ROUNDED_RECTANGLE, {
-  x: 1, y: 1, w: 3, h: 2, fill: { color: "FFFFFF" }, rectRadius: 0.1
+  x: 1, y: 1, w: 3, h: 2, fill: { color: 'FFFFFF' }, rectRadius: 0.1
 });
 
 // Shadow (to make a card stand out — use this, not an edge stripe)
 slide.addShape(pres.shapes.RECTANGLE, {
-  x: 1, y: 1, w: 3, h: 2, fill: { color: "FFFFFF" },
-  shadow: { type: "outer", color: "000000", blur: 6, offset: 2, angle: 45, opacity: 0.15 }
+  x: 1, y: 1, w: 3, h: 2, fill: { color: 'FFFFFF' },
+  shadow: { type: 'outer', color: '000000', blur: 6, offset: 2, angle: 45, opacity: 0.15 }
 });
 ```
 
@@ -322,16 +322,16 @@ slide.addShape(pres.shapes.RECTANGLE, {
 
 ```javascript
 // Three sources
-slide.addImage({ path: "images/photo.jpg", x: 1, y: 1, w: 5, h: 3 });            // local
-slide.addImage({ path: "https://example.com/img.jpg", x: 1, y: 1, w: 5, h: 3 }); // URL
-slide.addImage({ data: "image/png;base64,iVBORw0KGgo...", x: 1, y: 1, w: 5, h: 3 }); // base64 (faster)
+slide.addImage({ path: 'images/photo.jpg', x: 1, y: 1, w: 5, h: 3 });            // local
+slide.addImage({ path: 'https://example.com/img.jpg', x: 1, y: 1, w: 5, h: 3 }); // URL
+slide.addImage({ data: 'image/png;base64,iVBORw0KGgo...', x: 1, y: 1, w: 5, h: 3 }); // base64 (faster)
 
 // Options
 slide.addImage({
-  path: "image.png", x: 1, y: 1, w: 5, h: 3,
+  path: 'image.png', x: 1, y: 1, w: 5, h: 3,
   rotate: 45, rounding: true /*circular crop*/, transparency: 50,
-  flipH: true, flipV: false, altText: "Description",
-  hyperlink: { url: "https://example.com" }
+  flipH: true, flipV: false, altText: 'Description',
+  hyperlink: { url: 'https://example.com' }
 });
 
 // Sizing modes
@@ -343,7 +343,7 @@ slide.addImage({
 const origW = 1978, origH = 923, maxH = 3.0;
 const calcW = maxH * (origW / origH);
 const centerX = (W - calcW) / 2;
-slide.addImage({ path: "image.png", x: centerX, y: 1.2, w: calcW, h: maxH });
+slide.addImage({ path: 'image.png', x: centerX, y: 1.2, w: calcW, h: maxH });
 ```
 
 Supports PNG / JPG / GIF / SVG (SVG works in modern PowerPoint / Microsoft 365).
@@ -361,39 +361,39 @@ pptxgenjs won't stop you from writing `barGrouping: "stacked"` +
 
 ```js
 slide.addChart(p.charts.BAR, [{
-  name: "series",
-  labels: ["A", "B", "C"],
+  name: 'series',
+  labels: ['A', 'B', 'C'],
   values: [10, 20, 30],
 }], {
-  barDir: "col",
+  barDir: 'col',
   varyColors: true,                            // per-point coloring
-  chartColors: ["17457E", "17457E", "E8590C"], // highlight the 3rd bar
+  chartColors: ['17457E', '17457E', 'E8590C'], // highlight the 3rd bar
   showValue: true,
-  dataLabelPosition: "outEnd",                 // valid under clustered grouping
+  dataLabelPosition: 'outEnd',                 // valid under clustered grouping
 });
 ```
 
 ## Backgrounds
 
 ```javascript
-slide.background = { color: "F1F1F1" };                        // solid
-slide.background = { color: "FF3399", transparency: 50 };      // with transparency
-slide.background = { path: "https://example.com/bg.jpg" };     // image URL
-slide.background = { data: "image/png;base64,iVBORw0KGgo..." };// image base64
+slide.background = { color: 'F1F1F1' };                        // solid
+slide.background = { color: 'FF3399', transparency: 50 };      // with transparency
+slide.background = { path: 'https://example.com/bg.jpg' };     // image URL
+slide.background = { data: 'image/png;base64,iVBORw0KGgo...' };// image base64
 ```
 
 ## Tables
 
 ```javascript
 slide.addTable([
-  ["Header 1", "Header 2"],
-  ["Cell 1", "Cell 2"]
-], { x: 1, y: 1, w: 8, h: 2, border: { pt: 1, color: "999999" }, fill: { color: "F1F1F1" } });
+  ['Header 1', 'Header 2'],
+  ['Cell 1', 'Cell 2']
+], { x: 1, y: 1, w: 8, h: 2, border: { pt: 1, color: '999999' }, fill: { color: 'F1F1F1' } });
 
 // Merged cells
 let tableData = [
-  [{ text: "Header", options: { fill: { color: "6699CC" }, color: "FFFFFF", bold: true } }, "Cell"],
-  [{ text: "Merged", options: { colspan: 2 } }]
+  [{ text: 'Header', options: { fill: { color: '6699CC' }, color: 'FFFFFF', bold: true } }, 'Cell'],
+  [{ text: 'Merged', options: { colspan: 2 } }]
 ];
 slide.addTable(tableData, { x: 1, y: 3.5, w: 8, colW: [4, 4] });
 ```
@@ -409,17 +409,17 @@ slide.addTable(tableData, { x: 1, y: 3.5, w: 8, colW: [4, 4] });
 ```javascript
 // Bar
 slide.addChart(pres.charts.BAR, [{
-  name: "Sales", labels: ["Q1","Q2","Q3","Q4"], values: [4500,5500,6200,7100]
+  name: 'Sales', labels: ['Q1','Q2','Q3','Q4'], values: [4500,5500,6200,7100]
 }], { x: 0.5, y: 0.6, w: 6, h: 3, barDir: 'col', showTitle: true, title: 'Quarterly Sales' });
 
 // Line
 slide.addChart(pres.charts.LINE, [{
-  name: "Temp", labels: ["Jan","Feb","Mar"], values: [32,35,42]
+  name: 'Temp', labels: ['Jan','Feb','Mar'], values: [32,35,42]
 }], { x: 0.5, y: 2.5, w: 6, h: 2.5, lineSize: 3, lineSmooth: true });
 
 // Pie
 slide.addChart(pres.charts.PIE, [{
-  name: "Share", labels: ["A","B","Other"], values: [35,45,20]
+  name: 'Share', labels: ['A','B','Other'], values: [35,45,20]
 }], { x: 6.5, y: 1, w: 3, h: 3, showPercent: true });
 ```
 
@@ -427,13 +427,13 @@ slide.addChart(pres.charts.PIE, [{
 
 ```javascript
 slide.addChart(pres.charts.BAR, chartData, {
-  x: 0.5, y: 1, w: 9, h: 4, barDir: "col",
-  chartColors: ["0D9488", "14B8A6", "5EEAD4"],            // match your palette
-  chartArea: { fill: { color: "FFFFFF" }, roundedCorners: true },
-  catAxisLabelColor: "64748B", valAxisLabelColor: "64748B", // muted axis labels
-  valGridLine: { color: "E2E8F0", size: 0.5 },             // subtle grid, value axis only
-  catGridLine: { style: "none" },
-  showValue: true, dataLabelPosition: "outEnd", dataLabelColor: "1E293B", // data labels
+  x: 0.5, y: 1, w: 9, h: 4, barDir: 'col',
+  chartColors: ['0D9488', '14B8A6', '5EEAD4'],            // match your palette
+  chartArea: { fill: { color: 'FFFFFF' }, roundedCorners: true },
+  catAxisLabelColor: '64748B', valAxisLabelColor: '64748B', // muted axis labels
+  valGridLine: { color: 'E2E8F0', size: 0.5 },             // subtle grid, value axis only
+  catGridLine: { style: 'none' },
+  showValue: true, dataLabelPosition: 'outEnd', dataLabelColor: '1E293B', // data labels
   showLegend: false,                                       // hide legend for single series
 });
 ```
@@ -446,11 +446,11 @@ pres.defineSlideMaster({
   title: 'TITLE_SLIDE', background: { color: '283A5E' },
   objects: [{ placeholder: { options: { name: 'title', type: 'title', x: 1, y: 2, w: 8, h: 2 } } }]
 });
-let titleSlide = pres.addSlide({ masterName: "TITLE_SLIDE" });
-titleSlide.addText("My Title", { placeholder: "title" });
+let titleSlide = pres.addSlide({ masterName: 'TITLE_SLIDE' });
+titleSlide.addText('My Title', { placeholder: 'title' });
 
 // Speaker notes (visible only in Presenter View, not on the slide)
-slide.addNotes("Open with the FY25 revenue headline; pause after the number. If asked about the Q3 dip: supply chain, resolved in Q4.");
+slide.addNotes('Open with the FY25 revenue headline; pause after the number. If asked about the Q3 dip: supply chain, resolved in Q4.');
 ```
 
 ## Common pitfalls (file corruption / visual bugs / AI look)
@@ -645,6 +645,34 @@ Skip `word_wrap = False`: it makes text overflow the box invisibly in PowerPoint
 - Write concise code
 - Avoid verbose variable names and redundant operations
 - Avoid unnecessary print statements
+- Use **single-quote** string literals throughout (see § JS String Safety below)
+
+## JS String Safety — read before writing any Chinese copy
+
+pptxgenjs decks are built from JS string literals, and Chinese slide copy is full of quote
+characters. The hazard is **any quote character that matches the literal's delimiter**. With the
+single-quote convention used throughout this skill, the dangerous character is the ASCII apostrophe
+`'` — Chinese copy regularly carries apostrophes from English words (`It's`, `don't`, `Agent's`).
+
+- ASCII `'` inside copy: must be escaped (`\'`), or the literal switched to double quotes / a
+  template literal
+- ASCII `"` inside copy: **safe** under single quotes, no escaping needed
+- Full-width Chinese quotes `“ ”` `‘ ’`: not JS delimiters, never break syntax, write them directly
+
+```js
+// ❌ WRONG — bare ASCII apostrophe inside a single-quoted literal: SyntaxError, no deck is built
+slide.addText('It\'s a 模式', { x: 1, y: 1, w: 8, h: 1 });
+
+// ✅ CORRECT — ASCII double quotes are safe under single quotes
+slide.addText('行业正从"手写 Prompt"走向平台化工程', { x: 1, y: 1, w: 8, h: 1 });
+
+// ✅ CORRECT — copy with an apostrophe: switch delimiter or use a template literal
+slide.addText("It's a test", { x: 1, y: 1, w: 8, h: 1 });
+slide.addText(`It's a test`, { x: 1, y: 1, w: 8, h: 1 });
+
+// ✅ CORRECT — full-width Chinese quotes need no escaping at all
+slide.addText('行业正从“手写 Prompt”走向平台化工程', { x: 1, y: 1, w: 8, h: 1 });
+```
 
 ## Dependencies
 

@@ -117,7 +117,7 @@ Body headings (H1/H2/H3) and cover titles must avoid leaving 1–2 characters al
 **For body headings (H1/H2/H3):** When a heading text is long enough to wrap, apply the same `splitTitleLines()` logic. If the heading would cause a single-character orphan in Word's auto-wrapping, manually split into multiple `TextRun` elements with a `Break` (soft line break) at a semantic boundary.
 
 ```js
-const { Break } = require("docx");
+const { Break } = require('docx');
 
 // Check if heading needs manual line break to prevent orphan
 function buildHeadingRuns(text, maxCharsPerLine, runProps) {
@@ -129,7 +129,7 @@ function buildHeadingRuns(text, maxCharsPerLine, runProps) {
   const lines = splitTitleLines(text, maxCharsPerLine);
   const runs = [];
   for (let i = 0; i < lines.length; i++) {
-    if (i > 0) runs.push(new TextRun({ break: 1, ...runProps, text: "" })); // soft line break
+    if (i > 0) runs.push(new TextRun({ break: 1, ...runProps, text: '' })); // soft line break
     runs.push(new TextRun({ text: lines[i], ...runProps }));
   }
   return runs;
@@ -147,15 +147,15 @@ Generated code MUST guard against outputting literal `undefined`, `null`, `NaN`,
 ```js
 // ✅ MANDATORY: Safe text helper — use for ALL user-facing text values
 function safeText(value, placeholder) {
-  if (value === undefined || value === null || value === "" || String(value) === "NaN" || String(value) === "undefined") {
-    return placeholder || "【Please fill in】";
+  if (value === undefined || value === null || value === '' || String(value) === 'NaN' || String(value) === 'undefined') {
+    return placeholder || '【Please fill in】';
   }
   return String(value);
 }
 
 // Usage:
-new TextRun({ text: safeText(config.contact, "【Contact person】") })
-new TextRun({ text: safeText(row.phone, "【Phone number】") })
+new TextRun({ text: safeText(config.contact, '【Contact person】') })
+new TextRun({ text: safeText(row.phone, '【Phone number】') })
 ```
 
 **Rules:**
@@ -258,13 +258,13 @@ When generating any letter-style document (invitation letter, thank-you letter, 
 ```js
 // ✅ Correct — closing and sender right-aligned
 new Paragraph({ alignment: AlignmentType.RIGHT, spacing: { before: 400 },
-  children: [new TextRun({ text: "Yours sincerely,", size: 24 })] }),
+  children: [new TextRun({ text: 'Yours sincerely,', size: 24 })] }),
 new Paragraph({ alignment: AlignmentType.RIGHT,
-  children: [new TextRun({ text: "Li Hua", size: 24 })] }),
+  children: [new TextRun({ text: 'Li Hua', size: 24 })] }),
 
 // ❌ WRONG — closing left-aligned (default)
 new Paragraph({
-  children: [new TextRun({ text: "Yours sincerely," })] }),
+  children: [new TextRun({ text: 'Yours sincerely,' })] }),
 ```
 
 ## Quality Self-Check (Universal)

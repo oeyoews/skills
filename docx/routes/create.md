@@ -11,7 +11,7 @@
 5. If complex → also load `references/docx-js-advanced.md`
 6. Plan document structure (outline)
 7. Write JS/TS using docx library
-   ⚠️ **BEFORE writing any string**: scan ALL Chinese text for curly quotes `""''` and replace with `\u201c \u201d \u2018 \u2019` — bare curly quotes break JS syntax (see docx-js-advanced.md § Quotes Escaping)
+   ⚠️ **BEFORE writing any string**: this skill's code uses **single-quote** literals. A bare ASCII `'` inside copy is a `SyntaxError` — Chinese copy often carries apostrophes from English words (`It's`, `don't`, `Agent's`); switch to double quotes, a template literal, or `\'` in that case. ASCII `"` and full-width Chinese quotes `“ ”` need no escaping. See docx-js-advanced.md § Quotes Escaping in JS Strings
 8. Run with `node generate.js`
 9. If TOC → run `python3 "$DOCX_SCRIPTS/add_toc_placeholders.py" output.docx --auto`
 10. Run post-generation checklist (see SKILL.md)
@@ -150,19 +150,19 @@ Key rules:
 
 ```js
 const { Document, Packer, Paragraph, TextRun, Header, Footer,
-        AlignmentType, HeadingLevel, PageNumber } = require("docx");
-const fs = require("fs");
+        AlignmentType, HeadingLevel, PageNumber } = require('docx');
+const fs = require('fs');
 
 // 1. Palette
-const P = { primary: "#101820", body: "#182030", secondary: "#506070", accent: "#8090A0" };
-const c = (hex) => hex.replace("#", "");
+const P = { primary: '#101820', body: '#182030', secondary: '#506070', accent: '#8090A0' };
+const c = (hex) => hex.replace('#', '');
 
 // 2. Component builders
 function heading(text, level = HeadingLevel.HEADING_1) {
   return new Paragraph({
     heading: level,
     spacing: { before: level === HeadingLevel.HEADING_1 ? 360 : 240, after: 120 },
-    children: [new TextRun({ text, bold: true, color: c(P.primary), font: { ascii: "Calibri", eastAsia: "SimHei" } })]
+    children: [new TextRun({ text, bold: true, color: c(P.primary), font: { ascii: 'Calibri', eastAsia: 'SimHei' } })]
   });
 }
 
@@ -178,7 +178,7 @@ function body(text) {
 // 3. Assembly — cover + body in separate sections
 const doc = new Document({
   styles: { default: { document: {
-    run: { font: { ascii: "Calibri", eastAsia: "Microsoft YaHei" }, size: 24, color: c(P.body) },
+    run: { font: { ascii: 'Calibri', eastAsia: 'Microsoft YaHei' }, size: 24, color: c(P.body) },
     paragraph: { spacing: { line: 312 } },
   }}},
   sections: [
@@ -187,11 +187,11 @@ const doc = new Document({
     { properties: { page: { margin: { top: 1440, bottom: 1440, left: 1701, right: 1417 } } },
       footers: { default: new Footer({ children: [new Paragraph({ alignment: AlignmentType.CENTER,
         children: [new TextRun({ children: [PageNumber.CURRENT], size: 18 })] })] }) },
-      children: [heading("Chapter 1"), body("Content...")] },
+      children: [heading('Chapter 1'), body('Content...')] },
   ],
 });
 
-Packer.toBuffer(doc).then(buf => { fs.writeFileSync("output.docx", buf); });
+Packer.toBuffer(doc).then(buf => { fs.writeFileSync('output.docx', buf); });
 ```
 
 ## Post-Generation

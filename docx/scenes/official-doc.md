@@ -34,10 +34,10 @@ This scene covers:
 
 ```js
 function selectOfficialType(keywords, purpose) {
-  if (/minutes|meeting/.test(keywords)) return "minutes";
-  if (/reply|respond to request/.test(keywords)) return "reply";
-  if (/letter|inquiry|negotiation/.test(keywords)) return "letter";
-  return "notice"; // default
+  if (/minutes|meeting/.test(keywords)) return 'minutes';
+  if (/reply|respond to request/.test(keywords)) return 'reply';
+  if (/letter|inquiry|negotiation/.test(keywords)) return 'letter';
+  return 'notice'; // default
 }
 ```
 
@@ -256,8 +256,8 @@ Original Chinese numbering:
 **NO decorative colors.** Pure black text on white background. The only color is red header text.
 
 ```js
-const palette = { primary:"#000000", body:"#000000", accent:"#000000", surface:"#FFFFFF" };
-const RED_HEADER = "FF0000"; // Only for red header text
+const palette = { primary:'#000000', body:'#000000', accent:'#000000', surface:'#FFFFFF' };
+const RED_HEADER = 'FF0000'; // Only for red header text
 ```
 
 ---
@@ -296,7 +296,7 @@ page: { size: { width: 11906, height: 16838 }, margin: { top: 2098, bottom: 1984
 
 In code, set primary font and note the fallback:
 ```js
-font: { eastAsia: "STXiaoBiaoSong" }
+font: { eastAsia: 'STXiaoBiaoSong' }
 // Fallback: FZXiaoBiaoSong-S13 → SimSun Bold. User may need to install STXiaoBiaoSong for exact rendering.
 ```
 | Addressee | FangSong | San Hao 16pt (size: 32) | Left-aligned |
@@ -312,14 +312,14 @@ font: { eastAsia: "STXiaoBiaoSong" }
 styles: {
   default: {
     document: {
-      run: { font: { ascii: "Times New Roman", eastAsia: "FangSong" }, size: 32, color: "000000" },
+      run: { font: { ascii: 'Times New Roman', eastAsia: 'FangSong' }, size: 32, color: '000000' },
       paragraph: { spacing: { line: 560 } }, // Fixed 28pt line spacing
     },
     heading1: {
-      run: { font: { eastAsia: "SimHei" }, size: 32, bold: true, color: "000000" },
+      run: { font: { eastAsia: 'SimHei' }, size: 32, bold: true, color: '000000' },
     },
     heading2: {
-      run: { font: { eastAsia: "KaiTi" }, size: 32, color: "000000" },
+      run: { font: { eastAsia: 'KaiTi' }, size: 32, color: '000000' },
     },
   },
 }
@@ -334,10 +334,10 @@ styles: {
 ### Red Header (red-header documents only)
 
 ```js
-new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 0, after: 200, line: Math.ceil(26 * 23), lineRule: "atLeast" },
-  children: [new TextRun({ text: "XX Municipal Government", font: { eastAsia: "SimSun" },
-    size: 52, bold: true, color: "FF0000" })] })
-new Paragraph({ border: { bottom: { style: BorderStyle.SINGLE, size: 4, color: "FF0000" } },
+new Paragraph({ alignment: AlignmentType.CENTER, spacing: { before: 0, after: 200, line: Math.ceil(26 * 23), lineRule: 'atLeast' },
+  children: [new TextRun({ text: 'XX Municipal Government', font: { eastAsia: 'SimSun' },
+    size: 52, bold: true, color: 'FF0000' })] })
+new Paragraph({ border: { bottom: { style: BorderStyle.SINGLE, size: 4, color: 'FF0000' } },
   spacing: { after: 40 }, children: [] })
 ```
 
@@ -347,9 +347,9 @@ new Paragraph({ border: { bottom: { style: BorderStyle.SINGLE, size: 4, color: "
 footers: { default: new Footer({ children: [new Paragraph({
   alignment: AlignmentType.CENTER,
   children: [
-    new TextRun({ text: "\u2014 ", size: 28 }),
+    new TextRun({ text: '\u2014 ', size: 28 }),
     new TextRun({ children: [PageNumber.CURRENT], size: 28 }),
-    new TextRun({ text: " \u2014", size: 28 }),
+    new TextRun({ text: ' \u2014', size: 28 }),
   ],
 })] }) }
 ```

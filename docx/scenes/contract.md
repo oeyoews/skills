@@ -19,11 +19,11 @@ Generate a complete, formal, well-structured legal document with clear clauses, 
 
 ```js
 function selectContractType(keywords, topic) {
-  if (/confidential|NDA|non-disclosure/.test(keywords)) return "nda";
-  if (/transfer|equity|asset|rights/.test(keywords)) return "transfer";
-  if (/framework|strategic|cooperation agreement/.test(keywords)) return "framework";
-  if (/terms|platform rules|user agreement|privacy/.test(keywords)) return "terms";
-  return "bilateral"; // default: bilateral commercial contract
+  if (/confidential|NDA|non-disclosure/.test(keywords)) return 'nda';
+  if (/transfer|equity|asset|rights/.test(keywords)) return 'transfer';
+  if (/framework|strategic|cooperation agreement/.test(keywords)) return 'framework';
+  if (/terms|platform rules|user agreement|privacy/.test(keywords)) return 'terms';
+  return 'bilateral'; // default: bilateral commercial contract
 }
 ```
 
@@ -222,7 +222,7 @@ If the document repeatedly uses specialized terms ("deliverables", "service resu
 **Legal Wood** (Warm + Heavy + Calm) — for decorative elements only; body text must be pure black.
 
 ```js
-const palette = { primary:"#28201C", body:"#000000", secondary:"#6E6560", accent:"#7A5C3A", surface:"#FBF9F7" };
+const palette = { primary:'#28201C', body:'#000000', secondary:'#6E6560', accent:'#7A5C3A', surface:'#FBF9F7' };
 ```
 
 ⚠️ **ALL visible text in contracts must be pure black `"000000"`.** This includes:
@@ -238,15 +238,15 @@ const palette = { primary:"#28201C", body:"#000000", secondary:"#6E6560", accent
 ```js
 // ✅ Contract title — always pure black
 new Paragraph({ alignment: AlignmentType.CENTER,
-  spacing: { line: Math.ceil(22 * 23), lineRule: "atLeast" },  // ★ Rule 8: prevent clipping
-  children: [new TextRun({ text: "Training Cooperation Framework Agreement",
-    size: 44, bold: true, color: "000000",  // ← MUST be "000000"
-    font: { eastAsia: "SimHei", ascii: "Times New Roman" } })]
+  spacing: { line: Math.ceil(22 * 23), lineRule: 'atLeast' },  // ★ Rule 8: prevent clipping
+  children: [new TextRun({ text: 'Training Cooperation Framework Agreement',
+    size: 44, bold: true, color: '000000',  // ← MUST be "000000"
+    font: { eastAsia: 'SimHei', ascii: 'Times New Roman' } })]
 })
 
 // ❌ FORBIDDEN — accent/palette color on contract text
-new TextRun({ text: "Training Cooperation Framework Agreement", color: palette.accent }) // ← WRONG
-new TextRun({ text: "Contract No.:", color: palette.primary }) // ← WRONG (if primary ≠ "000000")
+new TextRun({ text: 'Training Cooperation Framework Agreement', color: palette.accent }) // ← WRONG
+new TextRun({ text: 'Contract No.:', color: palette.primary }) // ← WRONG (if primary ≠ "000000")
 ```
 
 ---
@@ -310,12 +310,12 @@ Party A and Party B information MUST be laid out using a **borderless table** so
 // ✅ Correct — borderless table ensures "统一社会信用代码：", "地址：", "法定代表人：" align
 function partyInfoBlock(partyLabel, partyName, fields) {
   // fields: [["Unified Social Credit Code", value], ["Address", value], ["Legal Representative", value]]
-  const NB = { style: BorderStyle.NONE, size: 0, color: "FFFFFF" };
+  const NB = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' };
   const noBorders = { top: NB, bottom: NB, left: NB, right: NB };
 
   const headerPara = new Paragraph({ spacing: { before: 200, after: 120 },
     children: [new TextRun({ text: `${partyLabel}: ${safeText(partyName, "【Company full name】")}`,
-      size: 24, font: { eastAsia: "SimSun", ascii: "Times New Roman" } })]
+      size: 24, font: { eastAsia: 'SimSun', ascii: 'Times New Roman' } })]
   });
 
   const infoTable = new Table({
@@ -329,7 +329,7 @@ function partyInfoBlock(partyLabel, partyName, fields) {
           margins: { top: 40, bottom: 40, left: 420, right: 60 },
           children: [new Paragraph({
             children: [new TextRun({ text: `${label}:`, size: 24,
-              font: { eastAsia: "SimSun", ascii: "Times New Roman" } })],
+              font: { eastAsia: 'SimSun', ascii: 'Times New Roman' } })],
           })],
         }),
         new TableCell({
@@ -337,7 +337,7 @@ function partyInfoBlock(partyLabel, partyName, fields) {
           margins: { top: 40, bottom: 40, left: 60, right: 120 },
           children: [new Paragraph({
             children: [new TextRun({ text: safeText(value, `【Please fill in: ${label}】`), size: 24,
-              font: { eastAsia: "SimSun", ascii: "Times New Roman" } })],
+              font: { eastAsia: 'SimSun', ascii: 'Times New Roman' } })],
           })],
         }),
       ],
@@ -348,10 +348,10 @@ function partyInfoBlock(partyLabel, partyName, fields) {
 }
 
 // Usage:
-const partyAChildren = partyInfoBlock("Party A (甲方)", config.partyA?.name, [
-  ["Unified Social Credit Code (统一社会信用代码)", config.partyA?.creditCode],
-  ["Address (地址)", config.partyA?.address],
-  ["Legal Representative (法定代表人/负责人)", config.partyA?.legalRep],
+const partyAChildren = partyInfoBlock('Party A (甲方)', config.partyA?.name, [
+  ['Unified Social Credit Code (统一社会信用代码)', config.partyA?.creditCode],
+  ['Address (地址)', config.partyA?.address],
+  ['Legal Representative (法定代表人/负责人)', config.partyA?.legalRep],
 ]);
 ```
 
@@ -380,26 +380,26 @@ Use a borderless 2-column table for symmetry. **Every field value must use `safe
 ```js
 // ✅ Correct signature block — safeText for all values
 function buildSignatureBlock(partyA, partyB) {
-  const fields = ["Party (Seal)", "Legal Rep / Authorized Rep (Signature)", "Contact Person", "Contact Info", "Signing Location", "Date"];
-  const NB = { style: BorderStyle.NONE, size: 0, color: "FFFFFF" };
+  const fields = ['Party (Seal)', 'Legal Rep / Authorized Rep (Signature)', 'Contact Person', 'Contact Info', 'Signing Location', 'Date'];
+  const NB = { style: BorderStyle.NONE, size: 0, color: 'FFFFFF' };
   const noBorders = { top: NB, bottom: NB, left: NB, right: NB };
 
   return new Table({
     width: { size: 100, type: WidthType.PERCENTAGE },
     borders: { top: NB, bottom: NB, left: NB, right: NB, insideHorizontal: NB, insideVertical: NB },
     rows: fields.map((label, i) => {
-      const aVal = i === fields.length - 1 ? "【____/____/____】" : safeText(partyA?.[i], "");
-      const bVal = i === fields.length - 1 ? "【____/____/____】" : safeText(partyB?.[i], "");
+      const aVal = i === fields.length - 1 ? '【____/____/____】' : safeText(partyA?.[i], '');
+      const bVal = i === fields.length - 1 ? '【____/____/____】' : safeText(partyB?.[i], '');
       const displayA = i === 0 ? `Party A (甲方): ${aVal}` : `${label}: ${aVal}`;
       const displayB = i === 0 ? `Party B (乙方): ${bVal}` : `${label}: ${bVal}`;
       return new TableRow({
         children: [
           new TableCell({ width: { size: 50, type: WidthType.PERCENTAGE }, borders: noBorders,
             margins: { top: 80, bottom: 80, left: 120, right: 60 },
-            children: [new Paragraph({ children: [new TextRun({ text: displayA, size: 24, color: "000000" })] })] }),
+            children: [new Paragraph({ children: [new TextRun({ text: displayA, size: 24, color: '000000' })] })] }),
           new TableCell({ width: { size: 50, type: WidthType.PERCENTAGE }, borders: noBorders,
             margins: { top: 80, bottom: 80, left: 60, right: 120 },
-            children: [new Paragraph({ children: [new TextRun({ text: displayB, size: 24, color: "000000" })] })] }),
+            children: [new Paragraph({ children: [new TextRun({ text: displayB, size: 24, color: '000000' })] })] }),
         ],
       });
     }),

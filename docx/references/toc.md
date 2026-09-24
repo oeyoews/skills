@@ -25,31 +25,31 @@ All 3 steps are **mandatory**. Skipping any step results in a broken or empty TO
 Insert **4 elements** in sequence:
 
 ```js
-const { TableOfContents, Paragraph, TextRun, PageBreak, AlignmentType } = require("docx");
+const { TableOfContents, Paragraph, TextRun, PageBreak, AlignmentType } = require('docx');
 
 // 1. TOC title — ⛔ DO NOT use HeadingLevel (or TOC will index itself!)
 new Paragraph({
   alignment: AlignmentType.CENTER,
   spacing: { before: 480, after: 360 },
   children: [new TextRun({
-    text: "目  录",  // or "Table of Contents" for English docs
+    text: '目  录',  // or "Table of Contents" for English docs
     bold: true, size: 32,
-    font: { eastAsia: "SimHei", ascii: "Times New Roman" }
+    font: { eastAsia: 'SimHei', ascii: 'Times New Roman' }
   })],
 }),
 
 // 2. TOC field element — ⚠️ first parameter is NOT displayed, it's internal name only
-new TableOfContents("Table of Contents", {
+new TableOfContents('Table of Contents', {
   hyperlink: true,
-  headingStyleRange: "1-3",  // match HeadingLevel range used in document
+  headingStyleRange: '1-3',  // match HeadingLevel range used in document
 }),
 
 // 3. ★ MANDATORY Refresh Hint — tells user how to update page numbers
 new Paragraph({
   spacing: { before: 200 },
   children: [new TextRun({
-    text: "Note: This Table of Contents is generated via field codes. To ensure page number accuracy after editing, please right-click the TOC and select \"Update Field.\"",
-    italics: true, size: 18, color: "888888"
+    text: 'Note: This Table of Contents is generated via field codes. To ensure page number accuracy after editing, please right-click the TOC and select "Update Field."',
+    italics: true, size: 18, color: '888888'
   })]
 }),
 
@@ -65,12 +65,12 @@ new Paragraph({ children: [new PageBreak()] }),
 // ✅ Correct — Heading style, TOC can index
 new Paragraph({
   heading: HeadingLevel.HEADING_1,
-  children: [new TextRun({ text: "第一章 引言", bold: true, size: 32, color: c(P.primary) })]
+  children: [new TextRun({ text: '第一章 引言', bold: true, size: 32, color: c(P.primary) })]
 })
 
 // ❌ Wrong — manual bold + large font, TOC cannot detect
 new Paragraph({
-  children: [new TextRun({ text: "第一章 引言", bold: true, size: 32, color: c(P.primary) })]
+  children: [new TextRun({ text: '第一章 引言', bold: true, size: 32, color: c(P.primary) })]
 })
 ```
 
@@ -201,7 +201,7 @@ footerXml = footerXml.replace(
 
 Also remove any empty `<w:pgNumType/>` from the cover section (docx-js emits these even when no pageNumbers is set):
 ```js
-docXml = docXml.replace(/<w:pgNumType\/>/g, "");
+docXml = docXml.replace(/<w:pgNumType\/>/g, '');
 ```
 
 ### Page Numbering Rules
@@ -234,8 +234,8 @@ docXml = docXml.replace(/<w:pgNumType\/>/g, "");
 new Paragraph({
   spacing: { before: 200 },
   children: [new TextRun({
-    text: "Note: This Table of Contents is generated via field codes. To ensure page number accuracy after editing, please right-click the TOC and select \"Update Field.\"",
-    italics: true, size: 18, color: "888888"
+    text: 'Note: This Table of Contents is generated via field codes. To ensure page number accuracy after editing, please right-click the TOC and select "Update Field."',
+    italics: true, size: 18, color: '888888'
   })]
 }),
 ```
